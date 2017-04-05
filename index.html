@@ -199,7 +199,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -209,7 +209,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            Kategorien
+            Categories
           </a>
         </li>
       
@@ -219,7 +219,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
-            Über
+            About
           </a>
         </li>
       
@@ -229,7 +229,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -282,6 +282,492 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/05/Mac安装mysql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="媛媛">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="best wishes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/05/Mac安装mysql/" itemprop="url">
+                  Mac安装mysql
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-05T20:21:17+08:00">
+                2017-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/环境/" itemprop="url" rel="index">
+                    <span itemprop="name">环境</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>简书上已经整理的很到位了，<a href="http://www.jianshu.com/p/fd3aae701db9" target="_blank" rel="external">http://www.jianshu.com/p/fd3aae701db9</a></p>
+<p>我这边补充一个问题，在运行过程中出错</p>
+<p>ERROR 29 (HY000): File ‘./cainiao/item_feature.MYD’ not found (Errcode: 13 - Permission denied)</p>
+<p>这个原因是因为我的mysql崩溃了，然后重装一下就好了。密码什么的都跟以前一样。</p>
+<p>可以看下数据库的权限：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">show grants;</div><div class="line">SELECT DISTINCT CONCAT(&apos;User: &apos;&apos;&apos;,user,&apos;&apos;&apos;@&apos;&apos;&apos;,host,&apos;&apos;&apos;;&apos;) AS query FROM mysql.user;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/02/Mac上hive数据库的搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="媛媛">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="best wishes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/02/Mac上hive数据库的搭建/" itemprop="url">
+                  Mac上hive数据库的搭建
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-02T10:48:32+08:00">
+                2017-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/环境/" itemprop="url" rel="index">
+                    <span itemprop="name">环境</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="环境准备：Hadoop，scala"><a href="#环境准备：Hadoop，scala" class="headerlink" title="环境准备：Hadoop，scala"></a>环境准备：Hadoop，scala</h3><ol>
+<li><p>我的Hadoop目录：<code>/usr/local/Cellar/hadoop/2.7.3/libexec/etc/hadoop</code></p>
+</li>
+<li><p>我的scala目录：<code>/usr/local/share/scala</code></p>
+</li>
+<li><p>我的spark目录：<code>/usr/local/share/spark</code></p>
+<p>​</p>
+</li>
+</ol>
+<h3 id="安装spark"><a href="#安装spark" class="headerlink" title="安装spark"></a>安装spark</h3><p>1.下载spark，解压</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mv /Users/hyy/Downloads/spark /usr/local/share  # 移动spark至自己的目录下</div><div class="line">cd /usr/local/share/spark/conf   #cd到目录下，编辑文件</div><div class="line">spark-env.sh.template copy spark-env.sh  # 将spark-env.sh.template重命名为spark-env.sh</div><div class="line">vi spark-env.sh  # 编辑文件</div></pre></td></tr></table></figure>
+<p>添加文件内容为：</p>
+<p>export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home<br>export SCALA_HOME=/User/local/share/scala<br>export SPARK_MASTER_IP=localhost<br>export SPARK_WORKER_MEMORY=1g<br>export HADOOP_CONF_DIR=/usr/local/Cellar/hadoop/2.7.3/libexec/etc/hadoop</p>
+<p>配置环境变量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vim /etc/profile  # 设置环境变量</div></pre></td></tr></table></figure>
+<p>添加内容</p>
+<p>export SCALA_HOME=/usr/local/share/scala/bin</p>
+<p>export SPARK_HOME=/usr/local/share/spark/bin</p>
+<p>export PATH=”${HADOOP_HOME}/bin:${SCALA_HOME}/bin:${SPARK_HOME}/bin:$PATH”</p>
+<ol>
+<li>启动spark</li>
+</ol>
+<p>进入Spark目录中的sbin子目录运行如下脚本启动Spark:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./start-all.sh</div></pre></td></tr></table></figure>
+<p>输入 <code>jps</code> 命令查看Spark是否运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jps</div></pre></td></tr></table></figure>
+<p>可以看到Master 和 Worker进城都已经启动</p>
+<ol>
+<li><p>使用spark shell 进行测试</p>
+<p>进去Spark目录下的bin子目录运行如下脚本启动Spark shell:</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./spark-shell</div></pre></td></tr></table></figure>
+<p>看到spark几个字，既说明安装成功，并成功运行。</p>
+<h3 id="安装hive"><a href="#安装hive" class="headerlink" title="安装hive"></a>安装hive</h3><ol>
+<li>采用brew来安装：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ brew install hive</div></pre></td></tr></table></figure>
+<ol>
+<li>配置环境变量</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vim ~/.bash_profile</div></pre></td></tr></table></figure>
+<p>export HADOOP_HOME=/usr/local/Cellar/hadoop/2.7.3/libexec<br>export SCALA_HOME=/usr/local/share/scala<br>export SPARK_HOME=/usr/local/share/spark<br>export HIVE_HOME=/usr/local/Cellar/hive/2.1.0/libexec<br>export PATH=”${HADOOP_HOME}/bin:${HIVE_HOME}/bin:${SCALA_HOME}/bin:${SPARK_HOME}/bin:$PATH”</p>
+<ol>
+<li>运行配置文件</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source ~/.bash_profile</div></pre></td></tr></table></figure>
+<ol>
+<li>下载<strong>mysql connector</strong> 并复制到hive目录下</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ curl -L &apos;https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.41.tar.gz&apos; | tar xz</div><div class="line">$ sudo cp mysql-connector-java-5.1.41/mysql-connector-java-5.1.41-bin.jar /usr/local/Cellar/hive/2.1.0/libexec/lib/</div></pre></td></tr></table></figure>
+<ol>
+<li><p>创建<strong>mysql metastore</strong></p>
+<ul>
+<li><p>启动mysql：打开“系统偏好设置”，单击下端的“MySQL”图标，在“MySQL”对话框中，单击“启动MySQL服务”按钮。</p>
+</li>
+<li><p>登陆mysql：在Finder的侧边栏中单击“应用程序”，然后在“实用工具”中，双击启动“终端”命令。在终端中输入添加MySQL路径的命令：</p>
+<p><code>PATH=&quot;$PATH&quot;:/usr/local/mysql/bin</code></p>
+<p>在终端登录到MySQL的命令如下：<code>mysql -u root -p</code></p>
+<p>我的密码是root</p>
+</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">mysql&gt; CREATE DATABASE metastore;</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; USE metastore;</div><div class="line">Database changed</div><div class="line">mysql&gt; CREATE USER &apos;hiveuser&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;password&apos;;</div><div class="line">Query OK, 0 rows affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; GRANT SELECT,INSERT,UPDATE,DELETE,ALTER,CREATE ON metastore.* TO &apos;hiveuser&apos;@&apos;localhost&apos;;</div><div class="line">Query OK, 0 rows affected (0.00 sec)</div></pre></td></tr></table></figure>
+<ol>
+<li>配置hive的配置文件</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/Cellar/hive/2.1.0/libexec/conf</div><div class="line">cp hive-default.xml.template hive-site.xml</div><div class="line">cp hive-default.xml.template hive-default.xml</div><div class="line">cp beeline-log4j2.properties.template beeline-log4j2.properties</div><div class="line">cp llap-cli-log4j2.properties.template llap-cli-log4j2.properties</div><div class="line">cp hive-env.sh.template hive-env.sh</div><div class="line">cp llap-daemon-log4j2.properties llap-daemon-log4j2.properties</div><div class="line">cp hive-exec-log4j2.properties.template hive-exec-log4j2.properties</div><div class="line">cp hive-log4j2.properties.template hive-log4j2.properties</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/02/hexo常用命令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="媛媛">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="best wishes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/02/hexo常用命令/" itemprop="url">
+                  hexo更博步骤及常用命令
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-02T10:28:15+08:00">
+                2017-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="更博步骤"><a href="#更博步骤" class="headerlink" title="更博步骤"></a>更博步骤</h3><ol>
+<li><p>切换到blog目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd /Applications/dev/myblog/blog</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建文章</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo new &quot;new_artical&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>文章在source/_posts目录下，支持Markdown语法，可以使用markdown编辑器进行编辑，我选的Typore来编辑文章。</p>
+</li>
+<li><p>编辑好文章，清楚预览，生成静态页面，将.deploy目录部署到GitHub更新</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo clean</div><div class="line">hexo generate</div><div class="line">hexo deploy</div></pre></td></tr></table></figure>
+</li>
+<li><p>访问博客即可</p>
+</li>
+</ol>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">hexo new &quot;postName&quot; #新建文章</div><div class="line">hexo new page &quot;pageName&quot; #新建页面</div><div class="line">hexo generate #生成静态页面至public目录</div><div class="line">hexo server #开启预览访问端口（默认端口4000，&apos;ctrl + c&apos;关闭server）</div><div class="line">hexo deploy #将.deploy目录部署到GitHub</div><div class="line">hexo help # 查看帮助</div><div class="line">hexo version #查看Hexo的版本</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/12/mac搭建Hadoop2-7-3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -319,7 +805,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-12T22:39:20+08:00">
                 2017-03-12
@@ -487,7 +973,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T00:40:56+08:00">
                 2017-02-27
@@ -508,7 +994,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -634,7 +1120,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-09T00:00:00+08:00">
                 2016-11-09
@@ -655,7 +1141,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -781,8 +1267,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/归档">
-                <span class="site-state-item-count">3</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -790,8 +1276,8 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/／分类">
-                <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">categories</span>
               </a>
             </div>
           
@@ -800,7 +1286,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/标签">
                 <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               </a>
             </div>
           
@@ -886,7 +1372,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
