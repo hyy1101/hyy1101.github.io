@@ -199,7 +199,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -209,7 +209,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            Categories
+            Kategorien
           </a>
         </li>
       
@@ -219,7 +219,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
-            About
+            Über
           </a>
         </li>
       
@@ -229,7 +229,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -282,6 +282,171 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/05/菜鸟-需求预测与分仓规划/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="媛媛">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="best wishes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/05/菜鸟-需求预测与分仓规划/" itemprop="url">
+                  菜鸟-需求预测与分仓规划
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-05T23:19:45+08:00">
+                2017-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>大赛题目链接：<a href="https://tianchi.aliyun.com/competition/information.htm?spm=5176.100067.5678.2.aY5MAf&amp;raceId=231530" target="_blank" rel="external">https://tianchi.aliyun.com/competition/information.htm?spm=5176.100067.5678.2.aY5MAf&amp;raceId=231530</a></p>
+<h3 id="思路整理："><a href="#思路整理：" class="headerlink" title="思路整理："></a>思路整理：</h3><ol>
+<li><p>理解题意：题目的意思就是根据商品从20141010到20151227的全国和区域分仓数据，后面两周（20151228-20160110）的全国和区域分仓目标库存。目标是预测尽量准，如果不能百分百准确，希望是损失最小，即达到库存成本最小化(无论是补多补少)。</p>
+</li>
+<li><p>特征碎碎念：</p>
+<ul>
+<li>原始特征：</li>
+</ul>
+<p>​       日期，商品ID，叶子类目ID，大类目ID，品牌ID，供应商ID</p>
+<p>​       浏览次数，流量UV，被加购次数，加购人次，收藏夹人次</p>
+<p>​       拍下笔数，拍下金额，拍下件数，拍下UV</p>
+<p>​       成交金额，成交笔数，成交件数，成交人次</p>
+<p>​       直通车引导浏览次数，淘宝客引导浏览次数，搜索引导浏览次数，聚划算引导浏览次数</p>
+<p>​       直通车引导浏览人次，淘宝客引导浏览人次，搜索引导浏览人次，聚划算引导浏览人次</p>
+<p>​       非聚划算支付笔数，非聚划算支付金额，非聚划算支付件数，非聚划算支付人次</p>
+<ul>
+<li><p>可能潜在的特征：</p>
+<ul>
+<li><p>业务特征</p>
+<p>成交比率：成交人次／流量UV ；成交成功率：成交笔数／拍下笔数</p>
+<p>商品折扣率：成交价格 / 拍下价格；</p>
+<p>单件成交价格：成交金额／成交件数；单笔成交价格：成交金额／成交笔数</p>
+<p>非聚划支付转化率：非聚划算支付人次／流量UV</p>
+<p>非聚划售出占比：非聚划算支付件数／成交件数</p>
+<p>非聚划支付占比：非聚划算支付金额／成交金额</p>
+<p>非聚划算支付金额／非聚划算支付笔数</p>
+</li>
+<li><p>时间特征</p>
+<p>商品最早出现历史数据的日期距离要预测的那一周的天数</p>
+<p>商品最后一次出现历史数据的日期距离要预测的那一周的天数</p>
+</li>
+<li><p>窗口特征（根据记忆曲线，取商品 前 1、2、3、4、7、14、21、28天）</p>
+<p>根据商品、叶子类目、大类目、品牌、供应商进行分组，提取前X天的非聚划算支付人次、浏览数、加购数的平均值、最小值、标准差作为特征</p>
+</li>
+</ul>
+</li>
+<li><p>缺失值补0</p>
+</li>
+</ul>
+</li>
+<li><p>模型：</p>
+</li>
+</ol>
+<h3 id="节点把控"><a href="#节点把控" class="headerlink" title="节点把控"></a>节点把控</h3><ol>
+<li>第一天下午拿到题目，晚上有事就看了一下。4.3</li>
+<li>第二天了解了下题意，进行电脑环境的配置。4.4</li>
+<li>第三天开始正式探索题目意思以及数据。4.5</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/05/Mac安装mysql/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -319,7 +484,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-05T20:21:17+08:00">
                 2017-04-05
@@ -340,7 +505,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">in</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -464,7 +629,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-02T10:48:32+08:00">
                 2017-04-02
@@ -485,7 +650,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">in</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -672,7 +837,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-02T10:28:15+08:00">
                 2017-04-02
@@ -805,7 +970,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-12T22:39:20+08:00">
                 2017-03-12
@@ -973,7 +1138,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T00:40:56+08:00">
                 2017-02-27
@@ -994,7 +1159,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">in</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -1120,7 +1285,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-09T00:00:00+08:00">
                 2016-11-09
@@ -1141,7 +1306,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">in</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -1267,8 +1432,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/归档">
-                <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -1277,7 +1442,7 @@
             <div class="site-state-item site-state-categories">
               <a href="/／分类">
                 <span class="site-state-item-count">3</span>
-                <span class="site-state-item-name">categories</span>
+                <span class="site-state-item-name">Kategorien</span>
               </a>
             </div>
           
@@ -1286,7 +1451,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/标签">
                 <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               </a>
             </div>
           
@@ -1372,7 +1537,7 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
