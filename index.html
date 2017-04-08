@@ -199,7 +199,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -209,7 +209,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            Kategorien
+            Categories
           </a>
         </li>
       
@@ -219,7 +219,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
-            Über
+            About
           </a>
         </li>
       
@@ -229,7 +229,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -319,7 +319,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-08T19:10:06+08:00">
                 2017-04-08
@@ -456,7 +456,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-05T23:19:45+08:00">
                 2017-04-05
@@ -526,7 +526,7 @@
 <p>最小天数：商品最后一次出现历史数据的日期距离要预测的那一周的天数。</p>
 <p>时间因子：商品时间距离20151228天数。</p>
 </li>
-<li><p>窗口特征（根据记忆曲线，取商品 前 1、2、3、4、7、14、21、28天）</p>
+<li><p>时间窗口特征（根据记忆曲线，取商品 前 1、2、3、4、7、14、21、28天）</p>
 <p>根据商品、叶子类目、大类目、品牌、供应商进行分组，提取前X天的非聚划算支付人次、浏览数、加购数的平均值、最小值、标准差作为特征</p>
 </li>
 </ul>
@@ -535,20 +535,57 @@
 </li>
 </ul>
 <h4 id="4-模型探索："><a href="#4-模型探索：" class="headerlink" title="4. 模型探索："></a>4. 模型探索：</h4><ul>
-<li><p>数据准备：用mysql处理，    个样本，   个指标</p>
+<li><p>数据准备：用mysql处理，17万个样本（滑窗取得），400多维指标（见上文潜在指标分析）</p>
 </li>
-<li><p>数据预处理：去除双11，双12，标准化(0-1)，去除异常值(3西格玛)</p>
+<li><p>数据预处理：去除双11，双12，去除异常值(3西格玛)，去除可能为负的数据。</p>
 </li>
 <li><p>选择两种类型模型分别尝试：</p>
 <ol>
-<li>传统算法Hotwinters—-时间序列分析(核心思想是三次指数平滑，包含趋势性季节性，可控性优于arima)</li>
-<li>机器学习agboost, rf, gbdt, adaboost再融合</li>
+<li><p>传统算法Hotwinters—-时间序列分析(核心思想是三次指数平滑，包含趋势性季节性，可控性优于arima)</p>
+</li>
+<li><p>机器学习agboost, rf, gbdt, adaboost再融合———只做了xgb和gbrt和rf，外加一个规则模型。</p>
+<p>1）xgb优点：1.正则化提升；2.可以实现并行处理；3.允许用户定义<strong>自定义优化目标和评价标准</strong>；4.内置处理缺失值的规则；5.一直分裂到指定的最大深度(max_depth)，然后回过头来剪枝；6.允许在每一轮boosting迭代中使用交叉验证；7.可以在上一轮的结果上继续训练。</p>
+<p>2）gbdt,rf</p>
+<p>3）由于牵扯到时间窗口，没有进行交叉验证，应该考虑添加一个时间因子指标，可供交叉验证。</p>
+</li>
 </ol>
 </li>
 <li><p>规则处理：预测不可能百分百准确，应该做到损失尽量小</p>
-<p>​</p>
+<p>如果补少成本大于补多成本，则应该预测多一点，取单模型预测结果中的最大值再乘以1.1，反之取单模型预测结果中的最小值再乘以0.9。最终以 0.85model + 0.15rule融合。</p>
+<p>对于上线不满四周的item，直接采用最近两周的平均销量*14预测获得。</p>
+</li>
+<li><p>测试集和训练集</p>
 </li>
 </ul>
+<p>​       训练集选择从2015-07-01以后的数据进行每14天全量滑动，总样本有963*180，取最后四周时间进行滑动，作为测试集。</p>
+<h3 id="代码目录说明"><a href="#代码目录说明" class="headerlink" title="代码目录说明"></a>代码目录说明</h3><ol>
+<li><p>raw_data：原始数据</p>
+</li>
+<li><p>Data：过程数据文件</p>
+</li>
+<li><p>raw_data原始数据</p>
+</li>
+<li><p>Data过程数据文件</p>
+</li>
+<li><p>raw_data原始数据</p>
+</li>
+<li><p>Data过程数据文件</p>
+</li>
+<li><p>mysql_process文件：</p>
+<p>数据处理文件，先运行<strong><em>preprocess</em></strong>，再运行<strong><em>dataprocess</em></strong></p>
+</li>
+<li><p>model文件包含：</p>
+<p><strong><em>data_preprocessing.py ：</em></strong>进行简单的数据处理，添加分割字段，标题等。</p>
+<p><strong><em>model.py：</em></strong>包含有gbrt，rf，xgb三个模型，其中参数有少许微调。</p>
+<p><strong><em>combine.py ：</em></strong>gbrt，rf，xgb三个模型得到结果的组合。</p>
+<p><strong><em>rule.py：</em></strong>规则模型，包含布多补少算法，以及加权规则。</p>
+<p><strong><em>ensemble&amp;estimate.py：</em></strong>机器学习模型与规则模型融合，输出结果，评估结果。</p>
+</li>
+<li><p>result结果文件</p>
+</li>
+</ol>
+<p>​       <strong><em>final_estimate.csv：</em></strong>为最终结果集</p>
+<p>​       <strong><em>04_09.csv：</em></strong>为带有误差及方差的预测集合。</p>
 <h3 id="节点把控"><a href="#节点把控" class="headerlink" title="节点把控"></a>节点把控</h3><ol>
 <li>第一天下午拿到题目，晚上有事就看了一下。4.3</li>
 <li>第二天了解了下题意，进行电脑环境的配置，大致翻了几个网页，论坛，博客，GitHub之类的。4.4</li>
@@ -557,7 +594,23 @@
 <li>第五天训练模型4.7</li>
 <li>第六天调优4.8</li>
 </ol>
+<h3 id="踩过的坑"><a href="#踩过的坑" class="headerlink" title="踩过的坑"></a>踩过的坑</h3><ol>
+<li><p>mysql导出数据，各种出错，详情见博客。</p>
+</li>
+<li><p>python函数merge区分字符与整型，例如”1”和1不同，merge时会出错；函数传参，有时候会不灵。</p>
+</li>
+<li><p>hive单机简直是个坑，动不动就内存超限，估计是我Hadoop一套太菜了，到时候得好好学学。</p>
+</li>
+<li><p>get新技能：</p>
+<p>merge,concat,apply,sort_values,groupby和egg连用。</p>
+</li>
+</ol>
 <h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><p><a href="https://devhub.io/repos/wepe-CaiNiao-DemandForecast-StoragePlaning" target="_blank" rel="external">https://devhub.io/repos/wepe-CaiNiao-DemandForecast-StoragePlaning</a></p>
+<p>xgb: <a href="http://www.dongcoder.com/detail-56275.html" target="_blank" rel="external">http://www.dongcoder.com/detail-56275.html</a></p>
+<p>好思路：</p>
+<p><a href="http://blog.csdn.net/bryan__/article/details/51685639" target="_blank" rel="external">http://blog.csdn.net/bryan__/article/details/51685639</a></p>
+<p><a href="http://www.lizhuoqing.com/2017/02/27/%E9%98%BF%E9%87%8C%E5%A4%A9%E6%B1%A0%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%AF%94%E8%B5%9B%E6%80%BB%E7%BB%93%EF%BC%882016%E8%8F%9C%E9%B8%9F%E9%9C%80%E6%B1%82%E9%A2%84%E6%B5%8B%E4%B8%8E%E5%88%86%E4%BB%93/" target="_blank" rel="external">http://www.lizhuoqing.com/2017/02/27/%E9%98%BF%E9%87%8C%E5%A4%A9%E6%B1%A0%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%AF%94%E8%B5%9B%E6%80%BB%E7%BB%93%EF%BC%882016%E8%8F%9C%E9%B8%9F%E9%9C%80%E6%B1%82%E9%A2%84%E6%B5%8B%E4%B8%8E%E5%88%86%E4%BB%93/</a></p>
+<p><a href="https://devhub.io/repos/wepe-CaiNiao-DemandForecast-StoragePlaning" target="_blank" rel="external">https://devhub.io/repos/wepe-CaiNiao-DemandForecast-StoragePlaning</a></p>
 
           
         
@@ -635,7 +688,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-05T20:21:17+08:00">
                 2017-04-05
@@ -656,7 +709,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -780,7 +833,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-02T10:48:32+08:00">
                 2017-04-02
@@ -801,7 +854,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -1023,7 +1076,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-02T10:28:15+08:00">
                 2017-04-02
@@ -1156,7 +1209,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-12T22:39:20+08:00">
                 2017-03-12
@@ -1324,7 +1377,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T00:40:56+08:00">
                 2017-02-27
@@ -1345,7 +1398,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -1471,7 +1524,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-09T00:00:00+08:00">
                 2016-11-09
@@ -1492,7 +1545,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -1619,7 +1672,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/归档">
                 <span class="site-state-item-count">8</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -1628,7 +1681,7 @@
             <div class="site-state-item site-state-categories">
               <a href="/／分类">
                 <span class="site-state-item-count">3</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">categories</span>
               </a>
             </div>
           
@@ -1637,7 +1690,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/标签">
                 <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               </a>
             </div>
           
@@ -1723,7 +1776,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
