@@ -105,7 +105,7 @@
 执行以下代码
 
 123456git config --global github.hyy1101git init                   # 本地仓库初始化，执行完">
-<meta property="og:updated_time" content="2017-04-11T14:05:33.000Z">
+<meta property="og:updated_time" content="2017-04-11T14:09:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="github上传">
 <meta name="twitter:description" content="1 在github上创建一个仓库这个非常简单，参考http://blog.csdn.net/xiahouzuoxin/article/details/9393119
@@ -213,7 +213,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -223,7 +223,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            Categories
+            Kategorien
           </a>
         </li>
       
@@ -233,7 +233,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
-            About
+            Über
           </a>
         </li>
       
@@ -243,7 +243,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -330,7 +330,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-08T19:10:06+08:00">
                 2017-04-08
@@ -375,6 +375,31 @@
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git config --global github.hyy1101</div><div class="line">git init                   # 本地仓库初始化，执行完后会在工程目录下生成一个.git的隐藏目录</div><div class="line">git remote add origin git@github.com:hyy1101/cainiao.git</div><div class="line">git add .               # 添加所有文件到本地索引</div><div class="line">git commit -m &quot;My first commit operation&quot;   # 提交修改到本地仓库，-m选项添加提交注释</div><div class="line">git push origin master      # 按照前一条命令中origin给定的github地址推送到github仓库的master分支</div></pre></td></tr></table></figure>
 <p>*注意：Mac上传会产生一个没用的.DS_Store，需要在上传之前创建一个.gitignore，<code>vim .gitignore</code>然后将不上传的文件名写在这个文件里面，再执行<code>git push origin master</code></p>
+<h2 id="3-附录（常用命令）"><a href="#3-附录（常用命令）" class="headerlink" title="3 附录（常用命令）"></a>3 附录（常用命令）</h2><hr>
+<p><strong>Local：</strong></p>
+<p>git clone git@github.com:xiahouzuoxin/mp3-encode.git        # 在本地克隆一个github上仓库</p>
+<p>git status                    # 获得当前项目的一个状况</p>
+<p>git commit -a              # 将修改文件（不包括新创建的文件）添加到索引，并提交到仓库</p>
+<p>git add [file]                # 添加文件到本地索引</p>
+<p>git branch                  # 获得当前仓库中所有分支列表</p>
+<p>git branch zx-branch                # 新建本地一个名为zx-branch的分支，主分支名为master</p>
+<p>git branch -D branch_name     # 删除名称为branch-name的本地分支</p>
+<p>git checkout master                  # 切回主分支，切换到zx-branch只需要将master改成zx-branch</p>
+<p>git log                                        # 查看提交日志，有许多附加参数</p>
+<p>git log -p                               # 显示补丁</p>
+<p>git log –stat                          # 日志统计：那些文件修改了，修改了多少行内容</p>
+<p>git log –graph                       # 使日志看上去更漂亮</p>
+<p>git diff master<strong>..</strong>zx-branch           # 比较两个分支之间差异</p>
+<p>git remote rm origin                   #  删除origin变量地址</p>
+<p>git branch [name]                 # 创建本地分支，注意新分支创建后不会自动切换为当前分支</p>
+<p>git checkout [name]              # 切换到name分支</p>
+<p>git checkout -b [name]          # 创建name分支并切换到name分支</p>
+<p>git merge [name]                  # 将name分支与当前分支合并，name可以是远程分支，如origin/master</p>
+<p><strong>Remote:</strong></p>
+<p>git push origin [name]          # 创建远程name分支</p>
+<p>git push origin<strong>:</strong>zx-branch      # 删除远程origin仓库地址的zx-branch分支 </p>
+<p>git branch -r                         # 获得当前仓库中所有分支列表，即查看远程分支</p>
+<p>参考自：<a href="http://blog.csdn.net/xiahouzuoxin/article/details/9398629" target="_blank" rel="external">http://blog.csdn.net/xiahouzuoxin/article/details/9398629</a></p>
 
       
     </div>
@@ -472,10 +497,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -496,7 +521,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/归档">
                 <span class="site-state-item-count">9</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -505,7 +530,7 @@
             <div class="site-state-item site-state-categories">
               <a href="/／分类">
                 <span class="site-state-item-count">3</span>
-                <span class="site-state-item-name">categories</span>
+                <span class="site-state-item-name">Kategorien</span>
               </a>
             </div>
           
@@ -514,7 +539,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/标签">
                 <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               </a>
             </div>
           
@@ -584,7 +609,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-在github上创建一个仓库"><span class="nav-number">1.</span> <span class="nav-text">1 在github上创建一个仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-把GitHub上的项目和本地关联"><span class="nav-number">2.</span> <span class="nav-text">2 把GitHub上的项目和本地关联</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-在github上创建一个仓库"><span class="nav-number">1.</span> <span class="nav-text">1 在github上创建一个仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-把GitHub上的项目和本地关联"><span class="nav-number">2.</span> <span class="nav-text">2 把GitHub上的项目和本地关联</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-附录（常用命令）"><span class="nav-number">3.</span> <span class="nav-text">3 附录（常用命令）</span></a></li></ol></div>
             
 
           </div>
@@ -616,7 +641,7 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
