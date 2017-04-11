@@ -282,6 +282,130 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/08/github上传/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="媛媛">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="best wishes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/08/github上传/" itemprop="url">
+                  github上传
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-08T19:10:06+08:00">
+                2017-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-在github上创建一个仓库"><a href="#1-在github上创建一个仓库" class="headerlink" title="1 在github上创建一个仓库"></a>1 在github上创建一个仓库</h2><p>这个非常简单，参考<a href="http://blog.csdn.net/xiahouzuoxin/article/details/9393119" target="_blank" rel="external">http://blog.csdn.net/xiahouzuoxin/article/details/9393119</a></p>
+<h2 id="2-把GitHub上的项目和本地关联"><a href="#2-把GitHub上的项目和本地关联" class="headerlink" title="2 把GitHub上的项目和本地关联"></a>2 把GitHub上的项目和本地关联</h2><ol>
+<li>进入到本地工程目录</li>
+<li>执行以下代码</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git config --global github.hyy1101</div><div class="line">git init                   # 本地仓库初始化，执行完后会在工程目录下生成一个.git的隐藏目录</div><div class="line">git remote add origin git@github.com:hyy1101/cainiao.git</div><div class="line">git add .               # 添加所有文件到本地索引</div><div class="line">git commit -m &quot;My first commit operation&quot;   # 提交修改到本地仓库，-m选项添加提交注释</div><div class="line">git push origin master      # 按照前一条命令中origin给定的github地址推送到github仓库的master分支</div></pre></td></tr></table></figure>
+<p>*注意：Mac上传会产生一个没用的.DS_Store，需要在上传之前创建一个.gitignore，<code>vim .gitignore</code>然后将不上传的文件名写在这个文件里面，再执行<code>git push origin master</code></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/08/那些年mysql导出文件踩过的坑/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -581,7 +705,7 @@
 <p><strong><em>rule.py：</em></strong>规则模型，包含布多补少算法，以及加权规则。</p>
 <p><strong><em>ensemble&amp;estimate.py：</em></strong>机器学习模型与规则模型融合，输出结果，评估结果。</p>
 </li>
-<li><p>result结果文件</p>
+<li><p>result结果文件：</p>
 </li>
 </ol>
 <p>​       <strong><em>final_estimate.csv：</em></strong>为最终结果集</p>
@@ -594,6 +718,11 @@
 <li>第五天训练模型4.7</li>
 <li>第六天调优4.8</li>
 </ol>
+<h3 id="后续提升"><a href="#后续提升" class="headerlink" title="后续提升"></a>后续提升</h3><ul>
+<li>对label进行log变换</li>
+<li>增加特征、增加训练集</li>
+<li>增加时间序列分析模型</li>
+</ul>
 <h3 id="踩过的坑"><a href="#踩过的坑" class="headerlink" title="踩过的坑"></a>踩过的坑</h3><ol>
 <li><p>mysql导出数据，各种出错，详情见博客。</p>
 </li>
@@ -605,12 +734,13 @@
 <p>merge,concat,apply,sort_values,groupby和egg连用。</p>
 </li>
 </ol>
-<h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><p><a href="https://devhub.io/repos/wepe-CaiNiao-DemandForecast-StoragePlaning" target="_blank" rel="external">https://devhub.io/repos/wepe-CaiNiao-DemandForecast-StoragePlaning</a></p>
+<h3 id="欢迎大神交流指正"><a href="#欢迎大神交流指正" class="headerlink" title="欢迎大神交流指正"></a>欢迎大神交流指正</h3><h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><p><a href="https://devhub.io/repos/wepe-CaiNiao-DemandForecast-StoragePlaning" target="_blank" rel="external">https://devhub.io/repos/wepe-CaiNiao-DemandForecast-StoragePlaning</a></p>
 <p>xgb: <a href="http://www.dongcoder.com/detail-56275.html" target="_blank" rel="external">http://www.dongcoder.com/detail-56275.html</a></p>
 <p>好思路：</p>
 <p><a href="http://blog.csdn.net/bryan__/article/details/51685639" target="_blank" rel="external">http://blog.csdn.net/bryan__/article/details/51685639</a></p>
 <p><a href="http://www.lizhuoqing.com/2017/02/27/%E9%98%BF%E9%87%8C%E5%A4%A9%E6%B1%A0%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%AF%94%E8%B5%9B%E6%80%BB%E7%BB%93%EF%BC%882016%E8%8F%9C%E9%B8%9F%E9%9C%80%E6%B1%82%E9%A2%84%E6%B5%8B%E4%B8%8E%E5%88%86%E4%BB%93/" target="_blank" rel="external">http://www.lizhuoqing.com/2017/02/27/%E9%98%BF%E9%87%8C%E5%A4%A9%E6%B1%A0%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%AF%94%E8%B5%9B%E6%80%BB%E7%BB%93%EF%BC%882016%E8%8F%9C%E9%B8%9F%E9%9C%80%E6%B1%82%E9%A2%84%E6%B5%8B%E4%B8%8E%E5%88%86%E4%BB%93/</a></p>
 <p><a href="https://devhub.io/repos/wepe-CaiNiao-DemandForecast-StoragePlaning" target="_blank" rel="external">https://devhub.io/repos/wepe-CaiNiao-DemandForecast-StoragePlaning</a></p>
+<p>### </p>
 
           
         
@@ -1671,7 +1801,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/归档">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
