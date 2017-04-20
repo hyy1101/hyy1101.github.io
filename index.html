@@ -199,7 +199,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Accueil
           </a>
         </li>
       
@@ -209,7 +209,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            Kategorien
+            Categories
           </a>
         </li>
       
@@ -219,7 +219,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
-            Über
+            A propos
           </a>
         </li>
       
@@ -229,7 +229,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -282,6 +282,460 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/20/tensorflow创建启动/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="媛媛">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="best wishes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/20/tensorflow创建启动/" itemprop="url">
+                  tensorflow创建启动
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-20T15:25:32+08:00">
+                2017-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/环境/" itemprop="url" rel="index">
+                    <span itemprop="name">环境</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="docker上创建"><a href="#docker上创建" class="headerlink" title="docker上创建"></a>docker上创建</h2><ol>
+<li>先安装docker</li>
+<li>打开终端，输入以下命令，这个命令是下载tensorflow的镜像：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull b.gcr.io/tensorflow/tensorflow</div></pre></td></tr></table></figure>
+<ol>
+<li>下载完成后执行以下命令：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run -it b.gcr.io/tensorflow/tensorflow bash</div></pre></td></tr></table></figure>
+<p>此命令会启动镜像环境，并进入另一个可以操作tensorflow的shell,进入后打开python测试下tensorflow是否可以使用.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">root@f2e5933c0073:/notebooks<span class="comment"># python</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>hello = tf.constant(<span class="string">'Hello, TensorFlow!'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>sess =tf.Session()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>sess =tf.Session()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>sess.run(hello)</div><div class="line"><span class="string">'Hello, TensorFlow!'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a = tf.constant(<span class="number">10</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>b = tf.constant(<span class="number">32</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>sess.run(a+b)</div><div class="line"><span class="number">42</span></div></pre></td></tr></table></figure>
+<h2 id="使用Virtualenv-安装"><a href="#使用Virtualenv-安装" class="headerlink" title="使用Virtualenv 安装"></a>使用Virtualenv 安装</h2><ol>
+<li>安装virtualenv</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo easy_install pip  </div><div class="line">sudo pip install --upgrade virtualenv</div></pre></td></tr></table></figure>
+<ol>
+<li>创建一个沙盒目录</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">virtualenv --system-site-packages ~/tensorflow</div></pre></td></tr></table></figure>
+<ol>
+<li>初始化环境变量</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source ~/tensorflow/bin/activate  # If using bash</div></pre></td></tr></table></figure>
+<ol>
+<li>下载安装(cpu版本)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.1.0rc2-py2-none-any.whl </div><div class="line">pip install --upgrade $TF_BINARY_URL</div></pre></td></tr></table></figure>
+<p>安装好了有提示</p>
+<ol>
+<li>用的时候初始化环境用命令：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ source ~/tensorflow/bin/activate  # If using bash.</div></pre></td></tr></table></figure>
+<p>创建一个测试文件<code>vim testtf.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"></div><div class="line"><span class="comment"># Create 100 phony x, y data points in NumPy, y = x * 0.1 + 0.3</span></div><div class="line">x_data = np.random.rand(<span class="number">100</span>).astype(np.float32)</div><div class="line">y_data = x_data * <span class="number">0.1</span> + <span class="number">0.3</span></div><div class="line"></div><div class="line"><span class="comment"># Try to find values for W and b that compute y_data = W * x_data + b</span></div><div class="line"><span class="comment"># (We know that W should be 0.1 and b 0.3, but Tensorflow will</span></div><div class="line"><span class="comment"># figure that out for us.)</span></div><div class="line">W = tf.Variable(tf.random_uniform([<span class="number">1</span>], <span class="number">-1.0</span>, <span class="number">1.0</span>))</div><div class="line">b = tf.Variable(tf.zeros([<span class="number">1</span>]))</div><div class="line">y = W * x_data + b</div><div class="line"></div><div class="line"><span class="comment"># Minimize the mean squared errors.</span></div><div class="line">loss = tf.reduce_mean(tf.square(y - y_data))</div><div class="line">optimizer = tf.train.GradientDescentOptimizer(<span class="number">0.5</span>)</div><div class="line">train = optimizer.minimize(loss)</div><div class="line"></div><div class="line"><span class="comment"># Before starting, initialize the variables.  We will 'run' this first.</span></div><div class="line">init = tf.initialize_all_variables()</div><div class="line"></div><div class="line"><span class="comment"># Launch the graph.</span></div><div class="line">sess = tf.Session()</div><div class="line">sess.run(init)</div><div class="line"></div><div class="line"><span class="comment"># Fit the line.</span></div><div class="line"><span class="keyword">for</span> step <span class="keyword">in</span> range(<span class="number">201</span>):</div><div class="line">    sess.run(train)</div><div class="line">    <span class="keyword">if</span> step % <span class="number">20</span> == <span class="number">0</span>:</div><div class="line">        print(step, sess.run(W), sess.run(b))</div><div class="line"></div><div class="line"><span class="comment"># Learns best fit is W: [0.1], b: [0.3]</span></div></pre></td></tr></table></figure>
+<p> 测试一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(tensorflow) hyydeMacBook-Pro:~ hyy$ vim testtf.py  #创建一个测试文件</div><div class="line">(tensorflow) hyydeMacBook-Pro:~ hyy$ python testtf.py  #测试一下</div></pre></td></tr></table></figure>
+<ol>
+<li>不用的时候把环境还原用命令：  </li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(tensorflow)$ deactivate</div></pre></td></tr></table></figure>
+<h2 id="使用pip安装"><a href="#使用pip安装" class="headerlink" title="使用pip安装"></a>使用pip安装</h2><p>参考：<a href="http://www.jianshu.com/p/01dc42595733" target="_blank" rel="external">http://www.jianshu.com/p/01dc42595733</a></p>
+<ol>
+<li>安装homebrew, 用homedrew安装python,安装pip,</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;   #安装homebrew</div><div class="line">brew install python  #安装python</div><div class="line">sudo easy_install pip  #安装pip</div><div class="line">sudo easy_install --upgrade six</div></pre></td></tr></table></figure>
+<ol>
+<li>安装tensorflow</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.1.0rc2-py2-none-any.whl</div><div class="line">$ sudo pip install --upgrade $TF_BINARY_URL</div></pre></td></tr></table></figure>
+<ol>
+<li>安装完毕，测试一下，是不是可以使用</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ python</div><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line">hello = tf.constant(<span class="string">'Hello, TensorFlow!'</span>)</div><div class="line">sess = tf.Session()</div><div class="line">sess.run(hello)</div></pre></td></tr></table></figure>
+<ol>
+<li>安装keras</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pip install keras</div></pre></td></tr></table></figure>
+<ol>
+<li>使用keras</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 先进入python模式：</span></div><div class="line"></div><div class="line">$ python</div><div class="line"><span class="comment"># 然后使用keras，模型选择线性（Sequential）的啥的，自己可以定：</span></div><div class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Sequential</div><div class="line"></div><div class="line">model = Sequential()</div><div class="line"><span class="comment"># 构建网络各层，直接add就可以：</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense, Activation</div><div class="line"></div><div class="line">model.add(Dense(output_dim=<span class="number">64</span>, input_dim=<span class="number">100</span>))</div><div class="line"></div><div class="line">model.add(Activation(<span class="string">"relu"</span>))</div><div class="line"></div><div class="line">model.add(Dense(output_dim=<span class="number">10</span>))</div><div class="line"></div><div class="line">model.add(Activation(<span class="string">"softmax"</span>))</div><div class="line"><span class="comment"># 构建完毕，configure一下：</span></div><div class="line"></div><div class="line">model.compile(loss=<span class="string">'categorical_crossentropy'</span>, optimizer=<span class="string">'sgd'</span>, metrics=[<span class="string">'accuracy'</span>])</div><div class="line"><span class="comment"># 如果有需要，可以优化网络，如使用SGD（随机梯度下降法）</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> keras.optimizers <span class="keyword">import</span> SGD</div><div class="line"></div><div class="line">model.compile(loss=<span class="string">'categorical_crossentropy'</span>, optimizer=SGD(lr=<span class="number">0.01</span>, momentum=<span class="number">0.9</span>, nesterov=<span class="keyword">True</span>))</div><div class="line"><span class="comment"># 下面就可以开始训练数据了，当然这些X_train, Y_train需要load进来哦：</span></div><div class="line"></div><div class="line">model.fit(X_train, Y_train, nb_epoch=<span class="number">5</span>, batch_size=<span class="number">32</span>)</div><div class="line"><span class="comment"># 然后测试数据，检查准确率，同样的X_test, Y_tes自己load进来：</span></div><div class="line"></div><div class="line">loss_and_metrics = model.evaluate(X_test, Y_test, batch_size=<span class="number">32</span>)</div><div class="line"><span class="comment"># 或者给个数据，预测下结果：</span></div><div class="line"></div><div class="line">classes = model.predict_classes(X_test, batch_size=<span class="number">32</span>)</div><div class="line"></div><div class="line">proba = model.predict_proba(X_test, batch_size=<span class="number">32</span>)</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/20/docker命令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="媛媛">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="best wishes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/20/docker命令/" itemprop="url">
+                  docker命令
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-20T15:24:39+08:00">
+                2017-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/08/那些年mysql导出文件踩过的坑/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="媛媛">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="best wishes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/08/那些年mysql导出文件踩过的坑/" itemprop="url">
+                  那些年mysql导出文件踩过的坑
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-08T19:10:06+08:00">
+                2017-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Mysql导出数据到csv"><a href="#Mysql导出数据到csv" class="headerlink" title="Mysql导出数据到csv"></a>Mysql导出数据到csv</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">select *</div><div class="line">from test_fencang</div><div class="line">into outfile &apos;/Applications/dev/tmp/test_fencang.csv&apos;</div><div class="line">fields terminated by &apos;,&apos; optionally enclosed by &apos;&quot;&apos; escaped by &apos;&quot;&apos;</div><div class="line">lines terminated by &apos;\r\n&apos;;</div></pre></td></tr></table></figure>
+<p>亲切的mysql，严肃的报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement</div></pre></td></tr></table></figure>
+<p>搞得我束手无策，只能谷歌:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SHOW VARIABLES LIKE &quot;secure_file_priv&quot;;</div></pre></td></tr></table></figure>
+<p>发现为null，然后又各种百度，发现有个my.cnf的文件，我电脑里面没有，就只能新建一个了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /private/etc/</div><div class="line">sudo vim my.cnf</div></pre></td></tr></table></figure>
+<p>然后在文件里添加如下语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#[/private/etc/my.cnf]</div><div class="line">[mysqld]</div><div class="line">secure-file-priv=&quot;/Applications/dev/tmp/&quot;</div></pre></td></tr></table></figure>
+<p>关闭之后，重新启动mysql 服务器。</p>
+<p>之后准备奇迹验证的一幕出现了，重新执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">select *</div><div class="line">from test_fencang</div><div class="line">into outfile &apos;/Applications/dev/tmp/test_fencang.csv&apos;</div><div class="line">fields terminated by &apos;,&apos; optionally enclosed by &apos;&quot;&apos; escaped by &apos;&quot;&apos;</div><div class="line">lines terminated by &apos;\r\n&apos;;</div></pre></td></tr></table></figure>
+<p>发现有残忍的报错了，我的小心脏。。。。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR 1 (HY000): Can&apos;t create/write to file &apos;/Applications/dev/tmp/train_all.csv&apos; (Errcode: 13 - Permission denied)</div></pre></td></tr></table></figure>
+<p>居然说我没有写的权限！！！！</p>
+<p>只能又回头给文件夹授权：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chmod -R 777 /Applications/dev</div></pre></td></tr></table></figure>
+<p>然后在运行导出，成功了！！！我那个开心呀，赶紧写下来，哈哈哈。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>my.cnf 设置：<a href="http://www.itdadao.com/articles/c15a1130741p0.html" target="_blank" rel="external">http://www.itdadao.com/articles/c15a1130741p0.html</a></p>
+<p>Mac文件夹权限修改：<a href="http://www.cnblogs.com/wanghuaijun/p/5294608.html" target="_blank" rel="external">http://www.cnblogs.com/wanghuaijun/p/5294608.html</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/08/github上传/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -319,7 +773,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-08T19:10:06+08:00">
                 2017-04-08
@@ -431,143 +885,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/08/那些年mysql导出文件踩过的坑/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="媛媛">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="best wishes">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/08/那些年mysql导出文件踩过的坑/" itemprop="url">
-                  那些年mysql导出文件踩过的坑
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-08T19:10:06+08:00">
-                2017-04-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Mysql导出数据到csv"><a href="#Mysql导出数据到csv" class="headerlink" title="Mysql导出数据到csv"></a>Mysql导出数据到csv</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">select *</div><div class="line">from test_fencang</div><div class="line">into outfile &apos;/Applications/dev/tmp/test_fencang.csv&apos;</div><div class="line">fields terminated by &apos;,&apos; optionally enclosed by &apos;&quot;&apos; escaped by &apos;&quot;&apos;</div><div class="line">lines terminated by &apos;\r\n&apos;;</div></pre></td></tr></table></figure>
-<p>亲切的mysql，严肃的报错：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement</div></pre></td></tr></table></figure>
-<p>搞得我束手无策，只能谷歌:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SHOW VARIABLES LIKE &quot;secure_file_priv&quot;;</div></pre></td></tr></table></figure>
-<p>发现为null，然后又各种百度，发现有个my.cnf的文件，我电脑里面没有，就只能新建一个了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /private/etc/</div><div class="line">sudo vim my.cnf</div></pre></td></tr></table></figure>
-<p>然后在文件里添加如下语句：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#[/private/etc/my.cnf]</div><div class="line">[mysqld]</div><div class="line">secure-file-priv=&quot;/Applications/dev/tmp/&quot;</div></pre></td></tr></table></figure>
-<p>关闭之后，重新启动mysql 服务器。</p>
-<p>之后准备奇迹验证的一幕出现了，重新执行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">select *</div><div class="line">from test_fencang</div><div class="line">into outfile &apos;/Applications/dev/tmp/test_fencang.csv&apos;</div><div class="line">fields terminated by &apos;,&apos; optionally enclosed by &apos;&quot;&apos; escaped by &apos;&quot;&apos;</div><div class="line">lines terminated by &apos;\r\n&apos;;</div></pre></td></tr></table></figure>
-<p>发现有残忍的报错了，我的小心脏。。。。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR 1 (HY000): Can&apos;t create/write to file &apos;/Applications/dev/tmp/train_all.csv&apos; (Errcode: 13 - Permission denied)</div></pre></td></tr></table></figure>
-<p>居然说我没有写的权限！！！！</p>
-<p>只能又回头给文件夹授权：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chmod -R 777 /Applications/dev</div></pre></td></tr></table></figure>
-<p>然后在运行导出，成功了！！！我那个开心呀，赶紧写下来，哈哈哈。</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>my.cnf 设置：<a href="http://www.itdadao.com/articles/c15a1130741p0.html" target="_blank" rel="external">http://www.itdadao.com/articles/c15a1130741p0.html</a></p>
-<p>Mac文件夹权限修改：<a href="http://www.cnblogs.com/wanghuaijun/p/5294608.html" target="_blank" rel="external">http://www.cnblogs.com/wanghuaijun/p/5294608.html</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/05/菜鸟-需求预测与分仓规划/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -605,7 +922,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-05T23:19:45+08:00">
                 2017-04-05
@@ -843,7 +1160,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-05T20:21:17+08:00">
                 2017-04-05
@@ -864,7 +1181,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -988,7 +1305,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-02T10:48:32+08:00">
                 2017-04-02
@@ -1009,7 +1326,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -1231,7 +1548,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-02T10:28:15+08:00">
                 2017-04-02
@@ -1364,7 +1681,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-12T22:39:20+08:00">
                 2017-03-12
@@ -1532,7 +1849,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T00:40:56+08:00">
                 2017-02-27
@@ -1553,7 +1870,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -1633,157 +1950,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/09/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="媛媛">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="best wishes">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/11/09/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-09T00:00:00+08:00">
-                2016-11-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/起步/" itemprop="url" rel="index">
-                    <span itemprop="name">起步</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
           
           </div>
@@ -1826,8 +1999,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/归档">
-                <span class="site-state-item-count">9</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -1836,7 +2009,7 @@
             <div class="site-state-item site-state-categories">
               <a href="/／分类">
                 <span class="site-state-item-count">3</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">categories</span>
               </a>
             </div>
           
@@ -1845,7 +2018,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/标签">
                 <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               </a>
             </div>
           
@@ -1931,11 +2104,11 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
-  Theme -
+  Thème -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Mist
   </a>
