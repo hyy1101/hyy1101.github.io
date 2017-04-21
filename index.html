@@ -383,69 +383,23 @@
       
         
           
-            <h2 id="docker上创建"><a href="#docker上创建" class="headerlink" title="docker上创建"></a>docker上创建</h2><ol>
-<li>先安装docker</li>
-<li>打开终端，输入以下命令，这个命令是下载tensorflow的镜像：</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull b.gcr.io/tensorflow/tensorflow</div></pre></td></tr></table></figure>
-<ol>
-<li>下载完成后执行以下命令：</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run -it b.gcr.io/tensorflow/tensorflow bash</div></pre></td></tr></table></figure>
-<p>此命令会启动镜像环境，并进入另一个可以操作tensorflow的shell,进入后打开python测试下tensorflow是否可以使用.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">root@f2e5933c0073:/notebooks<span class="comment"># python</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>hello = tf.constant(<span class="string">'Hello, TensorFlow!'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>sess =tf.Session()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>sess =tf.Session()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>sess.run(hello)</div><div class="line"><span class="string">'Hello, TensorFlow!'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a = tf.constant(<span class="number">10</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>b = tf.constant(<span class="number">32</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>sess.run(a+b)</div><div class="line"><span class="number">42</span></div></pre></td></tr></table></figure>
-<h2 id="使用Virtualenv-安装"><a href="#使用Virtualenv-安装" class="headerlink" title="使用Virtualenv 安装"></a>使用Virtualenv 安装</h2><ol>
-<li>安装virtualenv</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo easy_install pip  </div><div class="line">sudo pip install --upgrade virtualenv</div></pre></td></tr></table></figure>
-<ol>
-<li>创建一个沙盒目录</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">virtualenv --system-site-packages ~/tensorflow</div></pre></td></tr></table></figure>
-<ol>
-<li>初始化环境变量</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source ~/tensorflow/bin/activate  # If using bash</div></pre></td></tr></table></figure>
-<ol>
-<li>下载安装(cpu版本)</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.1.0rc2-py2-none-any.whl </div><div class="line">pip install --upgrade $TF_BINARY_URL</div></pre></td></tr></table></figure>
-<p>安装好了有提示</p>
-<ol>
-<li>用的时候初始化环境用命令：</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ source ~/tensorflow/bin/activate  # If using bash.</div></pre></td></tr></table></figure>
-<p>创建一个测试文件<code>vim testtf.py</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"></div><div class="line"><span class="comment"># Create 100 phony x, y data points in NumPy, y = x * 0.1 + 0.3</span></div><div class="line">x_data = np.random.rand(<span class="number">100</span>).astype(np.float32)</div><div class="line">y_data = x_data * <span class="number">0.1</span> + <span class="number">0.3</span></div><div class="line"></div><div class="line"><span class="comment"># Try to find values for W and b that compute y_data = W * x_data + b</span></div><div class="line"><span class="comment"># (We know that W should be 0.1 and b 0.3, but Tensorflow will</span></div><div class="line"><span class="comment"># figure that out for us.)</span></div><div class="line">W = tf.Variable(tf.random_uniform([<span class="number">1</span>], <span class="number">-1.0</span>, <span class="number">1.0</span>))</div><div class="line">b = tf.Variable(tf.zeros([<span class="number">1</span>]))</div><div class="line">y = W * x_data + b</div><div class="line"></div><div class="line"><span class="comment"># Minimize the mean squared errors.</span></div><div class="line">loss = tf.reduce_mean(tf.square(y - y_data))</div><div class="line">optimizer = tf.train.GradientDescentOptimizer(<span class="number">0.5</span>)</div><div class="line">train = optimizer.minimize(loss)</div><div class="line"></div><div class="line"><span class="comment"># Before starting, initialize the variables.  We will 'run' this first.</span></div><div class="line">init = tf.initialize_all_variables()</div><div class="line"></div><div class="line"><span class="comment"># Launch the graph.</span></div><div class="line">sess = tf.Session()</div><div class="line">sess.run(init)</div><div class="line"></div><div class="line"><span class="comment"># Fit the line.</span></div><div class="line"><span class="keyword">for</span> step <span class="keyword">in</span> range(<span class="number">201</span>):</div><div class="line">    sess.run(train)</div><div class="line">    <span class="keyword">if</span> step % <span class="number">20</span> == <span class="number">0</span>:</div><div class="line">        print(step, sess.run(W), sess.run(b))</div><div class="line"></div><div class="line"><span class="comment"># Learns best fit is W: [0.1], b: [0.3]</span></div></pre></td></tr></table></figure>
-<p> 测试一下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(tensorflow) hyydeMacBook-Pro:~ hyy$ vim testtf.py  #创建一个测试文件</div><div class="line">(tensorflow) hyydeMacBook-Pro:~ hyy$ python testtf.py  #测试一下</div></pre></td></tr></table></figure>
-<ol>
-<li>不用的时候把环境还原用命令：  </li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(tensorflow)$ deactivate</div></pre></td></tr></table></figure>
-<h2 id="使用pip安装"><a href="#使用pip安装" class="headerlink" title="使用pip安装"></a>使用pip安装</h2><p>参考：<a href="http://www.jianshu.com/p/01dc42595733" target="_blank" rel="external">http://www.jianshu.com/p/01dc42595733</a></p>
-<ol>
-<li>安装homebrew, 用homedrew安装python,安装pip,</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;   #安装homebrew</div><div class="line">brew install python  #安装python</div><div class="line">sudo easy_install pip  #安装pip</div><div class="line">sudo easy_install --upgrade six</div></pre></td></tr></table></figure>
-<ol>
-<li>安装tensorflow</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.1.0rc2-py2-none-any.whl</div><div class="line">$ sudo pip install --upgrade $TF_BINARY_URL</div></pre></td></tr></table></figure>
-<ol>
-<li>安装完毕，测试一下，是不是可以使用</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ python</div><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line">hello = tf.constant(<span class="string">'Hello, TensorFlow!'</span>)</div><div class="line">sess = tf.Session()</div><div class="line">sess.run(hello)</div></pre></td></tr></table></figure>
-<ol>
-<li>安装keras</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pip install keras</div></pre></td></tr></table></figure>
-<ol>
-<li>使用keras</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 先进入python模式：</span></div><div class="line"></div><div class="line">$ python</div><div class="line"><span class="comment"># 然后使用keras，模型选择线性（Sequential）的啥的，自己可以定：</span></div><div class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Sequential</div><div class="line"></div><div class="line">model = Sequential()</div><div class="line"><span class="comment"># 构建网络各层，直接add就可以：</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense, Activation</div><div class="line"></div><div class="line">model.add(Dense(output_dim=<span class="number">64</span>, input_dim=<span class="number">100</span>))</div><div class="line"></div><div class="line">model.add(Activation(<span class="string">"relu"</span>))</div><div class="line"></div><div class="line">model.add(Dense(output_dim=<span class="number">10</span>))</div><div class="line"></div><div class="line">model.add(Activation(<span class="string">"softmax"</span>))</div><div class="line"><span class="comment"># 构建完毕，configure一下：</span></div><div class="line"></div><div class="line">model.compile(loss=<span class="string">'categorical_crossentropy'</span>, optimizer=<span class="string">'sgd'</span>, metrics=[<span class="string">'accuracy'</span>])</div><div class="line"><span class="comment"># 如果有需要，可以优化网络，如使用SGD（随机梯度下降法）</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> keras.optimizers <span class="keyword">import</span> SGD</div><div class="line"></div><div class="line">model.compile(loss=<span class="string">'categorical_crossentropy'</span>, optimizer=SGD(lr=<span class="number">0.01</span>, momentum=<span class="number">0.9</span>, nesterov=<span class="keyword">True</span>))</div><div class="line"><span class="comment"># 下面就可以开始训练数据了，当然这些X_train, Y_train需要load进来哦：</span></div><div class="line"></div><div class="line">model.fit(X_train, Y_train, nb_epoch=<span class="number">5</span>, batch_size=<span class="number">32</span>)</div><div class="line"><span class="comment"># 然后测试数据，检查准确率，同样的X_test, Y_tes自己load进来：</span></div><div class="line"></div><div class="line">loss_and_metrics = model.evaluate(X_test, Y_test, batch_size=<span class="number">32</span>)</div><div class="line"><span class="comment"># 或者给个数据，预测下结果：</span></div><div class="line"></div><div class="line">classes = model.predict_classes(X_test, batch_size=<span class="number">32</span>)</div><div class="line"></div><div class="line">proba = model.predict_proba(X_test, batch_size=<span class="number">32</span>)</div></pre></td></tr></table></figure>
+          docker上创建
+先安装docker
+打开终端，输入以下命令，这个命令是下载tensorflow的镜像：
 
-          
+1docker pull b.gcr.io/tensorflow/tensorflow
+
+下载完成后执行以下命令：
+
+1docker run -it b.gcr.io/tensorflow/
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/20/tensorflow创建启动/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -575,8 +529,15 @@
       
         
           
-            
           
+          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/20/docker命令/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -706,40 +667,20 @@
       
         
           
-            <h2 id="1-在github上创建一个仓库"><a href="#1-在github上创建一个仓库" class="headerlink" title="1 在github上创建一个仓库"></a>1 在github上创建一个仓库</h2><p>这个非常简单，参考<a href="http://blog.csdn.net/xiahouzuoxin/article/details/9393119" target="_blank" rel="external">http://blog.csdn.net/xiahouzuoxin/article/details/9393119</a></p>
-<h2 id="2-把GitHub上的项目和本地关联"><a href="#2-把GitHub上的项目和本地关联" class="headerlink" title="2 把GitHub上的项目和本地关联"></a>2 把GitHub上的项目和本地关联</h2><ol>
-<li>进入到本地工程目录</li>
-<li>执行以下代码</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git config --global github.hyy1101</div><div class="line">git init                   # 本地仓库初始化，执行完后会在工程目录下生成一个.git的隐藏目录</div><div class="line">git remote add origin git@github.com:hyy1101/cainiao.git</div><div class="line">git add .               # 添加所有文件到本地索引</div><div class="line">git commit -m &quot;My first commit operation&quot;   # 提交修改到本地仓库，-m选项添加提交注释</div><div class="line">git push origin master      # 按照前一条命令中origin给定的github地址推送到github仓库的master分支</div></pre></td></tr></table></figure>
-<p>*注意：Mac上传会产生一个没用的.DS_Store，需要在上传之前创建一个.gitignore，<code>vim .gitignore</code>然后将不上传的文件名写在这个文件里面，再执行<code>git push origin master</code></p>
-<h2 id="3-附录（常用命令）"><a href="#3-附录（常用命令）" class="headerlink" title="3 附录（常用命令）"></a>3 附录（常用命令）</h2><hr>
-<p><strong>Local：</strong></p>
-<p>git clone git@github.com:xiahouzuoxin/mp3-encode.git        # 在本地克隆一个github上仓库</p>
-<p>git status                    # 获得当前项目的一个状况</p>
-<p>git commit -a              # 将修改文件（不包括新创建的文件）添加到索引，并提交到仓库</p>
-<p>git add [file]                # 添加文件到本地索引</p>
-<p>git branch                  # 获得当前仓库中所有分支列表</p>
-<p>git branch zx-branch                # 新建本地一个名为zx-branch的分支，主分支名为master</p>
-<p>git branch -D branch_name     # 删除名称为branch-name的本地分支</p>
-<p>git checkout master                  # 切回主分支，切换到zx-branch只需要将master改成zx-branch</p>
-<p>git log                                        # 查看提交日志，有许多附加参数</p>
-<p>git log -p                               # 显示补丁</p>
-<p>git log –stat                          # 日志统计：那些文件修改了，修改了多少行内容</p>
-<p>git log –graph                       # 使日志看上去更漂亮</p>
-<p>git diff master<strong>..</strong>zx-branch           # 比较两个分支之间差异</p>
-<p>git remote rm origin                   #  删除origin变量地址</p>
-<p>git branch [name]                 # 创建本地分支，注意新分支创建后不会自动切换为当前分支</p>
-<p>git checkout [name]              # 切换到name分支</p>
-<p>git checkout -b [name]          # 创建name分支并切换到name分支</p>
-<p>git merge [name]                  # 将name分支与当前分支合并，name可以是远程分支，如origin/master</p>
-<p><strong>Remote:</strong></p>
-<p>git push origin [name]          # 创建远程name分支</p>
-<p>git push origin<strong>:</strong>zx-branch      # 删除远程origin仓库地址的zx-branch分支 </p>
-<p>git branch -r                         # 获得当前仓库中所有分支列表，即查看远程分支</p>
-<p>参考自：<a href="http://blog.csdn.net/xiahouzuoxin/article/details/9398629" target="_blank" rel="external">http://blog.csdn.net/xiahouzuoxin/article/details/9398629</a></p>
+          1 在github上创建一个仓库这个非常简单，参考http://blog.csdn.net/xiahouzuoxin/article/details/9393119
+2 把GitHub上的项目和本地关联
+进入到本地工程目录
+执行以下代码
 
-          
+123456git config --global gith
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/08/github上传/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -869,28 +810,15 @@
       
         
           
-            <h3 id="Mysql导出数据到csv"><a href="#Mysql导出数据到csv" class="headerlink" title="Mysql导出数据到csv"></a>Mysql导出数据到csv</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">select *</div><div class="line">from test_fencang</div><div class="line">into outfile &apos;/Applications/dev/tmp/test_fencang.csv&apos;</div><div class="line">fields terminated by &apos;,&apos; optionally enclosed by &apos;&quot;&apos; escaped by &apos;&quot;&apos;</div><div class="line">lines terminated by &apos;\r\n&apos;;</div></pre></td></tr></table></figure>
-<p>亲切的mysql，严肃的报错：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement</div></pre></td></tr></table></figure>
-<p>搞得我束手无策，只能谷歌:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SHOW VARIABLES LIKE &quot;secure_file_priv&quot;;</div></pre></td></tr></table></figure>
-<p>发现为null，然后又各种百度，发现有个my.cnf的文件，我电脑里面没有，就只能新建一个了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /private/etc/</div><div class="line">sudo vim my.cnf</div></pre></td></tr></table></figure>
-<p>然后在文件里添加如下语句：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#[/private/etc/my.cnf]</div><div class="line">[mysqld]</div><div class="line">secure-file-priv=&quot;/Applications/dev/tmp/&quot;</div></pre></td></tr></table></figure>
-<p>关闭之后，重新启动mysql 服务器。</p>
-<p>之后准备奇迹验证的一幕出现了，重新执行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">select *</div><div class="line">from test_fencang</div><div class="line">into outfile &apos;/Applications/dev/tmp/test_fencang.csv&apos;</div><div class="line">fields terminated by &apos;,&apos; optionally enclosed by &apos;&quot;&apos; escaped by &apos;&quot;&apos;</div><div class="line">lines terminated by &apos;\r\n&apos;;</div></pre></td></tr></table></figure>
-<p>发现有残忍的报错了，我的小心脏。。。。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR 1 (HY000): Can&apos;t create/write to file &apos;/Applications/dev/tmp/train_all.csv&apos; (Errcode: 13 - Permission denied)</div></pre></td></tr></table></figure>
-<p>居然说我没有写的权限！！！！</p>
-<p>只能又回头给文件夹授权：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chmod -R 777 /Applications/dev</div></pre></td></tr></table></figure>
-<p>然后在运行导出，成功了！！！我那个开心呀，赶紧写下来，哈哈哈。</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>my.cnf 设置：<a href="http://www.itdadao.com/articles/c15a1130741p0.html" target="_blank" rel="external">http://www.itdadao.com/articles/c15a1130741p0.html</a></p>
-<p>Mac文件夹权限修改：<a href="http://www.cnblogs.com/wanghuaijun/p/5294608.html" target="_blank" rel="external">http://www.cnblogs.com/wanghuaijun/p/5294608.html</a></p>
-
-          
+          Mysql导出数据到csv12345select *from test_fencanginto outfile &apos;/Applications/dev/tmp/test_fencang.csv&apos;fields terminated by &apos;,&apos; optionall
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/08/那些年mysql导出文件踩过的坑/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1020,129 +948,16 @@
       
         
           
-            <p>大赛题目链接：<a href="https://tianchi.aliyun.com/competition/information.htm?spm=5176.100067.5678.2.aY5MAf&amp;raceId=231530" target="_blank" rel="external">https://tianchi.aliyun.com/competition/information.htm?spm=5176.100067.5678.2.aY5MAf&amp;raceId=231530</a></p>
-<h3 id="思路整理："><a href="#思路整理：" class="headerlink" title="思路整理："></a>思路整理：</h3><h4 id="1-理解题意："><a href="#1-理解题意：" class="headerlink" title="1. 理解题意："></a>1. 理解题意：</h4><p>题目的意思就是根据商品从20141010到20151227的全国和区域分仓数据，后面两周（20151228-20160110）的全国和区域分仓目标库存。目标是预测尽量准，如果不能百分百准确，希望是损失最小，即达到库存成本最小化(无论是补多补少)。</p>
-<h4 id="2-原始数据分析"><a href="#2-原始数据分析" class="headerlink" title="2. 原始数据分析"></a>2. 原始数据分析</h4><p>有963个商品，每个商品又不同的销售周期，后期可能需要考虑商品销售高峰时间段(距离出售时间)，标签应该是未来14内的销量，特征可以是原始特征+业务特征+时间影响因子+窗口特征</p>
-<h4 id="3-特征碎碎念："><a href="#3-特征碎碎念：" class="headerlink" title="3. 特征碎碎念："></a>3. 特征碎碎念：</h4><ul>
-<li>原始特征：</li>
-</ul>
-<p>​       日期，商品ID，叶子类目ID，大类目ID，品牌ID，供应商ID</p>
-<p>​       浏览次数，流量UV，被加购次数，加购人次，收藏夹人次</p>
-<p>​       拍下笔数，拍下金额，拍下件数，拍下UV</p>
-<p>​       成交金额，成交笔数，成交件数，成交人次</p>
-<p>​       直通车引导浏览次数，淘宝客引导浏览次数，搜索引导浏览次数，聚划算引导浏览次数</p>
-<p>​       直通车引导浏览人次，淘宝客引导浏览人次，搜索引导浏览人次，聚划算引导浏览人次</p>
-<p>​       非聚划算支付笔数，非聚划算支付金额，非聚划算支付件数，非聚划算支付人次</p>
-<ul>
-<li><p>可能潜在的特征：</p>
-<ul>
-<li><p>业务特征</p>
-<p>成交比率：成交人次／流量UV ；成交成功率：成交笔数／拍下笔数</p>
-<p>商品折扣率：成交价格 / 拍下价格；</p>
-<p>单件成交价格：成交金额／成交件数；单笔成交价格：成交金额／成交笔数</p>
-<p>非聚划支付转化率：非聚划算支付人次／流量UV</p>
-<p>非聚划售出占比：非聚划算支付件数／成交件数</p>
-<p>非聚划支付占比：非聚划算支付金额／成交金额</p>
-<p>单笔价值：非聚划算支付金额／非聚划算支付笔数</p>
-</li>
-<li><p>时间影响因子特征</p>
-<p>最大天数：商品最早出现历史数据的日期距离要预测的那一周的天数。</p>
-<p>最小天数：商品最后一次出现历史数据的日期距离要预测的那一周的天数。</p>
-<p>时间因子：商品时间距离20151228天数。</p>
-</li>
-<li><p>时间窗口特征（根据记忆曲线，取商品 前 1、2、3、4、7、14、21、28天）</p>
-<p>根据商品、叶子类目、大类目、品牌、供应商进行分组，提取前X天的非聚划算支付人次、浏览数、加购数的平均值、最小值、标准差作为特征</p>
-</li>
-</ul>
-</li>
-<li><p>缺失值补0</p>
-</li>
-</ul>
-<h4 id="4-模型探索："><a href="#4-模型探索：" class="headerlink" title="4. 模型探索："></a>4. 模型探索：</h4><ul>
-<li><p>数据准备：用mysql处理，17万个样本（滑窗取得），400多维指标（见上文潜在指标分析）</p>
-</li>
-<li><p>数据预处理：去除双11，双12，去除异常值(3西格玛)，去除可能为负的数据。</p>
-</li>
-<li><p>选择两种类型模型分别尝试：</p>
-<ol>
-<li><p>传统算法Hotwinters—-时间序列分析(核心思想是三次指数平滑，包含趋势性季节性，可控性优于arima)</p>
-</li>
-<li><p>机器学习agboost, rf, gbdt, adaboost再融合———只做了xgb和gbrt和rf，外加一个规则模型。</p>
-<p>1）xgb优点：1.正则化提升；2.可以实现并行处理；3.允许用户定义<strong>自定义优化目标和评价标准</strong>；4.内置处理缺失值的规则；5.一直分裂到指定的最大深度(max_depth)，然后回过头来剪枝；6.允许在每一轮boosting迭代中使用交叉验证；7.可以在上一轮的结果上继续训练。</p>
-<p>2）gbdt,rf</p>
-<p>3）由于牵扯到时间窗口，没有进行交叉验证，应该考虑添加一个时间因子指标，可供交叉验证。</p>
-</li>
-</ol>
-</li>
-<li><p>规则处理：预测不可能百分百准确，应该做到损失尽量小</p>
-<p>如果补少成本大于补多成本，则应该预测多一点，取单模型预测结果中的最大值再乘以1.1，反之取单模型预测结果中的最小值再乘以0.9。最终以 0.85model + 0.15rule融合。</p>
-<p>对于上线不满四周的item，直接采用最近两周的平均销量*14预测获得。</p>
-</li>
-<li><p>测试集和训练集</p>
-</li>
-</ul>
-<p>​       训练集选择从2015-07-01以后的数据进行每14天全量滑动，总样本有963*180，取最后四周时间进行滑动，作为测试集。</p>
-<h3 id="代码目录说明"><a href="#代码目录说明" class="headerlink" title="代码目录说明"></a>代码目录说明</h3><ol>
-<li><p>raw_data：原始数据</p>
-</li>
-<li><p>Data：过程数据文件</p>
-</li>
-<li><p>raw_data原始数据</p>
-</li>
-<li><p>Data过程数据文件</p>
-</li>
-<li><p>raw_data原始数据</p>
-</li>
-<li><p>Data过程数据文件</p>
-</li>
-<li><p>mysql_process文件：</p>
-<p>数据处理文件，先运行<strong><em>preprocess</em></strong>，再运行<strong><em>dataprocess</em></strong></p>
-</li>
-<li><p>model文件包含：</p>
-<p><strong><em>data_preprocessing.py ：</em></strong>进行简单的数据处理，添加分割字段，标题等。</p>
-<p><strong><em>model.py：</em></strong>包含有gbrt，rf，xgb三个模型，其中参数有少许微调。</p>
-<p><strong><em>combine.py ：</em></strong>gbrt，rf，xgb三个模型得到结果的组合。</p>
-<p><strong><em>rule.py：</em></strong>规则模型，包含布多补少算法，以及加权规则。</p>
-<p><strong><em>ensemble&amp;estimate.py：</em></strong>机器学习模型与规则模型融合，输出结果，评估结果。</p>
-</li>
-<li><p>result结果文件：</p>
-</li>
-</ol>
-<p>​       <strong><em>final_estimate.csv：</em></strong>为最终结果集</p>
-<p>​       <strong><em>04_09.csv：</em></strong>为带有误差及方差的预测集合。</p>
-<h3 id="节点把控"><a href="#节点把控" class="headerlink" title="节点把控"></a>节点把控</h3><ol>
-<li>第一天下午拿到题目，晚上有事就看了一下。4.3</li>
-<li>第二天了解了下题意，进行电脑环境的配置，大致翻了几个网页，论坛，博客，GitHub之类的。4.4</li>
-<li>第三天开始正式探索题目意思以及数据。4.5</li>
-<li>第四天准备数据4.6</li>
-<li>第五天训练模型4.7</li>
-<li>第六天调优4.8</li>
-</ol>
-<h3 id="后续提升"><a href="#后续提升" class="headerlink" title="后续提升"></a>后续提升</h3><ul>
-<li>对label进行log变换</li>
-<li>增加特征、增加训练集</li>
-<li>增加时间序列分析模型</li>
-</ul>
-<h3 id="踩过的坑"><a href="#踩过的坑" class="headerlink" title="踩过的坑"></a>踩过的坑</h3><ol>
-<li><p>mysql导出数据，各种出错，详情见博客。</p>
-</li>
-<li><p>python函数merge区分字符与整型，例如”1”和1不同，merge时会出错；函数传参，有时候会不灵。</p>
-</li>
-<li><p>hive单机简直是个坑，动不动就内存超限，估计是我Hadoop一套太菜了，到时候得好好学学。</p>
-</li>
-<li><p>get新技能：</p>
-<p>merge,concat,apply,sort_values,groupby和egg连用。</p>
-</li>
-</ol>
-<h3 id="欢迎大神交流指正"><a href="#欢迎大神交流指正" class="headerlink" title="欢迎大神交流指正"></a>欢迎大神交流指正</h3><h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><p><a href="https://devhub.io/repos/wepe-CaiNiao-DemandForecast-StoragePlaning" target="_blank" rel="external">https://devhub.io/repos/wepe-CaiNiao-DemandForecast-StoragePlaning</a></p>
-<p>xgb: <a href="http://www.dongcoder.com/detail-56275.html" target="_blank" rel="external">http://www.dongcoder.com/detail-56275.html</a></p>
-<p>好思路：</p>
-<p><a href="http://blog.csdn.net/bryan__/article/details/51685639" target="_blank" rel="external">http://blog.csdn.net/bryan__/article/details/51685639</a></p>
-<p><a href="http://www.lizhuoqing.com/2017/02/27/%E9%98%BF%E9%87%8C%E5%A4%A9%E6%B1%A0%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%AF%94%E8%B5%9B%E6%80%BB%E7%BB%93%EF%BC%882016%E8%8F%9C%E9%B8%9F%E9%9C%80%E6%B1%82%E9%A2%84%E6%B5%8B%E4%B8%8E%E5%88%86%E4%BB%93/" target="_blank" rel="external">http://www.lizhuoqing.com/2017/02/27/%E9%98%BF%E9%87%8C%E5%A4%A9%E6%B1%A0%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%AF%94%E8%B5%9B%E6%80%BB%E7%BB%93%EF%BC%882016%E8%8F%9C%E9%B8%9F%E9%9C%80%E6%B1%82%E9%A2%84%E6%B5%8B%E4%B8%8E%E5%88%86%E4%BB%93/</a></p>
-<p><a href="https://devhub.io/repos/wepe-CaiNiao-DemandForecast-StoragePlaning" target="_blank" rel="external">https://devhub.io/repos/wepe-CaiNiao-DemandForecast-StoragePlaning</a></p>
-<p>### </p>
-
-          
+          大赛题目链接：https://tianchi.aliyun.com/competition/information.htm?spm=5176.100067.5678.2.aY5MAf&amp;raceId=231530
+思路整理：1. 理解题意：题目的意思就是根据商品从20141010到201512
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/05/菜鸟-需求预测与分仓规划/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1294,14 +1109,17 @@
       
         
           
-            <p>简书上已经整理的很到位了，<a href="http://www.jianshu.com/p/fd3aae701db9" target="_blank" rel="external">http://www.jianshu.com/p/fd3aae701db9</a></p>
-<p>我这边补充一个问题，在运行过程中出错</p>
-<p>ERROR 29 (HY000): File ‘./cainiao/item_feature.MYD’ not found (Errcode: 13 - Permission denied)</p>
-<p>这个原因是因为我的mysql崩溃了，然后重装一下就好了。密码什么的都跟以前一样。</p>
-<p>可以看下数据库的权限：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">show grants;</div><div class="line">SELECT DISTINCT CONCAT(&apos;User: &apos;&apos;&apos;,user,&apos;&apos;&apos;@&apos;&apos;&apos;,host,&apos;&apos;&apos;;&apos;) AS query FROM mysql.user;</div></pre></td></tr></table></figure>
-
-          
+          简书上已经整理的很到位了，http://www.jianshu.com/p/fd3aae701db9
+我这边补充一个问题，在运行过程中出错
+ERROR 29 (HY000): File ‘./cainiao/item_feature.MYD’ not found (Errcode: 13 - Per
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/05/Mac安装mysql/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1453,112 +1271,23 @@
       
         
           
-            <h3 id="环境准备：Hadoop，scala"><a href="#环境准备：Hadoop，scala" class="headerlink" title="环境准备：Hadoop，scala"></a>环境准备：Hadoop，scala</h3><ol>
-<li><p>我的Hadoop目录：<code>/usr/local/Cellar/hadoop/2.7.3/libexec/etc/hadoop</code></p>
-</li>
-<li><p>我的scala目录：<code>/usr/local/share/scala</code></p>
-</li>
-<li><p>我的spark目录：<code>/usr/local/share/spark</code></p>
-<p>​</p>
-</li>
-</ol>
-<h3 id="安装spark"><a href="#安装spark" class="headerlink" title="安装spark"></a>安装spark</h3><p>1.下载spark，解压</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mv /Users/hyy/Downloads/spark /usr/local/share  # 移动spark至自己的目录下</div><div class="line">cd /usr/local/share/spark/conf   #cd到目录下，编辑文件</div><div class="line">spark-env.sh.template copy spark-env.sh  # 将spark-env.sh.template重命名为spark-env.sh</div><div class="line">vi spark-env.sh  # 编辑文件</div></pre></td></tr></table></figure>
-<p>添加文件内容为：</p>
-<p>export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home<br>export SCALA_HOME=/User/local/share/scala<br>export SPARK_MASTER_IP=localhost<br>export SPARK_WORKER_MEMORY=1g<br>export HADOOP_CONF_DIR=/usr/local/Cellar/hadoop/2.7.3/libexec/etc/hadoop</p>
-<p>配置环境变量：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vim /etc/profile  # 设置环境变量</div></pre></td></tr></table></figure>
-<p>添加内容</p>
-<p>export SCALA_HOME=/usr/local/share/scala/bin</p>
-<p>export SPARK_HOME=/usr/local/share/spark/bin</p>
-<p>export PATH=”${HADOOP_HOME}/bin:${SCALA_HOME}/bin:${SPARK_HOME}/bin:$PATH”</p>
-<ol>
-<li>启动spark</li>
-</ol>
-<p>进入Spark目录中的sbin子目录运行如下脚本启动Spark:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./start-all.sh</div></pre></td></tr></table></figure>
-<p>输入 <code>jps</code> 命令查看Spark是否运行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jps</div></pre></td></tr></table></figure>
-<p>可以看到Master 和 Worker进城都已经启动</p>
-<ol>
-<li><p>使用spark shell 进行测试</p>
-<p>进去Spark目录下的bin子目录运行如下脚本启动Spark shell:</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./spark-shell</div></pre></td></tr></table></figure>
-<p>看到spark几个字，既说明安装成功，并成功运行。</p>
-<h3 id="安装hive"><a href="#安装hive" class="headerlink" title="安装hive"></a>安装hive</h3><ol>
-<li>采用brew来安装：</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ brew install hive</div></pre></td></tr></table></figure>
-<ol>
-<li>配置环境变量</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vim ~/.bash_profile</div></pre></td></tr></table></figure>
-<p>export HADOOP_HOME=/usr/local/Cellar/hadoop/2.7.3/libexec<br>export SCALA_HOME=/usr/local/share/scala<br>export SPARK_HOME=/usr/local/share/spark<br>export HIVE_HOME=/usr/local/Cellar/hive/2.1.0/libexec<br>export PATH=”${HADOOP_HOME}/bin:${HIVE_HOME}/bin:${SCALA_HOME}/bin:${SPARK_HOME}/bin:$PATH”</p>
-<ol>
-<li>运行配置文件</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source ~/.bash_profile</div></pre></td></tr></table></figure>
-<ol>
-<li>下载<strong><a href="https://dev.mysql.com/downloads/connector/j/5.1.html" target="_blank" rel="external">mysql connector</a></strong>并复制到hive目录下</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ curl -L &apos;https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.41.tar.gz&apos; | tar xz</div><div class="line">$ sudo cp /Users/hyy/Downloads/mysql-connector-java-5.1.41/mysql-connector-java-5.1.41-bin.jar /usr/local/Cellar/hive/2.1.0/libexec/lib/</div></pre></td></tr></table></figure>
-<ol>
-<li><p>创建<strong>mysql metastore</strong></p>
-<ul>
-<li><p>启动mysql：打开“系统偏好设置”，单击下端的“MySQL”图标，在“MySQL”对话框中，单击“启动MySQL服务”按钮。</p>
-</li>
-<li><p>登陆mysql：在Finder的侧边栏中单击“应用程序”，然后在“实用工具”中，双击启动“终端”命令。在终端中输入添加MySQL路径的命令：</p>
-<p><code>PATH=&quot;$PATH&quot;:/usr/local/mysql/bin</code></p>
-<p>在终端登录到MySQL的命令如下：<code>mysql -u root -p</code></p>
-<p>我的密码是root</p>
-</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">mysql&gt; CREATE DATABASE hive;</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; USE hive;</div><div class="line">Database changed</div><div class="line">mysql&gt; CREATE USER &apos;root&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;root&apos;;</div><div class="line">Query OK, 0 rows affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; GRANT SELECT,INSERT,UPDATE,DELETE,ALTER,CREATE ON hive.* TO &apos;hirootve&apos;@&apos;localhost&apos;;</div><div class="line">Query OK, 0 rows affected (0.00 sec)</div></pre></td></tr></table></figure>
-<ol>
-<li>配置<code>/usr/local/Cellar/hive/2.1.0/libexec/conf</code>里面的设置文件</li>
-</ol>
-<ul>
-<li>配置<code>hive-env.sh</code></li>
-</ul>
-<p><code>cd</code>进<code>/usr/local/Cellar/hive/2.1.0/libexec/conf</code>，<code>touch</code>一个<code>hive-env.sh</code>，然后写入下面的配置，保存退出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/Cellar/hive/2.1.0/libexec/conf</div><div class="line">touch hive-env.sh </div><div class="line">vi hive-env.sh</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">export HADOOP_HEAPSIZE=1024</div><div class="line"># Set HADOOP_HOME to point to a specific hadoop install directory</div><div class="line">HADOOP_HOME=/usr/local/Cellar/hadoop/2.7.3</div><div class="line"># Hive Configuration Directory can be controlled by:</div><div class="line">export HIVE_CONF_DIR=/usr/local/Cellar/hive/2.1.0/libexec/conf</div><div class="line"># Folder containing extra ibraries required for hive compilation/execution can be controlled by:</div><div class="line">export HIVE_AUX_JARS_PATH=/usr/local/Cellar/hive/2.1.0/libexec/lib</div></pre></td></tr></table></figure>
-<p>注意：<strong>安装其他版本时，注意版本号</strong></p>
-<ul>
-<li>配置<code>hive-site.xml</code></li>
-</ul>
-<p>在<code>conf</code>下复制一份<code>hive-default.xml.template</code>为<code>hive-default.xml</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cp hive-default.xml.template hive-default.xml</div></pre></td></tr></table></figure>
-<p>然后，<code>touch</code>一个<code>hive-site.xml</code>，写入下面的配置（比较重要的说明见注释），保存退出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">touch hive-site.xml</div><div class="line">vi hive-site.xml</div><div class="line"></div><div class="line"></div><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;</div><div class="line">&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</div><div class="line">&lt;configuration&gt;</div><div class="line"></div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;</div><div class="line">    &lt;value&gt;jdbc:mysql://localhost:3306/hive_metastore?createDatabaseIfNotExist=true&lt;/value&gt;</div><div class="line">    &lt;description&gt;mysql连接地址&lt;/description&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line"></div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;</div><div class="line">    &lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;</div><div class="line">    &lt;description&gt;mysql驱动类&lt;/description&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line"></div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;</div><div class="line">    &lt;value&gt;hive&lt;/value&gt;</div><div class="line">    &lt;description&gt;刚刚创建的用户名hive&lt;/description&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line"></div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;</div><div class="line">    &lt;value&gt;hive&lt;/value&gt;</div><div class="line">    &lt;description&gt;hive用户对应的mysql密码&lt;/description&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">  &lt;name&gt;hive.cli.print.header&lt;/name&gt;</div><div class="line">  &lt;value&gt;true&lt;/value&gt;</div><div class="line">  &lt;description&gt;Whether to print the names of the columns in query output.&lt;/description&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">  &lt;name&gt;hive.cli.print.current.db&lt;/name&gt;</div><div class="line">  &lt;value&gt;true&lt;/value&gt;</div><div class="line">  &lt;description&gt;Whether to include the current database in the Hive prompt.&lt;/description&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-<p>注意：<strong>hive-default.xml会被hive-site.xml中的值覆盖掉，所以这里不新建hive-default.xml应该也是可以的。</strong></p>
-<ol>
-<li>元数据放入<code>mysql</code></li>
-</ol>
-<p><code>cd</code>进<code>scripts</code>目录：<code>/usr/local/Cellar/hive/2.1.0/libexec/scripts</code>，然后执行<code>schematool -initSchema -dbType mysql</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/Cellar/hive/2.1.0/libexec/scripts</div><div class="line">schematool -initSchema -dbType mysql</div></pre></td></tr></table></figure>
-<p>注意1：<strong>一定要先执行第4步才可以执行上面的语句，否则会报错</strong><code>org.apache.hadoop.hive.metastore.HiveMetaException: Failed to load driver</code></p>
-<p>注意2：<strong>数据库名字和密码一定要正确，否则会报错</strong> <code>SQL Error code: 1044</code></p>
-<ol>
-<li><p>启动、停止<code>hadoop</code>：</p>
-<p>从<code>/usr/local/Cellar/hadoop/2.7.3/sbin</code>路径进入Hadoop的目录执行启动、停止脚本：</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/Cellar/hadoop/2.7.3/sbin</div><div class="line">./start-dfs.sh          //启动HDFS</div><div class="line">./stop-dfs.sh           //停止HDFS</div></pre></td></tr></table></figure>
-<ol>
-<li>测试<code>hive</code>是否安装成功</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/Cellar/hive/2.1.0/bin</div><div class="line">hive</div></pre></td></tr></table></figure>
-<p>成功进入后，可以输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">show tables;</div><div class="line">show databases;</div></pre></td></tr></table></figure>
-<p>执行成功应该安装成功</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://myvin.xyz/2016/10/26/mac%E5%AE%89%E8%A3%85hive%E7%AC%94%E8%AE%B0/" target="_blank" rel="external">http://myvin.xyz/2016/10/26/mac%E5%AE%89%E8%A3%85hive%E7%AC%94%E8%AE%B0/</a></p>
-<p><a href="https://codetosurvive1.github.io/posts/install-hive-basic.html" target="_blank" rel="external">https://codetosurvive1.github.io/posts/install-hive-basic.html</a></p>
+          环境准备：Hadoop，scala
+我的Hadoop目录：/usr/local/Cellar/hadoop/2.7.3/libexec/etc/hadoop
 
-          
+我的scala目录：/usr/local/share/scala
+
+我的spark目录：/usr/local/share/spark
+​
+
+
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/02/Mac上hive数据库的搭建/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1688,24 +1417,22 @@
       
         
           
-            <h3 id="更博步骤"><a href="#更博步骤" class="headerlink" title="更博步骤"></a>更博步骤</h3><ol>
-<li><p>切换到blog目录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd /Applications/dev/myblog/blog</div></pre></td></tr></table></figure>
-</li>
-<li><p>创建文章</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo new &quot;new_artical&quot;</div></pre></td></tr></table></figure>
-</li>
-<li><p>文章在source/_posts目录下，支持Markdown语法，可以使用markdown编辑器进行编辑，我选的Typore来编辑文章。</p>
-</li>
-<li><p>编辑好文章，清楚预览，生成静态页面，将.deploy目录部署到GitHub更新</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo clean</div><div class="line">hexo generate</div><div class="line">hexo deploy</div></pre></td></tr></table></figure>
-</li>
-<li><p>访问博客即可</p>
-</li>
-</ol>
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">hexo new &quot;postName&quot; #新建文章</div><div class="line">hexo new page &quot;pageName&quot; #新建页面</div><div class="line">hexo generate #生成静态页面至public目录</div><div class="line">hexo server #开启预览访问端口（默认端口4000，&apos;ctrl + c&apos;关闭server）</div><div class="line">hexo deploy #将.deploy目录部署到GitHub</div><div class="line">hexo help # 查看帮助</div><div class="line">hexo version #查看Hexo的版本</div></pre></td></tr></table></figure>
+          更博步骤
+切换到blog目录
+1cd /Applications/dev/myblog/blog
 
-          
+创建文章
+1hexo new &quot;new_artical&quot;
+
+文章在source/_posts目录下，支持Markdown语法，可以使用markdown编辑器进行编辑，我选的Typo
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/02/hexo常用命令/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1835,59 +1562,19 @@
       
         
           
-            <hr>
-<h1 id="mac-搭建Hadoop-2-7-3"><a href="#mac-搭建Hadoop-2-7-3" class="headerlink" title="mac 搭建Hadoop 2.7.3"></a>mac 搭建Hadoop 2.7.3</h1><h3 id="java环境配置"><a href="#java环境配置" class="headerlink" title="java环境配置"></a>java环境配置</h3><p>1.创建 <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">java</a>环境，要是你本身电脑自带，请忽略</p>
-<p>2.假设电脑java 环境已经配置好，检查你的java版本：</p>
-<hr>
-<figure class="highlight plain"><figcaption><span>hyy$ java -version</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ java -version</div><div class="line">java version &quot;1.8.0_121&quot;</div><div class="line">Java(TM) SE Runtime Environment (build 1.8.0_121-b13)</div><div class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.121-b13, mixed mode)</div></pre></td></tr></table></figure>
-<p>3.查看java环境变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ cd /Library/Java/JavaVirtualMachines/</div><div class="line">$ ls</div><div class="line">jdk1.8.0_121.jdk</div></pre></td></tr></table></figure>
-<p>期间未报错，则可使用 java 环境变量为：</p>
-<p><code>export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home</code></p>
-<h3 id="Hadoop安装及配置"><a href="#Hadoop安装及配置" class="headerlink" title="Hadoop安装及配置"></a>Hadoop安装及配置</h3><p>1.安装Hadoop，一般可以使用brew，安装最新稳定版</p>
-<figure class="highlight plain"><figcaption><span>install Hadoop</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ brew install Hadoop</div></pre></td></tr></table></figure>
-<p>2.配置ssh面密码登录：</p>
-<p>  用dsa密钥认证来生成一对公钥和私钥：</p>
-<figure class="highlight plain"><figcaption><span>-t dsa -P &#39;&#39; -f ~/.ssh/id_dsa</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ssh-keygen -t dsa -P &apos;&apos; -f ~/.ssh/id_dsa</div></pre></td></tr></table></figure>
-<p> 将生成的公钥加入到用于认证的公钥文件中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cat ~/.ssh/id_dsa.pub &gt;&gt; ~/.ssh/authorized_keys</div></pre></td></tr></table></figure>
-<p>测试一下是否配置成功</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ ssh localhost</div><div class="line">Password:</div><div class="line">Last login: Sun Mar 12 13:13:58 2017</div></pre></td></tr></table></figure>
-<p>这样则表示成功，如果不成功，显示遇到connection refused之类的错误，则需要在Mac&gt;&gt;&gt;系统偏好设置&gt;&gt;&gt;共享&gt;&gt;&gt;勾选远程登录，在尝试上面几个步骤即可成功。</p>
-<h3 id="配置Hadoop目录下的文件："><a href="#配置Hadoop目录下的文件：" class="headerlink" title="配置Hadoop目录下的文件："></a>配置Hadoop目录下的文件：</h3><p>1.找到Hadoop安装目录：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cd  /usr/local/Cellar/hadoop</div><div class="line">$ ls</div></pre></td></tr></table></figure>
-<p>直至找到ect文件</p>
-<p>我的目录是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ pwd</div><div class="line">/usr/local/Cellar/hadoop/2.7.3/libexec/etc/hadoop</div></pre></td></tr></table></figure>
-<p>2.配置core-site.xml <code>$ vim core-site.xml</code>编辑文件内容</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">    &lt;property&gt;</div><div class="line">        &lt;name&gt;fs.defaultFS&lt;/name&gt;</div><div class="line">        &lt;value&gt;hdfs://localhost:9000&lt;/value&gt;</div><div class="line">    &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-<p>3.配置修改hdfs-site.xml</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">    &lt;property&gt;</div><div class="line">        &lt;name&gt;dfs.replication&lt;/name&gt;</div><div class="line">        &lt;value&gt;1&lt;/value&gt;</div><div class="line">    &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-<p>4.修改mapred-site.xml，新版本的hadoop没有该文件，需要新建一个，可以直接<code>$ vim mapred-site.xml</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">    &lt;property&gt;</div><div class="line">        &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</div><div class="line">        &lt;value&gt;yarn&lt;/value&gt;</div><div class="line">    &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-<p>5.修改yarn-site.xml</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">    &lt;property&gt;</div><div class="line">        &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</div><div class="line">        &lt;value&gt;mapreduce_shuffle&lt;/value&gt;</div><div class="line">    &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-<p>6.修改hadoop-evn.sh，在文件修改：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home</div><div class="line">export HADOOP_OPTS=&quot;-Djava.security.krb5.realm=OX.AC.UK -Djava.security.krb5.kdc=kdc0.ox.ac.uk:kdc1.ox.ac.uk&quot;</div></pre></td></tr></table></figure>
-<p>注意：export JAVA_HOME是刚开始你自己的java环境</p>
-<p>7.启动hadoop</p>
-<ul>
-<li>格式化namenode，定位到当前安装目录下，执行<code>bin/hdfs namenode -format</code></li>
-<li>执行<code>sbin/start-all.sh</code>启动全部服务。</li>
-<li>打开<a href="http://localhost:50070/和http://localhost:8088/，可以打开成功表明hadoop安装成功而且服务启动成功。" target="_blank" rel="external">http://localhost:50070/和http://localhost:8088/，可以打开成功表明hadoop安装成功而且服务启动成功。</a></li>
-</ul>
-<p>50070为namenode端口，8088为http服务端口，详见<a href="http://www.cnblogs.com/jancco/p/4447756.html" target="_blank" rel="external">hadoop端口</a></p>
-<h3 id="注意事项，在搭建环境中遇到的一些问题"><a href="#注意事项，在搭建环境中遇到的一些问题" class="headerlink" title="注意事项，在搭建环境中遇到的一些问题"></a>注意事项，在搭建环境中遇到的一些问题</h3><p>1、服务启动失败，到log目录下查看相应的日志，并处理。</p>
-<p>2、namenode启动失败，可能是由于tmp原因，因为格式化后的tmp文件夹在重启后自动删除了，所以又要格式化才能启动。在core-site.xml中加入节点</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;property&gt;</div><div class="line">    	&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</div><div class="line">    	&lt;value&gt;/Applications/hadoop-2.7.3/tmp&lt;/value&gt;</div><div class="line">    	&lt;description&gt;A base for other temporary directories.&lt;/description&gt;</div><div class="line">&lt;/property&gt;</div></pre></td></tr></table></figure>
-<p>将tmp目录设置到安装目录下的tmp文件夹，当然可以根据自己的需要进行设置到其他目录。</p>
-<p>3、ssh无法登陆，需要密码，哪个用户设置的ssh就用哪个，其他的用户登陆是无效的，需要重新设置。</p>
-<p>本文参考网址：</p>
-<p><a href="http://blog.csdn.net/u010558325/article/details/43865649" target="_blank" rel="external">http://blog.csdn.net/u010558325/article/details/43865649</a></p>
-<p><a href="http://blog.csdn.net/xbwer/article/details/35773919" target="_blank" rel="external">http://blog.csdn.net/xbwer/article/details/35773919</a></p>
-<p><a href="http://www.cnblogs.com/JinUzuki/articles/2130321.html" target="_blank" rel="external">http://www.cnblogs.com/JinUzuki/articles/2130321.html</a></p>
-
           
+mac 搭建Hadoop 2.7.3java环境配置1.创建 java环境，要是你本身电脑自带，请忽略
+2.假设电脑java 环境已经配置好，检查你的java版本：
+
+hyy$ java -version1234$ java -versionjava version &quot;1.8.0_121
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/12/mac搭建Hadoop2-7-3/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2039,16 +1726,23 @@
       
         
           
-            <h1 id="my-first-try"><a href="#my-first-try" class="headerlink" title="my first try"></a>my first try</h1><h3 id="生活还是有诗和远方的"><a href="#生活还是有诗和远方的" class="headerlink" title="生活还是有诗和远方的"></a><strong>生活还是有诗和远方的</strong></h3><blockquote>
-<blockquote>
-<p>此时内心充满了开心与感激</p>
-</blockquote>
-</blockquote>
-<p><em>只想用一句话表达，愿所有美好与 你，你们不期而遇</em></p>
-<p><img src="http://image155.poco.cn/mypoco/qing/20131117/17/7095390716479632_640x360_320.jpg" alt="bestwishes"></p>
-<p>加油(^_^)a <a href="http://qhbsyys.github.io/blog/" target="_blank" rel="external">http://qhbsyys.github.io/blog/</a> </p>
+          my first try生活还是有诗和远方的
+
+此时内心充满了开心与感激
+
+
+只想用一句话表达，愿所有美好与 你，你们不期而遇
+
+加油(^_^)a http://qhbsyys.github.io/blog/ 
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/02/27/first/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
