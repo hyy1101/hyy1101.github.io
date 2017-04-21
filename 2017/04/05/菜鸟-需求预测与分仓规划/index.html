@@ -1,0 +1,961 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="npm,hexo,github," />
+
+
+
+
+
+  <link rel="alternate" href="/Applications/dev/myblog/blog/node_modules/atom.xml" title="best wishes" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="大赛题目链接：https://tianchi.aliyun.com/competition/information.htm?spm=5176.100067.5678.2.aY5MAf&amp;amp;raceId=231530
+思路整理：1. 理解题意：题目的意思就是根据商品从20141010到20151227的全国和区域分仓数据，后面两周（20151228-20160110）的全国和区域分仓目标库存。目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="菜鸟-需求预测与分仓规划">
+<meta property="og:url" content="http://yoursite.com/2017/04/05/菜鸟-需求预测与分仓规划/index.html">
+<meta property="og:site_name" content="best wishes">
+<meta property="og:description" content="大赛题目链接：https://tianchi.aliyun.com/competition/information.htm?spm=5176.100067.5678.2.aY5MAf&amp;amp;raceId=231530
+思路整理：1. 理解题意：题目的意思就是根据商品从20141010到20151227的全国和区域分仓数据，后面两周（20151228-20160110）的全国和区域分仓目标库存。目">
+<meta property="og:updated_time" content="2017-04-08T23:09:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="菜鸟-需求预测与分仓规划">
+<meta name="twitter:description" content="大赛题目链接：https://tianchi.aliyun.com/competition/information.htm?spm=5176.100067.5678.2.aY5MAf&amp;amp;raceId=231530
+思路整理：1. 理解题意：题目的意思就是根据商品从20141010到20151227的全国和区域分仓数据，后面两周（20151228-20160110）的全国和区域分仓目标库存。目">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/04/05/菜鸟-需求预测与分仓规划/"/>
+
+
+
+
+
+  <title> 菜鸟-需求预测与分仓规划 | best wishes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?41fc030db57d5570dd22f78997dc4a7e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">best wishes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">宠辱不惊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/05/菜鸟-需求预测与分仓规划/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="媛媛">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="best wishes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                菜鸟-需求预测与分仓规划
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-05T23:19:45+08:00">
+                2017-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/04/05/菜鸟-需求预测与分仓规划/" class="leancloud_visitors" data-flag-title="菜鸟-需求预测与分仓规划">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>大赛题目链接：<a href="https://tianchi.aliyun.com/competition/information.htm?spm=5176.100067.5678.2.aY5MAf&amp;raceId=231530" target="_blank" rel="external">https://tianchi.aliyun.com/competition/information.htm?spm=5176.100067.5678.2.aY5MAf&amp;raceId=231530</a></p>
+<h3 id="思路整理："><a href="#思路整理：" class="headerlink" title="思路整理："></a>思路整理：</h3><h4 id="1-理解题意："><a href="#1-理解题意：" class="headerlink" title="1. 理解题意："></a>1. 理解题意：</h4><p>题目的意思就是根据商品从20141010到20151227的全国和区域分仓数据，后面两周（20151228-20160110）的全国和区域分仓目标库存。目标是预测尽量准，如果不能百分百准确，希望是损失最小，即达到库存成本最小化(无论是补多补少)。</p>
+<h4 id="2-原始数据分析"><a href="#2-原始数据分析" class="headerlink" title="2. 原始数据分析"></a>2. 原始数据分析</h4><p>有963个商品，每个商品又不同的销售周期，后期可能需要考虑商品销售高峰时间段(距离出售时间)，标签应该是未来14内的销量，特征可以是原始特征+业务特征+时间影响因子+窗口特征</p>
+<h4 id="3-特征碎碎念："><a href="#3-特征碎碎念：" class="headerlink" title="3. 特征碎碎念："></a>3. 特征碎碎念：</h4><ul>
+<li>原始特征：</li>
+</ul>
+<p>​       日期，商品ID，叶子类目ID，大类目ID，品牌ID，供应商ID</p>
+<p>​       浏览次数，流量UV，被加购次数，加购人次，收藏夹人次</p>
+<p>​       拍下笔数，拍下金额，拍下件数，拍下UV</p>
+<p>​       成交金额，成交笔数，成交件数，成交人次</p>
+<p>​       直通车引导浏览次数，淘宝客引导浏览次数，搜索引导浏览次数，聚划算引导浏览次数</p>
+<p>​       直通车引导浏览人次，淘宝客引导浏览人次，搜索引导浏览人次，聚划算引导浏览人次</p>
+<p>​       非聚划算支付笔数，非聚划算支付金额，非聚划算支付件数，非聚划算支付人次</p>
+<ul>
+<li><p>可能潜在的特征：</p>
+<ul>
+<li><p>业务特征</p>
+<p>成交比率：成交人次／流量UV ；成交成功率：成交笔数／拍下笔数</p>
+<p>商品折扣率：成交价格 / 拍下价格；</p>
+<p>单件成交价格：成交金额／成交件数；单笔成交价格：成交金额／成交笔数</p>
+<p>非聚划支付转化率：非聚划算支付人次／流量UV</p>
+<p>非聚划售出占比：非聚划算支付件数／成交件数</p>
+<p>非聚划支付占比：非聚划算支付金额／成交金额</p>
+<p>单笔价值：非聚划算支付金额／非聚划算支付笔数</p>
+</li>
+<li><p>时间影响因子特征</p>
+<p>最大天数：商品最早出现历史数据的日期距离要预测的那一周的天数。</p>
+<p>最小天数：商品最后一次出现历史数据的日期距离要预测的那一周的天数。</p>
+<p>时间因子：商品时间距离20151228天数。</p>
+</li>
+<li><p>时间窗口特征（根据记忆曲线，取商品 前 1、2、3、4、7、14、21、28天）</p>
+<p>根据商品、叶子类目、大类目、品牌、供应商进行分组，提取前X天的非聚划算支付人次、浏览数、加购数的平均值、最小值、标准差作为特征</p>
+</li>
+</ul>
+</li>
+<li><p>缺失值补0</p>
+</li>
+</ul>
+<h4 id="4-模型探索："><a href="#4-模型探索：" class="headerlink" title="4. 模型探索："></a>4. 模型探索：</h4><ul>
+<li><p>数据准备：用mysql处理，17万个样本（滑窗取得），400多维指标（见上文潜在指标分析）</p>
+</li>
+<li><p>数据预处理：去除双11，双12，去除异常值(3西格玛)，去除可能为负的数据。</p>
+</li>
+<li><p>选择两种类型模型分别尝试：</p>
+<ol>
+<li><p>传统算法Hotwinters—-时间序列分析(核心思想是三次指数平滑，包含趋势性季节性，可控性优于arima)</p>
+</li>
+<li><p>机器学习agboost, rf, gbdt, adaboost再融合———只做了xgb和gbrt和rf，外加一个规则模型。</p>
+<p>1）xgb优点：1.正则化提升；2.可以实现并行处理；3.允许用户定义<strong>自定义优化目标和评价标准</strong>；4.内置处理缺失值的规则；5.一直分裂到指定的最大深度(max_depth)，然后回过头来剪枝；6.允许在每一轮boosting迭代中使用交叉验证；7.可以在上一轮的结果上继续训练。</p>
+<p>2）gbdt,rf</p>
+<p>3）由于牵扯到时间窗口，没有进行交叉验证，应该考虑添加一个时间因子指标，可供交叉验证。</p>
+</li>
+</ol>
+</li>
+<li><p>规则处理：预测不可能百分百准确，应该做到损失尽量小</p>
+<p>如果补少成本大于补多成本，则应该预测多一点，取单模型预测结果中的最大值再乘以1.1，反之取单模型预测结果中的最小值再乘以0.9。最终以 0.85model + 0.15rule融合。</p>
+<p>对于上线不满四周的item，直接采用最近两周的平均销量*14预测获得。</p>
+</li>
+<li><p>测试集和训练集</p>
+</li>
+</ul>
+<p>​       训练集选择从2015-07-01以后的数据进行每14天全量滑动，总样本有963*180，取最后四周时间进行滑动，作为测试集。</p>
+<h3 id="代码目录说明"><a href="#代码目录说明" class="headerlink" title="代码目录说明"></a>代码目录说明</h3><ol>
+<li><p>raw_data：原始数据</p>
+</li>
+<li><p>Data：过程数据文件</p>
+</li>
+<li><p>raw_data原始数据</p>
+</li>
+<li><p>Data过程数据文件</p>
+</li>
+<li><p>raw_data原始数据</p>
+</li>
+<li><p>Data过程数据文件</p>
+</li>
+<li><p>mysql_process文件：</p>
+<p>数据处理文件，先运行<strong><em>preprocess</em></strong>，再运行<strong><em>dataprocess</em></strong></p>
+</li>
+<li><p>model文件包含：</p>
+<p><strong><em>data_preprocessing.py ：</em></strong>进行简单的数据处理，添加分割字段，标题等。</p>
+<p><strong><em>model.py：</em></strong>包含有gbrt，rf，xgb三个模型，其中参数有少许微调。</p>
+<p><strong><em>combine.py ：</em></strong>gbrt，rf，xgb三个模型得到结果的组合。</p>
+<p><strong><em>rule.py：</em></strong>规则模型，包含布多补少算法，以及加权规则。</p>
+<p><strong><em>ensemble&amp;estimate.py：</em></strong>机器学习模型与规则模型融合，输出结果，评估结果。</p>
+</li>
+<li><p>result结果文件：</p>
+</li>
+</ol>
+<p>​       <strong><em>final_estimate.csv：</em></strong>为最终结果集</p>
+<p>​       <strong><em>04_09.csv：</em></strong>为带有误差及方差的预测集合。</p>
+<h3 id="节点把控"><a href="#节点把控" class="headerlink" title="节点把控"></a>节点把控</h3><ol>
+<li>第一天下午拿到题目，晚上有事就看了一下。4.3</li>
+<li>第二天了解了下题意，进行电脑环境的配置，大致翻了几个网页，论坛，博客，GitHub之类的。4.4</li>
+<li>第三天开始正式探索题目意思以及数据。4.5</li>
+<li>第四天准备数据4.6</li>
+<li>第五天训练模型4.7</li>
+<li>第六天调优4.8</li>
+</ol>
+<h3 id="后续提升"><a href="#后续提升" class="headerlink" title="后续提升"></a>后续提升</h3><ul>
+<li>对label进行log变换</li>
+<li>增加特征、增加训练集</li>
+<li>增加时间序列分析模型</li>
+</ul>
+<h3 id="踩过的坑"><a href="#踩过的坑" class="headerlink" title="踩过的坑"></a>踩过的坑</h3><ol>
+<li><p>mysql导出数据，各种出错，详情见博客。</p>
+</li>
+<li><p>python函数merge区分字符与整型，例如”1”和1不同，merge时会出错；函数传参，有时候会不灵。</p>
+</li>
+<li><p>hive单机简直是个坑，动不动就内存超限，估计是我Hadoop一套太菜了，到时候得好好学学。</p>
+</li>
+<li><p>get新技能：</p>
+<p>merge,concat,apply,sort_values,groupby和egg连用。</p>
+</li>
+</ol>
+<h3 id="欢迎大神交流指正"><a href="#欢迎大神交流指正" class="headerlink" title="欢迎大神交流指正"></a>欢迎大神交流指正</h3><h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><p><a href="https://devhub.io/repos/wepe-CaiNiao-DemandForecast-StoragePlaning" target="_blank" rel="external">https://devhub.io/repos/wepe-CaiNiao-DemandForecast-StoragePlaning</a></p>
+<p>xgb: <a href="http://www.dongcoder.com/detail-56275.html" target="_blank" rel="external">http://www.dongcoder.com/detail-56275.html</a></p>
+<p>好思路：</p>
+<p><a href="http://blog.csdn.net/bryan__/article/details/51685639" target="_blank" rel="external">http://blog.csdn.net/bryan__/article/details/51685639</a></p>
+<p><a href="http://www.lizhuoqing.com/2017/02/27/%E9%98%BF%E9%87%8C%E5%A4%A9%E6%B1%A0%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%AF%94%E8%B5%9B%E6%80%BB%E7%BB%93%EF%BC%882016%E8%8F%9C%E9%B8%9F%E9%9C%80%E6%B1%82%E9%A2%84%E6%B5%8B%E4%B8%8E%E5%88%86%E4%BB%93/" target="_blank" rel="external">http://www.lizhuoqing.com/2017/02/27/%E9%98%BF%E9%87%8C%E5%A4%A9%E6%B1%A0%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%AF%94%E8%B5%9B%E6%80%BB%E7%BB%93%EF%BC%882016%E8%8F%9C%E9%B8%9F%E9%9C%80%E6%B1%82%E9%A2%84%E6%B5%8B%E4%B8%8E%E5%88%86%E4%BB%93/</a></p>
+<p><a href="https://devhub.io/repos/wepe-CaiNiao-DemandForecast-StoragePlaning" target="_blank" rel="external">https://devhub.io/repos/wepe-CaiNiao-DemandForecast-StoragePlaning</a></p>
+<p>### </p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/npm/" rel="tag"># npm</a>
+          
+            <a href="/tags/hexo/" rel="tag"># hexo</a>
+          
+            <a href="/tags/github/" rel="tag"># github</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/05/Mac安装mysql/" rel="next" title="Mac安装mysql">
+                <i class="fa fa-chevron-left"></i> Mac安装mysql
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/08/那些年mysql导出文件踩过的坑/" rel="prev" title="那些年mysql导出文件踩过的坑">
+                那些年mysql导出文件踩过的坑 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="媛媛" />
+          <p class="site-author-name" itemprop="name">媛媛</p>
+           
+              <p class="site-description motion-element" itemprop="description">持之以恒</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/Applications/dev/myblog/blog/node_modules/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路整理："><span class="nav-number">1.</span> <span class="nav-text">思路整理：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-理解题意："><span class="nav-number">1.1.</span> <span class="nav-text">1. 理解题意：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-原始数据分析"><span class="nav-number">1.2.</span> <span class="nav-text">2. 原始数据分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-特征碎碎念："><span class="nav-number">1.3.</span> <span class="nav-text">3. 特征碎碎念：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-模型探索："><span class="nav-number">1.4.</span> <span class="nav-text">4. 模型探索：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码目录说明"><span class="nav-number">2.</span> <span class="nav-text">代码目录说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#节点把控"><span class="nav-number">3.</span> <span class="nav-text">节点把控</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后续提升"><span class="nav-number">4.</span> <span class="nav-text">后续提升</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#踩过的坑"><span class="nav-number">5.</span> <span class="nav-text">踩过的坑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#欢迎大神交流指正"><span class="nav-number">6.</span> <span class="nav-text">欢迎大神交流指正</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考："><span class="nav-number">7.</span> <span class="nav-text">参考：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">媛媛</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6BLakcxrjroymKY9COjaLrXA-gzGzoHsz", "666VnlfwNetTaf6YosSbNCWD");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
