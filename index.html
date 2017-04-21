@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -106,7 +106,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
+    scheme: 'Mist',
     sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
     fancybox: true,
     motion: true,
@@ -391,7 +391,9 @@
 
 下载完成后执行以下命令：
 
-1docker run -it b.gcr.io/tensorflow/
+1docker run -it b.gcr.io/tensorflow/tensorflow bash
+此命令会启动镜像环境，并进入另一个可以操作tensorflow的shell,进入后打开python测试下tensorflow是否可以使用.
+1234567891011root@f2e5933c0073:/notebooks# python&gt;&gt;&gt; import tensorflow as tf&gt;&gt;&gt; hello = tf.constant('Hello, TensorFlow!')&gt;&gt;&gt; sess =tf.Session()&gt;&gt;&gt; sess =tf.Session()&gt;&gt;&gt; sess.run(hello)'Hello, TensorFlow!'&gt;&gt;&gt; a 
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -672,7 +674,8 @@
 进入到本地工程目录
 执行以下代码
 
-123456git config --global gith
+123456git config --global github.hyy1101git init                   # 本地仓库初始化，执行完后会在工程目录下生成一个.git的隐藏目录git remote add origin git@github.com:hyy1101/cainiao.gitgit add .               # 添加所有文件到本地索引git commit -m &quot;My first commit operation&quot;   # 提交修改到本地仓库，-m选项添加提交注释git push origin master      # 按照前一条命令中origin给定的github地址推送到github仓库的master分支
+*注意：Mac上传会产生一个没用的.DS_Store，需要在上传之前
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -810,7 +813,13 @@
       
         
           
-          Mysql导出数据到csv12345select *from test_fencanginto outfile &apos;/Applications/dev/tmp/test_fencang.csv&apos;fields terminated by &apos;,&apos; optionall
+          Mysql导出数据到csv12345select *from test_fencanginto outfile &apos;/Applications/dev/tmp/test_fencang.csv&apos;fields terminated by &apos;,&apos; optionally enclosed by &apos;&quot;&apos; escaped by &apos;&quot;&apos;lines terminated by &apos;\r\n&apos;;
+亲切的mysql，严肃的报错：
+1ERROR 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+搞得我束手无策，只能谷歌:
+1SHOW VARIABLES LIKE &quot;secure_file_priv&quot;;
+发现为null，然后又各种百度，发现有个my.cnf的文件，我电脑里面没有，就只能新建一个了。
+1
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -949,7 +958,16 @@
         
           
           大赛题目链接：https://tianchi.aliyun.com/competition/information.htm?spm=5176.100067.5678.2.aY5MAf&amp;raceId=231530
-思路整理：1. 理解题意：题目的意思就是根据商品从20141010到201512
+思路整理：1. 理解题意：题目的意思就是根据商品从20141010到20151227的全国和区域分仓数据，后面两周（20151228-20160110）的全国和区域分仓目标库存。目标是预测尽量准，如果不能百分百准确，希望是损失最小，即达到库存成本最小化(无论是补多补少)。
+2. 原始数据分析有963个商品，每个商品又不同的销售周期，后期可能需要考虑商品销售高峰时间段(距离出售时间)，标签应该是未来14内的销量，特征可以是原始特征+业务特征+时间影响因子+窗口特征
+3. 特征碎碎念：
+原始特征：
+
+​       日期，商品ID，叶子类目ID，大类目ID，品牌ID，供应商ID
+​       浏览次数，流量UV，被加购次数，加购人次，收藏夹人次
+​       拍下笔数，拍下金额，拍下件数，拍下UV
+​       成交金额，成交笔数，成交件数，成交人次
+​       
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1111,8 +1129,12 @@
           
           简书上已经整理的很到位了，http://www.jianshu.com/p/fd3aae701db9
 我这边补充一个问题，在运行过程中出错
-ERROR 29 (HY000): File ‘./cainiao/item_feature.MYD’ not found (Errcode: 13 - Per
-          ...
+ERROR 29 (HY000): File ‘./cainiao/item_feature.MYD’ not found (Errcode: 13 - Permission denied)
+这个原因是因为我的mysql崩溃了，然后重装一下就好了。密码什么的都跟以前一样。
+可以看下数据库的权限：
+12show grants;SELECT DISTINCT CONCAT(&apos;User: &apos;&apos;&apos;,user,&apos;&apos;&apos;@&apos;&apos;&apos;,host,&apos;&apos;&apos;;&apos;) AS query FROM mysql.user;
+
+          
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/04/05/Mac安装mysql/#more" rel="contents">
@@ -1280,6 +1302,10 @@ ERROR 29 (HY000): File ‘./cainiao/item_feature.MYD’ not found (Errcode: 13 -
 ​
 
 
+安装spark1.下载spark，解压
+1234mv /Users/hyy/Downloads/spark /usr/local/share  # 移动spark至自己的目录下cd /usr/local/share/spark/conf   #cd到目录下，编辑文件spark-env.sh.template copy spark-env.sh  # 将spark-env.sh.template重命名为spark-env.shvi spark-env.sh  # 编辑文件
+添加文件内容为：
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Homeexport SCALA_HOME=/Us
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1424,8 +1450,17 @@ ERROR 29 (HY000): File ‘./cainiao/item_feature.MYD’ not found (Errcode: 13 -
 创建文章
 1hexo new &quot;new_artical&quot;
 
-文章在source/_posts目录下，支持Markdown语法，可以使用markdown编辑器进行编辑，我选的Typo
-          ...
+文章在source/_posts目录下，支持Markdown语法，可以使用markdown编辑器进行编辑，我选的Typore来编辑文章。
+
+编辑好文章，清楚预览，生成静态页面，将.deploy目录部署到GitHub更新
+123hexo cleanhexo generatehexo deploy
+
+访问博客即可
+
+
+常用命令1234567hexo new &quot;postName&quot; #新建文章hexo new page &quot;pageName&quot; #新建页面hexo generate #生成静态页面至public目录hexo server #开启预览访问端口（默认端口4000，&apos;ctrl + c&apos;关闭server）hexo deploy #将.deploy目录部署到GitHubhexo help # 查看帮助hexo version #查看Hexo的版本
+
+          
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/04/02/hexo常用命令/#more" rel="contents">
@@ -1566,7 +1601,13 @@ ERROR 29 (HY000): File ‘./cainiao/item_feature.MYD’ not found (Errcode: 13 -
 mac 搭建Hadoop 2.7.3java环境配置1.创建 java环境，要是你本身电脑自带，请忽略
 2.假设电脑java 环境已经配置好，检查你的java版本：
 
-hyy$ java -version1234$ java -versionjava version &quot;1.8.0_121
+hyy$ java -version1234$ java -versionjava version &quot;1.8.0_121&quot;Java(TM) SE Runtime Environment (build 1.8.0_121-b13)Java HotSpot(TM) 64-Bit Server VM (build 25.121-b13, mixed mode)
+3.查看java环境变量
+123$ cd /Library/Java/JavaVirtualMachines/$ lsjdk1.8.0_121.jdk
+期间未报错，则可使用 java 环境变量为：
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home
+Hadoop安装及配置1.安装Hadoop，一般可以使用brew，安装最新稳定版
+insta
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1903,7 +1944,7 @@ hyy$ java -version1234$ java -versionjava version &quot;1.8.0_121
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
+    NexT.Mist
   </a>
 </div>
 
@@ -1982,13 +2023,6 @@ hyy$ java -version1234$ java -versionjava version &quot;1.8.0_121
 
   
   
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
-
-
 
   
 
