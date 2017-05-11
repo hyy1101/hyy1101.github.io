@@ -1,0 +1,935 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="layout: ‘post# transform title into titlecase’title: LSTM时间序列分析date: 2017-05-11 15:33:19
+tags: [tensorflow]
+LSTM Network for Regression12345import pandasimport matplotlib.pyplot as pltdataset = pandas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="best wishes">
+<meta property="og:url" content="http://yoursite.com/2017/05/11/LSTM时间序列分析/index.html">
+<meta property="og:site_name" content="best wishes">
+<meta property="og:description" content="layout: ‘post# transform title into titlecase’title: LSTM时间序列分析date: 2017-05-11 15:33:19
+tags: [tensorflow]
+LSTM Network for Regression12345import pandasimport matplotlib.pyplot as pltdataset = pandas">
+<meta property="og:image" content="http://yoursite.com/output_1_0.png">
+<meta property="og:image" content="http://yoursite.com/output_17_0.png">
+<meta property="og:image" content="http://yoursite.com/output_20_1.png">
+<meta property="og:image" content="http://yoursite.com/output_23_1.png">
+<meta property="og:image" content="http://yoursite.com/output_26_1.png">
+<meta property="og:image" content="http://yoursite.com/output_29_1.png">
+<meta property="og:updated_time" content="2017-05-11T07:35:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="best wishes">
+<meta name="twitter:description" content="layout: ‘post# transform title into titlecase’title: LSTM时间序列分析date: 2017-05-11 15:33:19
+tags: [tensorflow]
+LSTM Network for Regression12345import pandasimport matplotlib.pyplot as pltdataset = pandas">
+<meta name="twitter:image" content="http://yoursite.com/output_1_0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/11/LSTM时间序列分析/"/>
+
+
+
+
+
+  <title>  | best wishes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?41fc030db57d5570dd22f78997dc4a7e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">best wishes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">宠辱不惊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/11/LSTM时间序列分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="媛媛">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="best wishes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-11T15:33:19+08:00">
+                2017-05-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/11/LSTM时间序列分析/" class="leancloud_visitors" data-flag-title="">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>layout: ‘post# transform title into titlecase’<br>title: LSTM时间序列分析<br>date: 2017-05-11 15:33:19</p>
+<p>tags: [tensorflow]</p>
+<h2 id="LSTM-Network-for-Regression"><a href="#LSTM-Network-for-Regression" class="headerlink" title="LSTM Network for Regression"></a>LSTM Network for Regression</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">dataset = pandas.read_csv(<span class="string">'international-airline-passengers.csv'</span>, usecols=[<span class="number">1</span>], engine=<span class="string">'python'</span>, skipfooter=<span class="number">3</span>)</div><div class="line">plt.plot(dataset)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_1_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> pandas</div><div class="line"><span class="keyword">import</span> math</div><div class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Sequential</div><div class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense</div><div class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> LSTM</div><div class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler</div><div class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</div><div class="line"></div><div class="line"><span class="comment"># 随机种子</span></div><div class="line">numpy.random.seed(<span class="number">7</span>)</div><div class="line"></div><div class="line"><span class="comment"># 加载数据集</span></div><div class="line">dataframe = pandas.read_csv(<span class="string">'international-airline-passengers.csv'</span>, usecols=[<span class="number">1</span>], engine=<span class="string">'python'</span>, skipfooter=<span class="number">3</span>)</div><div class="line">dataset = dataframe.values</div><div class="line">dataset = dataset.astype(<span class="string">'float32'</span>)</div></pre></td></tr></table></figure>
+<p>LSTMs are sensitive to the scale of the input data, specifically when the sigmoid (default) or tanh activation functions are used. It can be a good practice to rescale the data to the range of 0-to-1, also called normalizing. We can easily normalize the dataset using the MinMaxScaler preprocessing class from the scikit-learn library.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 标准化(sigmod默认,tanh,MinMaxScaler)</span></div><div class="line">scaler = MinMaxScaler(feature_range=(<span class="number">0</span>, <span class="number">1</span>))</div><div class="line">dataset = scaler.fit_transform(dataset)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 划分测试集和训练集（67%，33%）</span></div><div class="line">train_size = int(len(dataset) * <span class="number">0.67</span>)</div><div class="line">test_size = len(dataset) - train_size</div><div class="line">train, test = dataset[<span class="number">0</span>:train_size,:], dataset[train_size:len(dataset),:]</div><div class="line">print(len(train), len(test))</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(96, 48)</div></pre></td></tr></table></figure>
+<p>定义一个函数，创建新的数据集</p>
+<p>函数需要两个参数，NumPy array的数据集dataset，look_back代表向前多少个时间步长作为输入变量来预测下一个时间周期，可以默认设置为1<br>这是以前的时间步长作为输入变量来预测下一个时间段-在这种情况下默认为1。</p>
+<p>比如，输出的样子是x为t时刻数据，y为 t + 1时刻数据<br>这个可以设置，下一步我们也可以创建一个不同大小的数据集创建函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 将array转换为matrix数据集</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_dataset</span><span class="params">(dataset, look_back=<span class="number">1</span>)</span>:</span></div><div class="line">    dataX, dataY = [], []</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(dataset)-look_back<span class="number">-1</span>):</div><div class="line">        a = dataset[i:(i+look_back), <span class="number">0</span>]</div><div class="line">        dataX.append(a)</div><div class="line">        dataY.append(dataset[i + look_back, <span class="number">0</span>])</div><div class="line">    <span class="keyword">return</span> numpy.array(dataX), numpy.array(dataY)</div></pre></td></tr></table></figure>
+<p>看下这个函数对数据集的第一行的效果来看（没有辨准化之前，数据长这样）</p>
+<pre>
+ X          Y
+112        118
+118        132
+132        129
+129        121
+121        135
+</pre>
+
+<p>X=t  Y=t+1</p>
+<p>然后用这个函数来准备模型的测试集和训练集</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 重新创建数据 X=t  Y=t+1</span></div><div class="line">look_back = <span class="number">1</span></div><div class="line">trainX, trainY = create_dataset(train, look_back)</div><div class="line">testX, testY = create_dataset(test, look_back)</div></pre></td></tr></table></figure>
+<p>LSTM网络要求输入数据（x）长这样：[samples, time_steps, features]。<br>目前，我们的数据是这样的：[samples, features]，我们准备把每个样本建立为一个步长的数据，使用numpy.reshape()把准备好的训练集和测试集转换为可用结构。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 将输入数据转化为 [samples, time steps, features]类型</span></div><div class="line">trainX = numpy.reshape(trainX, (trainX.shape[<span class="number">0</span>], <span class="number">1</span>, trainX.shape[<span class="number">1</span>]))</div><div class="line">testX = numpy.reshape(testX, (testX.shape[<span class="number">0</span>], <span class="number">1</span>, testX.shape[<span class="number">1</span>]))</div></pre></td></tr></table></figure>
+<p>下一步就是建立模型LSTM<br>比如：一个输入层，隐藏层层设置四个lstm模块，输出层预测步长为1，LSTM层的默认激活函数是sigmoid,batch_size设置为1，训练100期</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 创建并拟合 LSTM network</span></div><div class="line">model = Sequential()</div><div class="line">model.add(LSTM(<span class="number">3</span>, input_dim=look_back))</div><div class="line">model.add(Dense(<span class="number">1</span>))</div><div class="line">model.compile(loss=<span class="string">'mean_squared_error'</span>, optimizer=<span class="string">'adam'</span>)</div><div class="line">model.fit(trainX, trainY, nb_epoch=<span class="number">50</span>, batch_size=<span class="number">1</span>, verbose=<span class="number">0</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/Users/hyy/Library/Python/2.7/lib/python/site-packages/ipykernel/__main__.py:3: UserWarning: The `input_dim` and `input_length` arguments in recurrent layers are deprecated. Use `input_shape` instead.</div><div class="line">  app.launch_new_instance()</div><div class="line">/Users/hyy/Library/Python/2.7/lib/python/site-packages/ipykernel/__main__.py:3: UserWarning: Update your `LSTM` call to the Keras 2 API: `LSTM(3, input_shape=(None, 1))`</div><div class="line">  app.launch_new_instance()</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;keras.callbacks.History at 0x11de10850&gt;</div></pre></td></tr></table></figure>
+<p>一旦模型拟合完，我们就可以在训练集和测试集上查看性能，这个可以作为新模型的比较模型。</p>
+<p>注：我们在计算错误得分前将预测转化为在原始数据上确保效果是可以被描述的样子，就是反标准化</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 预测</span></div><div class="line">trainPredict = model.predict(trainX)</div><div class="line">testPredict = model.predict(testX)</div><div class="line"></div><div class="line"><span class="comment"># 转换预测结果，因为之前的数据是被标准化了的</span></div><div class="line">trainPredict = scaler.inverse_transform(trainPredict)</div><div class="line">trainY = scaler.inverse_transform([trainY])</div><div class="line">testPredict = scaler.inverse_transform(testPredict)</div><div class="line">testY = scaler.inverse_transform([testY])</div><div class="line"></div><div class="line"><span class="comment"># 计算RMSE</span></div><div class="line">trainScore = math.sqrt(mean_squared_error(trainY[<span class="number">0</span>], trainPredict[:,<span class="number">0</span>]))</div><div class="line">print(<span class="string">'Train Score: %.2f RMSE'</span> % (trainScore))</div><div class="line">testScore = math.sqrt(mean_squared_error(testY[<span class="number">0</span>], testPredict[:,<span class="number">0</span>]))</div><div class="line">print(<span class="string">'Test Score: %.2f RMSE'</span> % (testScore))</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Train Score: 22.99 RMSE</div><div class="line">Test Score: 51.49 RMSE</div></pre></td></tr></table></figure>
+<p>这个模型看起来也不是很差</p>
+<p>最终，我们可以将模型使用在训练集和测试集。然后对模型效果做一个可视化。</p>
+<p>因为之前的数据集是XY被打乱了一个单位对齐的，所以再按照打乱前的数据重新排列。准备好数据后，原来的数据集用蓝色，训练集用绿色，不可见的测试集用红色。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 转换训练集数据</span></div><div class="line">trainPredictPlot = numpy.empty_like(dataset)</div><div class="line">trainPredictPlot[:, :] = numpy.nan</div><div class="line">trainPredictPlot[look_back:len(trainPredict)+look_back, :] = trainPredict</div><div class="line"></div><div class="line"><span class="comment"># 转换测试集数据</span></div><div class="line">testPredictPlot = numpy.empty_like(dataset)</div><div class="line">testPredictPlot[:, :] = numpy.nan</div><div class="line">testPredictPlot[len(trainPredict)+(look_back*<span class="number">2</span>)+<span class="number">1</span>:len(dataset)<span class="number">-1</span>, :] = testPredict</div><div class="line"></div><div class="line"><span class="comment"># 绘图</span></div><div class="line">plt.plot(scaler.inverse_transform(dataset))</div><div class="line">plt.plot(trainPredictPlot)</div><div class="line">plt.plot(testPredictPlot)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_17_0.png" alt="png"></p>
+<p>可以看到这个模型拟合的还可以</p>
+<h2 id="LSTM-for-Regression-Using-the-Window-Method"><a href="#LSTM-for-Regression-Using-the-Window-Method" class="headerlink" title="LSTM for Regression Using the Window Method"></a>LSTM for Regression Using the Window Method</h2><p>我们也可以把问题想象成多维，最近的时间的步长可以用来做下一个时间步长的预测（也叫时间窗口法），窗口的大小可以作为一个参数，可以根据问题是集调整。</p>
+<p>比如预测未来t+1，我们可以使用当天和以前几个时间的数据：t，t-1，t-2作为输入变量。<br>简化后，问题变为：输入变量是 t-2, t-1, t，输出变量应该是t+1。可以把前面的create_dataset()函数的look_back参数从1设置为3</p>
+<p>现在重新建立create_dataset()函数，其实可以通过修改之前的函数look_back参数为3即为增加的变量</p>
+<p>比如，修改之后，数据变为下面这种形式：</p>
+<pre>
+ X1     X2     X3     Y
+112    118    132    129
+118    132    129    121
+132    129    121    135
+129    121    135    148
+121    135    148    148
+</pre>
+
+<p>更改下前面的窗口大小，如下程序。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># LSTM 将窗口特征作为feature</span></div><div class="line"><span class="keyword">import</span> numpy</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> pandas</div><div class="line"><span class="keyword">import</span> math</div><div class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Sequential</div><div class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense</div><div class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> LSTM</div><div class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler</div><div class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</div><div class="line"></div><div class="line"><span class="comment"># 窗口函数，look_back默认为1</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_dataset</span><span class="params">(dataset, look_back=<span class="number">1</span>)</span>:</span></div><div class="line">    dataX, dataY = [], []</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(dataset)-look_back<span class="number">-1</span>):</div><div class="line">        a = dataset[i:(i+look_back), <span class="number">0</span>]</div><div class="line">        dataX.append(a)</div><div class="line">        dataY.append(dataset[i + look_back, <span class="number">0</span>])</div><div class="line">    <span class="keyword">return</span> numpy.array(dataX), numpy.array(dataY)</div><div class="line"></div><div class="line"><span class="comment"># 随机种子</span></div><div class="line">numpy.random.seed(<span class="number">7</span>)</div><div class="line"></div><div class="line"><span class="comment"># 加载数据</span></div><div class="line">dataframe = pandas.read_csv(<span class="string">'international-airline-passengers.csv'</span>, usecols=[<span class="number">1</span>], engine=<span class="string">'python'</span>, skipfooter=<span class="number">3</span>)</div><div class="line">dataset = dataframe.values</div><div class="line">dataset = dataset.astype(<span class="string">'float32'</span>)</div><div class="line"></div><div class="line"><span class="comment"># 标准化，最大最小</span></div><div class="line">scaler = MinMaxScaler(feature_range=(<span class="number">0</span>, <span class="number">1</span>))</div><div class="line">dataset = scaler.fit_transform(dataset)</div><div class="line"></div><div class="line"><span class="comment"># 训练集测试集划分</span></div><div class="line">train_size = int(len(dataset) * <span class="number">0.67</span>)</div><div class="line">test_size = len(dataset) - train_size</div><div class="line">train, test = dataset[<span class="number">0</span>:train_size,:], dataset[train_size:len(dataset),:]</div><div class="line"></div><div class="line"><span class="comment"># reshape数据</span></div><div class="line">look_back = <span class="number">3</span></div><div class="line">trainX, trainY = create_dataset(train, look_back)</div><div class="line">testX, testY = create_dataset(test, look_back)</div><div class="line"></div><div class="line"><span class="comment"># reshape输入[samples, time steps, features]</span></div><div class="line">trainX = numpy.reshape(trainX, (trainX.shape[<span class="number">0</span>], <span class="number">1</span>, trainX.shape[<span class="number">1</span>]))</div><div class="line">testX = numpy.reshape(testX, (testX.shape[<span class="number">0</span>], <span class="number">1</span>, testX.shape[<span class="number">1</span>]))</div><div class="line"></div><div class="line"><span class="comment"># 创建lstm模型拟合函数</span></div><div class="line">model = Sequential()</div><div class="line">model.add(LSTM(<span class="number">4</span>, input_dim=look_back))</div><div class="line">model.add(Dense(<span class="number">1</span>))</div><div class="line">model.compile(loss=<span class="string">'mean_squared_error'</span>, optimizer=<span class="string">'adam'</span>)</div><div class="line">model.fit(trainX, trainY, nb_epoch=<span class="number">100</span>, batch_size=<span class="number">1</span>, verbose=<span class="number">0</span>)</div><div class="line"></div><div class="line"><span class="comment"># 预测</span></div><div class="line">trainPredict = model.predict(trainX)</div><div class="line">testPredict = model.predict(testX)</div><div class="line"></div><div class="line"><span class="comment"># 你转换预测值</span></div><div class="line">trainPredict = scaler.inverse_transform(trainPredict)</div><div class="line">trainY = scaler.inverse_transform([trainY])</div><div class="line">testPredict = scaler.inverse_transform(testPredict)</div><div class="line">testY = scaler.inverse_transform([testY])</div><div class="line"></div><div class="line"><span class="comment"># 计算均方根误差</span></div><div class="line">trainScore = math.sqrt(mean_squared_error(trainY[<span class="number">0</span>], trainPredict[:,<span class="number">0</span>]))</div><div class="line">print(<span class="string">'Train Score: %.2f RMSE'</span> % (trainScore))</div><div class="line">testScore = math.sqrt(mean_squared_error(testY[<span class="number">0</span>], testPredict[:,<span class="number">0</span>]))</div><div class="line">print(<span class="string">'Test Score: %.2f RMSE'</span> % (testScore))</div><div class="line"></div><div class="line"><span class="comment"># 转换训练数据为可画图形式</span></div><div class="line">trainPredictPlot = numpy.empty_like(dataset)</div><div class="line">trainPredictPlot[:, :] = numpy.nan</div><div class="line">trainPredictPlot[look_back:len(trainPredict)+look_back, :] = trainPredict</div><div class="line"></div><div class="line"><span class="comment"># 转换测试集为可画图形式</span></div><div class="line">testPredictPlot = numpy.empty_like(dataset)</div><div class="line">testPredictPlot[:, :] = numpy.nan</div><div class="line">testPredictPlot[len(trainPredict)+(look_back*<span class="number">2</span>)+<span class="number">1</span>:len(dataset)<span class="number">-1</span>, :] = testPredict</div><div class="line"></div><div class="line"><span class="comment"># 绘制原始数据和预测数据</span></div><div class="line">plt.plot(scaler.inverse_transform(dataset))</div><div class="line">plt.plot(trainPredictPlot)</div><div class="line">plt.plot(testPredictPlot)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Train Score: 22.01 RMSE</div><div class="line">Test Score: 68.70 RMSE</div></pre></td></tr></table></figure>
+<p><img src="output_20_1.png" alt="png"></p>
+<p>我们可以看到模型误差略有增加。</p>
+<h2 id="LSTM-for-Regression-with-Time-Steps"><a href="#LSTM-for-Regression-with-Time-Steps" class="headerlink" title="LSTM for Regression with Time Steps"></a>LSTM for Regression with Time Steps</h2><p>LSTM的参数也包括时间步长</p>
+<p>有的序列可能有不同的时间步长。比如，你可能因为物理测量原因导致一个点测量错误，每个实例都是一个观测样本，使得事件将是时间步长，观测变量将是样本。</p>
+<p>时间步长将会提供另外一种思考时间序列的问题。像上面的窗口示例一样，我们可以在我们的时间序列中使用前时间步长作为输入来预测下一个时间步长的输出。而不是将过去的观测作为单独的输入功能，我们可以使用它们作为时间步长的一个输入功能，这确实是一个更准确的框架的问题</p>
+<p>我们可以这样做，使用相同的数据，在以前的窗口为基础的例子上，除了当我们重新塑造数据，我们设置列为时间步长的维度，并且将特征该回为1。比如:</p>
+<pre>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># reshape input to be [samples, time steps, features]</div><div class="line"></div><div class="line">trainX = numpy.reshape(trainX, (trainX.shape[0], trainX.shape[1], 1))</div><div class="line">testX = numpy.reshape(testX, (testX.shape[0], testX.shape[1], 1))</div></pre></td></tr></table></figure>
+
+</pre>
+
+<p>整个代码见下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># LSTM 将time_step作为特征回归。</span></div><div class="line"><span class="keyword">import</span> numpy</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> pandas</div><div class="line"><span class="keyword">import</span> math</div><div class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Sequential</div><div class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense</div><div class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> LSTM</div><div class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler</div><div class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</div><div class="line"></div><div class="line"><span class="comment"># array转化为matrix</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_dataset</span><span class="params">(dataset, look_back=<span class="number">1</span>)</span>:</span></div><div class="line">    dataX, dataY = [], []</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(dataset)-look_back<span class="number">-1</span>):</div><div class="line">        a = dataset[i:(i+look_back), <span class="number">0</span>]</div><div class="line">        dataX.append(a)</div><div class="line">        dataY.append(dataset[i + look_back, <span class="number">0</span>])</div><div class="line">    <span class="keyword">return</span> numpy.array(dataX), numpy.array(dataY)</div><div class="line"></div><div class="line"><span class="comment"># 随机种子</span></div><div class="line">numpy.random.seed(<span class="number">7</span>)</div><div class="line"></div><div class="line"><span class="comment"># 加载数据</span></div><div class="line">dataframe = pandas.read_csv(<span class="string">'international-airline-passengers.csv'</span>, usecols=[<span class="number">1</span>], engine=<span class="string">'python'</span>, skipfooter=<span class="number">3</span>)</div><div class="line">dataset = dataframe.values</div><div class="line">dataset = dataset.astype(<span class="string">'float32'</span>)</div><div class="line"></div><div class="line"><span class="comment"># 标准化</span></div><div class="line">scaler = MinMaxScaler(feature_range=(<span class="number">0</span>, <span class="number">1</span>))</div><div class="line">dataset = scaler.fit_transform(dataset)</div><div class="line"></div><div class="line"><span class="comment"># 训练集测试集</span></div><div class="line">train_size = int(len(dataset) * <span class="number">0.67</span>)</div><div class="line">test_size = len(dataset) - train_size</div><div class="line">train, test = dataset[<span class="number">0</span>:train_size,:], dataset[train_size:len(dataset),:]</div><div class="line"></div><div class="line"><span class="comment"># reshape，X=t，Y=t+1</span></div><div class="line">look_back = <span class="number">3</span></div><div class="line">trainX, trainY = create_dataset(train, look_back)</div><div class="line">testX, testY = create_dataset(test, look_back)</div><div class="line"></div><div class="line"><span class="comment"># reshape input[samples, time steps, features]，加入步长特征。步长即为</span></div><div class="line">trainX = numpy.reshape(trainX, (trainX.shape[<span class="number">0</span>], trainX.shape[<span class="number">1</span>], <span class="number">1</span>))</div><div class="line">testX = numpy.reshape(testX, (testX.shape[<span class="number">0</span>], testX.shape[<span class="number">1</span>], <span class="number">1</span>))</div><div class="line"></div><div class="line"><span class="comment"># 创建拟合LSTM network</span></div><div class="line">model = Sequential()</div><div class="line">model.add(LSTM(<span class="number">4</span>, input_dim=<span class="number">1</span>))</div><div class="line">model.add(Dense(<span class="number">1</span>))</div><div class="line">model.compile(loss=<span class="string">'mean_squared_error'</span>, optimizer=<span class="string">'adam'</span>)</div><div class="line">model.fit(trainX, trainY, nb_epoch=<span class="number">100</span>, batch_size=<span class="number">1</span>, verbose=<span class="number">0</span>)</div><div class="line"></div><div class="line"><span class="comment"># 预测</span></div><div class="line">trainPredict = model.predict(trainX)</div><div class="line">testPredict = model.predict(testX)</div><div class="line"></div><div class="line"><span class="comment"># 转化预测数据反标准化</span></div><div class="line">trainPredict = scaler.inverse_transform(trainPredict)</div><div class="line">trainY = scaler.inverse_transform([trainY])</div><div class="line">testPredict = scaler.inverse_transform(testPredict)</div><div class="line">testY = scaler.inverse_transform([testY])</div><div class="line"></div><div class="line"><span class="comment"># RMSE</span></div><div class="line">trainScore = math.sqrt(mean_squared_error(trainY[<span class="number">0</span>], trainPredict[:,<span class="number">0</span>]))</div><div class="line">print(<span class="string">'Train Score: %.2f RMSE'</span> % (trainScore))</div><div class="line">testScore = math.sqrt(mean_squared_error(testY[<span class="number">0</span>], testPredict[:,<span class="number">0</span>]))</div><div class="line">print(<span class="string">'Test Score: %.2f RMSE'</span> % (testScore))</div><div class="line"></div><div class="line"><span class="comment"># 训练集</span></div><div class="line">trainPredictPlot = numpy.empty_like(dataset)</div><div class="line">trainPredictPlot[:, :] = numpy.nan</div><div class="line">trainPredictPlot[look_back:len(trainPredict)+look_back, :] = trainPredict</div><div class="line"></div><div class="line"><span class="comment"># 测试集</span></div><div class="line">testPredictPlot = numpy.empty_like(dataset)</div><div class="line">testPredictPlot[:, :] = numpy.nan</div><div class="line">testPredictPlot[len(trainPredict)+(look_back*<span class="number">2</span>)+<span class="number">1</span>:len(dataset)<span class="number">-1</span>, :] = testPredict</div><div class="line"></div><div class="line"><span class="comment"># 拟合图</span></div><div class="line">plt.plot(scaler.inverse_transform(dataset))</div><div class="line">plt.plot(trainPredictPlot)</div><div class="line">plt.plot(testPredictPlot)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Train Score: 23.21 RMSE</div><div class="line">Test Score: 57.32 RMSE</div></pre></td></tr></table></figure>
+<p><img src="output_23_1.png" alt="png"></p>
+<p>我们可以看到，结果略好于以前的例子，虽然输入数据的结构更有意义。</p>
+<h2 id="LSTM-with-Memory-Between-Batches"><a href="#LSTM-with-Memory-Between-Batches" class="headerlink" title="LSTM with Memory Between Batches"></a>LSTM with Memory Between Batches</h2><p>LSTM有记忆功能，能够记住长序列。</p>
+<p>通常情况下，当神经网络拟合调用模型训练时，比如model.predict() 或者 model.evaluate()时，每一次training batch后都会状态复位。</p>
+<p>当LSTM网络内部通过创建LSTM 层 “stateful”来清除keras时，我们可以更好的拟合问题。这意味着它可以在整个训练序列上建立状态，甚至可以在预测时保持状态。</p>
+<p>这样就要求，你和模型的时候，训练集的数据不能被打乱，每次训练数据训练一个epoch后，它也需要明确的进行网络状态的复位即调用model.reset_states()函数，也就是说，我们必须创建自己的外部循环和内部循环的epoch。每个epoch调用model.fit() 和model.reset_states()。比如：</p>
+<p>这意味着我们必须每个时代的呼叫模型在创造我们自己的时代和外环。fit() reset_states()和模型。例如:</p>
+<pre>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">for i in range(100):</div><div class="line">    model.fit(trainX, trainY, nb_epoch=1, batch_size=batch_size, verbose=2, shuffle=False)</div><div class="line">    model.reset_states()</div></pre></td></tr></table></figure>
+
+</pre>
+
+<p>最后，当 构建LSTM时，状态参数必须设置为true，而不是指定输入尺寸。我们必须把一些样本硬编码在一个batch中，时间步长的数量和一个时间步长的样本特征数量可以设置在batch_input_shape这个参数中。</p>
+<p>例如:</p>
+<pre>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">model.add(LSTM(4, batch_input_shape=(batch_size, time_steps, features), stateful=True))</div></pre></td></tr></table></figure>
+
+</pre>
+
+<p>在评估模型和预测时，必须使用相同的batch size。例如:</p>
+<pre>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">model.predict(trainX, batch_size=batch_size)</div></pre></td></tr></table></figure>
+
+</pre>
+
+<p>我们调整下以前的time step模型，来创建一个状态恢复 LSTM模型，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># LSTM 记忆模型</span></div><div class="line"><span class="keyword">import</span> numpy</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> pandas</div><div class="line"><span class="keyword">import</span> math</div><div class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Sequential</div><div class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense</div><div class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> LSTM</div><div class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler</div><div class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</div><div class="line"></div><div class="line"><span class="comment"># 窗口数据创建</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_dataset</span><span class="params">(dataset, look_back=<span class="number">1</span>)</span>:</span></div><div class="line">    dataX, dataY = [], []</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(dataset)-look_back<span class="number">-1</span>):</div><div class="line">        a = dataset[i:(i+look_back), <span class="number">0</span>]</div><div class="line">        dataX.append(a)</div><div class="line">        dataY.append(dataset[i + look_back, <span class="number">0</span>])</div><div class="line">    <span class="keyword">return</span> numpy.array(dataX), numpy.array(dataY)</div><div class="line"></div><div class="line"><span class="comment"># 随机种子</span></div><div class="line">numpy.random.seed(<span class="number">7</span>)</div><div class="line"></div><div class="line"><span class="comment"># 加载数据集</span></div><div class="line">dataframe = pandas.read_csv(<span class="string">'international-airline-passengers.csv'</span>, usecols=[<span class="number">1</span>], engine=<span class="string">'python'</span>, skipfooter=<span class="number">3</span>)</div><div class="line">dataset = dataframe.values</div><div class="line">dataset = dataset.astype(<span class="string">'float32'</span>)</div><div class="line"></div><div class="line"><span class="comment"># 标准化</span></div><div class="line">scaler = MinMaxScaler(feature_range=(<span class="number">0</span>, <span class="number">1</span>))</div><div class="line">dataset = scaler.fit_transform(dataset)</div><div class="line"></div><div class="line"><span class="comment"># split into train and test sets</span></div><div class="line">train_size = int(len(dataset) * <span class="number">0.67</span>)</div><div class="line">test_size = len(dataset) - train_size</div><div class="line">train, test = dataset[<span class="number">0</span>:train_size,:], dataset[train_size:len(dataset),:]</div><div class="line"></div><div class="line"><span class="comment"># 时间窗口数量设置为3</span></div><div class="line">look_back = <span class="number">3</span></div><div class="line">trainX, trainY = create_dataset(train, look_back)</div><div class="line">testX, testY = create_dataset(test, look_back)</div><div class="line"></div><div class="line"><span class="comment"># reshape input[samples, time steps, features]</span></div><div class="line">trainX = numpy.reshape(trainX, (trainX.shape[<span class="number">0</span>], trainX.shape[<span class="number">1</span>], <span class="number">1</span>))</div><div class="line">testX = numpy.reshape(testX, (testX.shape[<span class="number">0</span>], testX.shape[<span class="number">1</span>], <span class="number">1</span>))</div><div class="line"></div><div class="line"><span class="comment"># 创建拟合 LSTM network</span></div><div class="line">batch_size = <span class="number">1</span>   <span class="comment">#</span></div><div class="line">model = Sequential()</div><div class="line">model.add(LSTM(<span class="number">4</span>, batch_input_shape=(batch_size, look_back, <span class="number">1</span>), stateful=<span class="keyword">True</span>))  <span class="comment">#</span></div><div class="line">model.add(Dense(<span class="number">1</span>))  <span class="comment">#</span></div><div class="line">model.compile(loss=<span class="string">'mean_squared_error'</span>, optimizer=<span class="string">'adam'</span>)</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</div><div class="line">    model.fit(trainX, trainY, nb_epoch=<span class="number">1</span>, batch_size=batch_size, verbose=<span class="number">0</span>, shuffle=<span class="keyword">False</span>)</div><div class="line">    model.reset_states()</div><div class="line">    </div><div class="line"><span class="comment"># 预测</span></div><div class="line">trainPredict = model.predict(trainX, batch_size=batch_size)</div><div class="line">model.reset_states()</div><div class="line">testPredict = model.predict(testX, batch_size=batch_size)</div><div class="line"></div><div class="line"><span class="comment"># 反标准化</span></div><div class="line">trainPredict = scaler.inverse_transform(trainPredict)</div><div class="line">trainY = scaler.inverse_transform([trainY])</div><div class="line">testPredict = scaler.inverse_transform(testPredict)</div><div class="line">testY = scaler.inverse_transform([testY])</div><div class="line"></div><div class="line"><span class="comment"># 均方差</span></div><div class="line">trainScore = math.sqrt(mean_squared_error(trainY[<span class="number">0</span>], trainPredict[:,<span class="number">0</span>]))</div><div class="line">print(<span class="string">'Train Score: %.2f RMSE'</span> % (trainScore))</div><div class="line">testScore = math.sqrt(mean_squared_error(testY[<span class="number">0</span>], testPredict[:,<span class="number">0</span>]))</div><div class="line">print(<span class="string">'Test Score: %.2f RMSE'</span> % (testScore))</div><div class="line"></div><div class="line"><span class="comment"># 训练集画图数据</span></div><div class="line">trainPredictPlot = numpy.empty_like(dataset)</div><div class="line">trainPredictPlot[:, :] = numpy.nan</div><div class="line">trainPredictPlot[look_back:len(trainPredict)+look_back, :] = trainPredict</div><div class="line"></div><div class="line"><span class="comment"># 测试集画图数据</span></div><div class="line">testPredictPlot = numpy.empty_like(dataset)</div><div class="line">testPredictPlot[:, :] = numpy.nan</div><div class="line">testPredictPlot[len(trainPredict)+(look_back*<span class="number">2</span>)+<span class="number">1</span>:len(dataset)<span class="number">-1</span>, :] = testPredict</div><div class="line"></div><div class="line"><span class="comment"># 画图</span></div><div class="line">plt.plot(scaler.inverse_transform(dataset))</div><div class="line">plt.plot(trainPredictPlot)</div><div class="line">plt.plot(testPredictPlot)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Train Score: 22.17 RMSE</div><div class="line">Test Score: 71.53 RMSE</div></pre></td></tr></table></figure>
+<p><img src="output_26_1.png" alt="png"></p>
+<p>不过这个结果却是没有以前好。该模型可能需要更多的模块，训练更多轮，才能显示效果。</p>
+<h2 id="Stacked-LSTMs-with-Memory-Between-Batches"><a href="#Stacked-LSTMs-with-Memory-Between-Batches" class="headerlink" title="Stacked LSTMs with Memory Between Batches"></a>Stacked LSTMs with Memory Between Batches</h2><p>最后，我们再看一下使用lstm最大的好处：事实上，他们可以成功地训练堆叠的lstm到深层网络架构。</p>
+<p>LSTM网络可以堆叠在keras上。同样的，其他层类型也可以被堆叠。另外的配置，需要的是一个对应层的每个后续层之前必须返回对应的序列。这可以通过设置return_sequences参数为True来完成。</p>
+<p>比如上一部分，我们可以将stateful LSTM设置为两层。设置如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">model.add(LSTM(4, batch_input_shape=(batch_size, look_back, 1), stateful=True, return_sequences=True))</div><div class="line"></div><div class="line">model.add(LSTM(4, batch_input_shape=(batch_size, look_back, 1), stateful=True))</div></pre></td></tr></table></figure>
+<p>完整的代码见下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 堆叠 LSTM 记忆模型</span></div><div class="line"><span class="keyword">import</span> numpy</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> pandas</div><div class="line"><span class="keyword">import</span> math</div><div class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Sequential</div><div class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense</div><div class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> LSTM</div><div class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler</div><div class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</div><div class="line"></div><div class="line"><span class="comment"># 窗口转化</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_dataset</span><span class="params">(dataset, look_back=<span class="number">1</span>)</span>:</span></div><div class="line">    dataX, dataY = [], []</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(dataset)-look_back<span class="number">-1</span>):</div><div class="line">        a = dataset[i:(i+look_back), <span class="number">0</span>]</div><div class="line">        dataX.append(a)</div><div class="line">        dataY.append(dataset[i + look_back, <span class="number">0</span>])</div><div class="line">    <span class="keyword">return</span> numpy.array(dataX), numpy.array(dataY)</div><div class="line"></div><div class="line"><span class="comment"># 随机种子</span></div><div class="line">numpy.random.seed(<span class="number">7</span>)</div><div class="line"></div><div class="line"><span class="comment"># 加载数据</span></div><div class="line">dataframe = pandas.read_csv(<span class="string">'international-airline-passengers.csv'</span>, usecols=[<span class="number">1</span>], engine=<span class="string">'python'</span>, skipfooter=<span class="number">3</span>)</div><div class="line">dataset = dataframe.values</div><div class="line">dataset = dataset.astype(<span class="string">'float32'</span>)</div><div class="line"></div><div class="line"><span class="comment"># 标准化数据集</span></div><div class="line">scaler = MinMaxScaler(feature_range=(<span class="number">0</span>, <span class="number">1</span>))</div><div class="line">dataset = scaler.fit_transform(dataset)</div><div class="line"></div><div class="line"><span class="comment"># 划分数据集</span></div><div class="line">train_size = int(len(dataset) * <span class="number">0.67</span>)</div><div class="line">test_size = len(dataset) - train_size</div><div class="line">train, test = dataset[<span class="number">0</span>:train_size,:], dataset[train_size:len(dataset),:]</div><div class="line"></div><div class="line"><span class="comment"># 时间窗口设置为3，reshape数据</span></div><div class="line">look_back = <span class="number">3</span></div><div class="line">trainX, trainY = create_dataset(train, look_back)</div><div class="line">testX, testY = create_dataset(test, look_back)</div><div class="line"></div><div class="line"><span class="comment"># reshape input[samples, time steps, features]</span></div><div class="line">trainX = numpy.reshape(trainX, (trainX.shape[<span class="number">0</span>], trainX.shape[<span class="number">1</span>], <span class="number">1</span>))</div><div class="line">testX = numpy.reshape(testX, (testX.shape[<span class="number">0</span>], testX.shape[<span class="number">1</span>], <span class="number">1</span>))</div><div class="line"></div><div class="line"><span class="comment"># 创建和拟合 LSTM network</span></div><div class="line">batch_size = <span class="number">1</span></div><div class="line">model = Sequential()</div><div class="line">model.add(LSTM(<span class="number">4</span>, batch_input_shape=(batch_size, look_back, <span class="number">1</span>), stateful=<span class="keyword">True</span>, return_sequences=<span class="keyword">True</span>))</div><div class="line">model.add(LSTM(<span class="number">4</span>, batch_input_shape=(batch_size, look_back, <span class="number">1</span>), stateful=<span class="keyword">True</span>))</div><div class="line">model.add(Dense(<span class="number">1</span>))</div><div class="line">model.compile(loss=<span class="string">'mean_squared_error'</span>, optimizer=<span class="string">'adam'</span>)</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</div><div class="line">    model.fit(trainX, trainY, nb_epoch=<span class="number">1</span>, batch_size=batch_size, verbose=<span class="number">0</span>, shuffle=<span class="keyword">False</span>)</div><div class="line">    model.reset_states()</div><div class="line">    </div><div class="line"><span class="comment"># 预测</span></div><div class="line">trainPredict = model.predict(trainX, batch_size=batch_size)</div><div class="line">model.reset_states()</div><div class="line">testPredict = model.predict(testX, batch_size=batch_size)</div><div class="line"></div><div class="line"><span class="comment"># 反标准化预测数据</span></div><div class="line">trainPredict = scaler.inverse_transform(trainPredict)</div><div class="line">trainY = scaler.inverse_transform([trainY])</div><div class="line">testPredict = scaler.inverse_transform(testPredict)</div><div class="line">testY = scaler.inverse_transform([testY])</div><div class="line"></div><div class="line"><span class="comment"># 计算RMSE</span></div><div class="line">trainScore = math.sqrt(mean_squared_error(trainY[<span class="number">0</span>], trainPredict[:,<span class="number">0</span>]))</div><div class="line">print(<span class="string">'Train Score: %.2f RMSE'</span> % (trainScore))</div><div class="line">testScore = math.sqrt(mean_squared_error(testY[<span class="number">0</span>], testPredict[:,<span class="number">0</span>]))</div><div class="line">print(<span class="string">'Test Score: %.2f RMSE'</span> % (testScore))</div><div class="line"></div><div class="line"><span class="comment"># 转换训练数据画图</span></div><div class="line">trainPredictPlot = numpy.empty_like(dataset)</div><div class="line">trainPredictPlot[:, :] = numpy.nan</div><div class="line">trainPredictPlot[look_back:len(trainPredict)+look_back, :] = trainPredict</div><div class="line"></div><div class="line"><span class="comment"># 转换测试数据画图</span></div><div class="line">testPredictPlot = numpy.empty_like(dataset)</div><div class="line">testPredictPlot[:, :] = numpy.nan</div><div class="line">testPredictPlot[len(trainPredict)+(look_back*<span class="number">2</span>)+<span class="number">1</span>:len(dataset)<span class="number">-1</span>, :] = testPredict</div><div class="line"></div><div class="line"><span class="comment"># 画图</span></div><div class="line">plt.plot(scaler.inverse_transform(dataset))</div><div class="line">plt.plot(trainPredictPlot)</div><div class="line">plt.plot(testPredictPlot)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Train Score: 27.60 RMSE</div><div class="line">Test Score: 90.21 RMSE</div></pre></td></tr></table></figure>
+<p><img src="output_29_1.png" alt="png"></p>
+<p>测试数据集的预测再次变差。这更多的证据表明需要额外的增加epoch训练</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/20/tensorflow创建启动/" rel="next" title="tensorflow创建启动">
+                <i class="fa fa-chevron-left"></i> tensorflow创建启动
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="媛媛" />
+          <p class="site-author-name" itemprop="name">媛媛</p>
+           
+              <p class="site-description motion-element" itemprop="description">持之以恒</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#LSTM-Network-for-Regression"><span class="nav-number">1.</span> <span class="nav-text">LSTM Network for Regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSTM-for-Regression-Using-the-Window-Method"><span class="nav-number">2.</span> <span class="nav-text">LSTM for Regression Using the Window Method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSTM-for-Regression-with-Time-Steps"><span class="nav-number">3.</span> <span class="nav-text">LSTM for Regression with Time Steps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSTM-with-Memory-Between-Batches"><span class="nav-number">4.</span> <span class="nav-text">LSTM with Memory Between Batches</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stacked-LSTMs-with-Memory-Between-Batches"><span class="nav-number">5.</span> <span class="nav-text">Stacked LSTMs with Memory Between Batches</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">媛媛</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6BLakcxrjroymKY9COjaLrXA-gzGzoHsz", "666VnlfwNetTaf6YosSbNCWD");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
