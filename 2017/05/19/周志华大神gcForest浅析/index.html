@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="工具," />
+  <meta name="keywords" content="ML," />
 
 
 
@@ -90,16 +90,40 @@
 
 
 
-<meta name="description" content="Mysql导出数据到csv12345select *from test_fencanginto outfile &amp;apos;/Applications/dev/tmp/test_fencang.csv&amp;apos;fields terminated by &amp;apos;,&amp;apos; optionally enclosed by &amp;apos;&amp;quot;&amp;apos; escaped by &amp;apos;">
+<meta name="description" content="gcForest(multi-Grained Cascade forest 多粒度级联森林)
+知乎上也有各种喷的，俺只是好奇，想了解而已。。。
+paper链接：《Deep Forest: Towards An Alternative to Deep Neural Networks》
+源码见 GitHub
+
+
+文章大致翻译：摘要在文章中，提出了gcforest，是一个决策树预测的集成方法。可以与">
 <meta property="og:type" content="article">
-<meta property="og:title" content="那些年mysql导出文件踩过的坑">
-<meta property="og:url" content="http://yoursite.com/2017/04/08/那些年mysql导出文件踩过的坑/index.html">
+<meta property="og:title" content="周志华大神gcForest浅析">
+<meta property="og:url" content="http://yoursite.com/2017/05/19/周志华大神gcForest浅析/index.html">
 <meta property="og:site_name" content="best wishes">
-<meta property="og:description" content="Mysql导出数据到csv12345select *from test_fencanginto outfile &amp;apos;/Applications/dev/tmp/test_fencang.csv&amp;apos;fields terminated by &amp;apos;,&amp;apos; optionally enclosed by &amp;apos;&amp;quot;&amp;apos; escaped by &amp;apos;">
-<meta property="og:updated_time" content="2017-04-21T05:25:02.000Z">
+<meta property="og:description" content="gcForest(multi-Grained Cascade forest 多粒度级联森林)
+知乎上也有各种喷的，俺只是好奇，想了解而已。。。
+paper链接：《Deep Forest: Towards An Alternative to Deep Neural Networks》
+源码见 GitHub
+
+
+文章大致翻译：摘要在文章中，提出了gcforest，是一个决策树预测的集成方法。可以与">
+<meta property="og:image" content="http://yoursite.com/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG7.jpeg">
+<meta property="og:image" content="http://yoursite.com/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG10.jpeg">
+<meta property="og:image" content="http://yoursite.com/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG8.jpeg">
+<meta property="og:image" content="http://yoursite.com/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG9.jpeg">
+<meta property="og:image" content="http://yoursite.com/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG12.jpeg">
+<meta property="og:updated_time" content="2017-05-19T09:43:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="那些年mysql导出文件踩过的坑">
-<meta name="twitter:description" content="Mysql导出数据到csv12345select *from test_fencanginto outfile &amp;apos;/Applications/dev/tmp/test_fencang.csv&amp;apos;fields terminated by &amp;apos;,&amp;apos; optionally enclosed by &amp;apos;&amp;quot;&amp;apos; escaped by &amp;apos;">
+<meta name="twitter:title" content="周志华大神gcForest浅析">
+<meta name="twitter:description" content="gcForest(multi-Grained Cascade forest 多粒度级联森林)
+知乎上也有各种喷的，俺只是好奇，想了解而已。。。
+paper链接：《Deep Forest: Towards An Alternative to Deep Neural Networks》
+源码见 GitHub
+
+
+文章大致翻译：摘要在文章中，提出了gcforest，是一个决策树预测的集成方法。可以与">
+<meta name="twitter:image" content="http://yoursite.com/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG7.jpeg">
 
 
 
@@ -127,13 +151,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/04/08/那些年mysql导出文件踩过的坑/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/19/周志华大神gcForest浅析/"/>
 
 
 
 
 
-  <title> 那些年mysql导出文件踩过的坑 | best wishes </title>
+  <title> 周志华大神gcForest浅析 | best wishes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -272,7 +296,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/08/那些年mysql导出文件踩过的坑/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/19/周志华大神gcForest浅析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="媛媛">
@@ -293,7 +317,7 @@
             
             
               
-                那些年mysql导出文件踩过的坑
+                周志华大神gcForest浅析
               
             
           </h1>
@@ -308,8 +332,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-08T19:10:06+08:00">
-                2017-04-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-19T15:25:25+08:00">
+                2017-05-19
               </time>
             
 
@@ -319,28 +343,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/环境/" itemprop="url" rel="index">
-                    <span itemprop="name">环境</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -348,7 +350,7 @@
 
           
           
-             <span id="/2017/04/08/那些年mysql导出文件踩过的坑/" class="leancloud_visitors" data-flag-title="那些年mysql导出文件踩过的坑">
+             <span id="/2017/05/19/周志华大神gcForest浅析/" class="leancloud_visitors" data-flag-title="周志华大神gcForest浅析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -377,26 +379,81 @@
       
 
       
-        <h3 id="Mysql导出数据到csv"><a href="#Mysql导出数据到csv" class="headerlink" title="Mysql导出数据到csv"></a>Mysql导出数据到csv</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">select *</div><div class="line">from test_fencang</div><div class="line">into outfile &apos;/Applications/dev/tmp/test_fencang.csv&apos;</div><div class="line">fields terminated by &apos;,&apos; optionally enclosed by &apos;&quot;&apos; escaped by &apos;&quot;&apos;</div><div class="line">lines terminated by &apos;\r\n&apos;;</div></pre></td></tr></table></figure>
-<p>亲切的mysql，严肃的报错：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement</div></pre></td></tr></table></figure>
-<p>搞得我束手无策，只能谷歌:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SHOW VARIABLES LIKE &quot;secure_file_priv&quot;;</div></pre></td></tr></table></figure>
-<p>发现为null，然后又各种百度，发现有个my.cnf的文件，我电脑里面没有，就只能新建一个了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /private/etc/</div><div class="line">sudo vim my.cnf</div></pre></td></tr></table></figure>
-<p>然后在文件里添加如下语句：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#[/private/etc/my.cnf]</div><div class="line">[mysqld]</div><div class="line">secure-file-priv=&quot;/Applications/dev/tmp/&quot;</div></pre></td></tr></table></figure>
-<p>关闭之后，重新启动mysql 服务器。</p>
-<p>之后准备奇迹验证的一幕出现了，重新执行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">select *</div><div class="line">from test_fencang</div><div class="line">into outfile &apos;/Applications/dev/tmp/test_fencang.csv&apos;</div><div class="line">fields terminated by &apos;,&apos; optionally enclosed by &apos;&quot;&apos; escaped by &apos;&quot;&apos;</div><div class="line">lines terminated by &apos;\r\n&apos;;</div></pre></td></tr></table></figure>
-<p>发现有残忍的报错了，我的小心脏。。。。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR 1 (HY000): Can&apos;t create/write to file &apos;/Applications/dev/tmp/train_all.csv&apos; (Errcode: 13 - Permission denied)</div></pre></td></tr></table></figure>
-<p>居然说我没有写的权限！！！！</p>
-<p>只能又回头给文件夹授权：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chmod -R 777 /Applications/dev</div></pre></td></tr></table></figure>
-<p>然后在运行导出，成功了！！！我那个开心呀，赶紧写下来，哈哈哈。</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>my.cnf 设置：<a href="http://www.itdadao.com/articles/c15a1130741p0.html" target="_blank" rel="external">http://www.itdadao.com/articles/c15a1130741p0.html</a></p>
-<p>Mac文件夹权限修改：<a href="http://www.cnblogs.com/wanghuaijun/p/5294608.html" target="_blank" rel="external">http://www.cnblogs.com/wanghuaijun/p/5294608.html</a></p>
+        <blockquote>
+<blockquote>
+<p>gcForest(multi-Grained Cascade forest 多粒度级联森林)</p>
+<p>知乎上也有各种喷的，俺只是好奇，想了解而已。。。</p>
+<p>paper链接：<a href="https://arxiv.org/pdf/1702.08835.pdf" target="_blank" rel="external">《Deep Forest: Towards An Alternative to Deep Neural Networks》</a></p>
+<p>源码见 <a href="">GitHub</a></p>
+</blockquote>
+</blockquote>
+<h1 id="文章大致翻译："><a href="#文章大致翻译：" class="headerlink" title="文章大致翻译："></a>文章大致翻译：</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>在文章中，提出了gcforest，是一个决策树预测的集成方法。可以与DNN相对比。</p>
+<p>对于 hyper-parameter的训练来说，gcforest比DNN更容易。</p>
+<p>不需要特意调参，即使针对不同领域的数据，默认的参数也能得到较好的结果。</p>
+<p>gcforest训练过程高效可扩展，实验中在PC上运行的gc与GPU设备运行的深神经网络的时间相差无几。而且gcforest效率优势可能更为明显，因为gcforest容易并行实施。</p>
+<p>gcforest对于小样本数据也能较好的工作，而DNN需要大规模数据。而且，gc比神经网络更容易做理论研究。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="Cascade-Forest：级联森林"><a href="#Cascade-Forest：级联森林" class="headerlink" title="Cascade Forest：级联森林"></a>Cascade Forest：级联森林</h3><p><img src="/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG7.jpeg" alt="Cascade Forest"></p>
+<ol>
+<li><p>每一级级联接收由其前级处理的特征信息并输出其处理结果到下一级。</p>
+</li>
+<li><p>每一层都是由决策树森林组成，并且决策树森林越多样越好。</p>
+</li>
+<li><p>级联的每个级别包括两个普通随机森林(蓝色字体标出)和两个完全随机森林(黑色)。[可以是多个，为了简单稳重取了2种森林4个弱分类器]</p>
+</li>
+<li><p>每个完全随机的树森林包含1000(超参数)个完全随机树，通过随机选择一个特征在树的每个节点进行分割实现生成，树一直生长，直到每个叶节点只包含相同类的实例或不超过10个实例。</p>
+</li>
+<li><p>类似地，每个普通随机森林也包含1000(超参数)棵树，通过随机选择根号d个数量(d为输入特征的数量)的特征作为候选，然后选择具有最佳gini值的特征作为分割。(每个森林中的树的数值是一个超参数)</p>
+</li>
+<li><p>给一条测试样本，每棵树会根据样本所在的子空间中训练样本的类别占比生成一个类别的概率分布，然后对森林内所有树的各类比例取平均，输出整个森林对各类的比例。</p>
+<p>假设有三个类要预测， 则每个森林将输出三维类向量，然后将其连接输入特征以重新表示下一次原始输入。</p>
+<p>假设有三个类，则四个森林每一个都将产生一个三维的类向量，因此，级联的下一级将接收12 = 3×4个增强特征(augmented feature)</p>
+<p><img src="/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG10.jpeg" alt="Cascade Forest"></p>
+<p><strong>类别概率向量生成:</strong></p>
+<p>给定一个实例，每个森林会通过计算相关实例落入的叶节点处的不同类的训练样本的百分比，然后对森林中的所有树计算平均值，以生成对类的分布的估计。即每个森林会输出一个类别概率向量。</p>
+<p>为了降低过拟合风险，每个森林产生的类向量由k折交叉验证(k-fold cross validation)产生。即训练数据会被使用k-1次并求均值，最后的均值才是最终输出给下一层的数据。每新扩展一层，都会用验证集数据进行性能测试，若性能没有提升，则不会再进行扩展。因此本模型具备自动适应不同数据规模的能力。</p>
+<p>例如下图所示，这是三分类问题的一个简化森林，每个样本在每棵树中都会找到一条路径去找到自己对应的叶节点，而同样在这个叶节点中的训练数据很可能是有不同类别的，我们可以对不同类别进行统计获取各类的比例，然后通过对所有树的比例进行求均值生成整个森林的概率分布。</p>
+</li>
+</ol>
+<p><img src="/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG8.jpeg" alt="Cascade Forest"></p>
+<h3 id="Multi-Grained-Scanning：多粒度扫描"><a href="#Multi-Grained-Scanning：多粒度扫描" class="headerlink" title="Multi-Grained Scanning：多粒度扫描"></a>Multi-Grained Scanning：多粒度扫描</h3><p>受到神经网络的启发，CNN对图片，时序的特征学习很到位，所以引用了类似CNN的一个滑动窗口，</p>
+<p>假设有一个400维的样本输入，现在设定采样窗口是100维，那可以通过逐步的采样，最终获得301个子样本(这里默认的采样步长是1，所以得到的子样本个数 = (400-100)/1 + 1 = 301)。如果输入的是一个20 <em> 20的图片，利用一个10 </em> 10的采样窗口，就可以获得121个子样本(对每行和每列都是 (20-10)/1 + 1 = 11，11<em> 11 = 121)。所以，整个多粒度扫描过程就是：先输入一个完整的P维样本，然后通过一个长度为k的采样窗口进行滑动采样，得到S = (P - K)/1+1 个k维特征子样本向量，接着每个子样本都用于完全随机森林和普通随机森林的训练并在每个森林都获得一个长度为C的概率向量，这样每个森林会产生长度为S</em>C的表征向量（就是经过随机森林转换并拼接的概率向量），最后把每层的F个森林的结果拼接在一起得到本层输出。</p>
+<p>维度变化：1个实例400维-&gt;301个实例100维-&gt;2棵森林301个实例3维-&gt;1806维(2x301x3)</p>
+<p>​                   1个实例10 * 10维-&gt;121个实例10维-&gt;2棵森林121个实例3维-&gt;1806维(2x121x3)</p>
+<p><img src="/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG9.jpeg" alt="Cascade Forest"></p>
+<p>整体流程：</p>
+<p><img src="/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG12.jpeg" alt="Cascade Forest"></p>
+<p>阶段1：</p>
+<ol>
+<li>利用滑动窗口切分成多实例特征向量，经过森林变换输出类别概率向量。</li>
+<li>合并类别概率向量生成新的特征。</li>
+</ol>
+<p>阶段2：</p>
+<ol>
+<li>输入特征经过森林输出类别概率向量，连接原始输入作为下一层输出。</li>
+<li>经过多个级联森林，输出最终的类别概率向量。</li>
+<li>对多个森林输出的类别概率向量求类别的均值概率向量，取最大的类别概率为预测结果。</li>
+</ol>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>性能较之深度神经网络有很强的竞争力。 gcForest较深度神经网络容易训练， gcForest具有少得多的超参数，并且对参数设置不太敏感，在几乎完全一样的超参数设置下，在处理不同领域的不同数据时，也能达到极佳的性能，即对于超参数设定性能鲁棒性高。 训练过程效率高且可扩展，适用于并行的部署，其效率高的优势就更为明显。 gcForest在仅有小规模训练数据的情况下也表现优异。</p>
+<h3 id="褒贬不一"><a href="#褒贬不一" class="headerlink" title="褒贬不一"></a>褒贬不一</h3><p><a href="https://www.zhihu.com/question/56474891" target="_blank" rel="external">知乎吐槽</a></p>
+<h1 id="个人总结"><a href="#个人总结" class="headerlink" title="个人总结"></a>个人总结</h1><ol>
+<li><p>由于多粒度扫描和级联森林模块是相当独立的，因此可以单独使用它们。例如使用多粒度扫描提取特征；</p>
+</li>
+<li><p>gcForest较深度神经网络容易训练。</p>
+</li>
+<li><p>对参数设置不太敏感，对于超参数设定性能鲁棒性高。</p>
+</li>
+<li><p>适用于并行的部署，本身并行，所以效率高。</p>
+</li>
+<li><p>仅有小规模训练数据的情况下gcForest表现优异。因为<strong>gcforest的层数自适应确定的</strong></p>
+</li>
+<li><p>比深度网络更易理论分析，因为树的结构很清晰</p>
+<p>​</p>
+</li>
+</ol>
+<p><a href="https://github.com/pylablanche/gcForest" target="_blank" rel="external">GitHub源码</a>：python3实现，后续可以考虑python2.X实现，哈哈～</p>
+<h3 id="参考阅读："><a href="#参考阅读：" class="headerlink" title="参考阅读："></a>参考阅读：</h3><p><a href="https://arxiv.org/pdf/1702.08835.pdf" target="_blank" rel="external">Deep Forest: Towards An Alternative to Deep Neural Networks</a></p>
+<p><a href="http://geek.csdn.net/news/detail/195065" target="_blank" rel="external">周志华教授gcForest（多粒度级联森林）算法预测股指期货涨跌</a></p>
+<p><a href="https://www.zhihu.com/question/56474891" target="_blank" rel="external">如何评价周志华教授新提出的 Deep Forest 模型，它会取代当前火热的深度学习 DNN 吗？</a></p>
 
       
     </div>
@@ -426,7 +483,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/工具/" rel="tag"># 工具</a>
+            <a href="/tags/ML/" rel="tag"># ML</a>
           
         </div>
       
@@ -439,8 +496,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/05/菜鸟-需求预测与分仓规划/" rel="next" title="菜鸟-需求预测与分仓规划">
-                <i class="fa fa-chevron-left"></i> 菜鸟-需求预测与分仓规划
+              <a href="/2017/05/11/LSTM时间序列分析/" rel="next" title="LSTM时间序列分析">
+                <i class="fa fa-chevron-left"></i> LSTM时间序列分析
               </a>
             
           </div>
@@ -448,10 +505,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/08/github上传/" rel="prev" title="github上传">
-                github上传 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -580,7 +633,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mysql导出数据到csv"><span class="nav-number">1.</span> <span class="nav-text">Mysql导出数据到csv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文章大致翻译："><span class="nav-number">1.</span> <span class="nav-text">文章大致翻译：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">1.2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cascade-Forest：级联森林"><span class="nav-number">1.2.1.</span> <span class="nav-text">Cascade Forest：级联森林</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multi-Grained-Scanning：多粒度扫描"><span class="nav-number">1.2.2.</span> <span class="nav-text">Multi-Grained Scanning：多粒度扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优点"><span class="nav-number">1.2.3.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#褒贬不一"><span class="nav-number">1.2.4.</span> <span class="nav-text">褒贬不一</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#个人总结"><span class="nav-number">2.</span> <span class="nav-text">个人总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考阅读："><span class="nav-number">2.0.1.</span> <span class="nav-text">参考阅读：</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
