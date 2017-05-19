@@ -109,11 +109,11 @@ paper链接：《Deep Forest: Towards An Alternative to Deep Neural Networks》
 
 文章大致翻译：摘要在文章中，提出了gcforest，是一个决策树预测的集成方法。可以与">
 <meta property="og:image" content="http://yoursite.com/2017/05/19/周志华大神gcForest浅析/WechatIMG7.jpeg">
-<meta property="og:image" content="http://yoursite.com/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG10.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/05/19/周志华大神gcForest浅析/WechatIMG10.jpeg">
 <meta property="og:image" content="http://yoursite.com/2017/05/19/周志华大神gcForest浅析/WechatIMG8.jpeg">
 <meta property="og:image" content="http://yoursite.com/2017/05/19/周志华大神gcForest浅析/WechatIMG9.jpeg">
 <meta property="og:image" content="http://yoursite.com/2017/05/19/周志华大神gcForest浅析/WechatIMG12.jpeg">
-<meta property="og:updated_time" content="2017-05-19T09:55:22.000Z">
+<meta property="og:updated_time" content="2017-05-19T10:00:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="周志华大神gcForest浅析">
 <meta name="twitter:description" content="gcForest(multi-Grained Cascade forest 多粒度级联森林)
@@ -407,7 +407,7 @@ paper链接：《Deep Forest: Towards An Alternative to Deep Neural Networks》
 <li><p>给一条测试样本，每棵树会根据样本所在的子空间中训练样本的类别占比生成一个类别的概率分布，然后对森林内所有树的各类比例取平均，输出整个森林对各类的比例。</p>
 <p>假设有三个类要预测， 则每个森林将输出三维类向量，然后将其连接输入特征以重新表示下一次原始输入。</p>
 <p>假设有三个类，则四个森林每一个都将产生一个三维的类向量，因此，级联的下一级将接收12 = 3×4个增强特征(augmented feature)</p>
-<p><img src="/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG10.jpeg" alt="Cascade Forest"></p>
+<p><img src="/2017/05/19/周志华大神gcForest浅析/WechatIMG10.jpeg" alt="Cascade Forest"></p>
 <p><strong>类别概率向量生成:</strong></p>
 <p>给定一个实例，每个森林会通过计算相关实例落入的叶节点处的不同类的训练样本的百分比，然后对森林中的所有树计算平均值，以生成对类的分布的估计。即每个森林会输出一个类别概率向量。</p>
 <p>为了降低过拟合风险，每个森林产生的类向量由k折交叉验证(k-fold cross validation)产生。即训练数据会被使用k-1次并求均值，最后的均值才是最终输出给下一层的数据。每新扩展一层，都会用验证集数据进行性能测试，若性能没有提升，则不会再进行扩展。因此本模型具备自动适应不同数据规模的能力。</p>
