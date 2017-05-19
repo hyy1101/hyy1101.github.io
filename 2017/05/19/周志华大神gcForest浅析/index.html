@@ -108,12 +108,12 @@ paper链接：《Deep Forest: Towards An Alternative to Deep Neural Networks》
 
 
 文章大致翻译：摘要在文章中，提出了gcforest，是一个决策树预测的集成方法。可以与">
-<meta property="og:image" content="http://yoursite.com/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG7.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/05/19/周志华大神gcForest浅析/WechatIMG7.jpeg">
 <meta property="og:image" content="http://yoursite.com/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG10.jpeg">
-<meta property="og:image" content="http://yoursite.com/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG8.jpeg">
-<meta property="og:image" content="http://yoursite.com/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG9.jpeg">
-<meta property="og:image" content="http://yoursite.com/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG12.jpeg">
-<meta property="og:updated_time" content="2017-05-19T09:47:55.000Z">
+<meta property="og:image" content="http://yoursite.com/2017/05/19/周志华大神gcForest浅析/WechatIMG8.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/05/19/周志华大神gcForest浅析/WechatIMG9.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/05/19/周志华大神gcForest浅析/WechatIMG12.jpeg">
+<meta property="og:updated_time" content="2017-05-19T09:55:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="周志华大神gcForest浅析">
 <meta name="twitter:description" content="gcForest(multi-Grained Cascade forest 多粒度级联森林)
@@ -123,7 +123,7 @@ paper链接：《Deep Forest: Towards An Alternative to Deep Neural Networks》
 
 
 文章大致翻译：摘要在文章中，提出了gcforest，是一个决策树预测的集成方法。可以与">
-<meta name="twitter:image" content="http://yoursite.com/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG7.jpeg">
+<meta name="twitter:image" content="http://yoursite.com/2017/05/19/周志华大神gcForest浅析/WechatIMG7.jpeg">
 
 
 
@@ -392,7 +392,7 @@ paper链接：《Deep Forest: Towards An Alternative to Deep Neural Networks》
 <p>不需要特意调参，即使针对不同领域的数据，默认的参数也能得到较好的结果。</p>
 <p>gcforest训练过程高效可扩展，实验中在PC上运行的gc与GPU设备运行的深神经网络的时间相差无几。而且gcforest效率优势可能更为明显，因为gcforest容易并行实施。</p>
 <p>gcforest对于小样本数据也能较好的工作，而DNN需要大规模数据。而且，gc比神经网络更容易做理论研究。</p>
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="Cascade-Forest：级联森林"><a href="#Cascade-Forest：级联森林" class="headerlink" title="Cascade Forest：级联森林"></a>Cascade Forest：级联森林</h3><p><img src="/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG7.jpeg" alt="Cascade Forest"></p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="Cascade-Forest：级联森林"><a href="#Cascade-Forest：级联森林" class="headerlink" title="Cascade Forest：级联森林"></a>Cascade Forest：级联森林</h3><p><img src="/2017/05/19/周志华大神gcForest浅析/WechatIMG7.jpeg" alt="Cascade Forest"></p>
 <ol>
 <li><p>每一级级联接收由其前级处理的特征信息并输出其处理结果到下一级。</p>
 </li>
@@ -414,13 +414,13 @@ paper链接：《Deep Forest: Towards An Alternative to Deep Neural Networks》
 <p>例如下图所示，这是三分类问题的一个简化森林，每个样本在每棵树中都会找到一条路径去找到自己对应的叶节点，而同样在这个叶节点中的训练数据很可能是有不同类别的，我们可以对不同类别进行统计获取各类的比例，然后通过对所有树的比例进行求均值生成整个森林的概率分布。</p>
 </li>
 </ol>
-<p><img src="/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG8.jpeg" alt="Cascade Forest"></p>
+<p><img src="/2017/05/19/周志华大神gcForest浅析/WechatIMG8.jpeg" alt="2"></p>
 <h3 id="Multi-Grained-Scanning：多粒度扫描"><a href="#Multi-Grained-Scanning：多粒度扫描" class="headerlink" title="Multi-Grained Scanning：多粒度扫描"></a>Multi-Grained Scanning：多粒度扫描</h3><p>受到神经网络的启发，CNN对图片，时序的特征学习很到位，所以引用了类似CNN的一个滑动窗口，</p>
 <p>假设有一个400维的样本输入，现在设定采样窗口是100维，那可以通过逐步的采样，最终获得301个子样本(这里默认的采样步长是1，所以得到的子样本个数 = (400-100)/1 + 1 = 301)。如果输入的是一个20 <em> 20的图片，利用一个10 </em> 10的采样窗口，就可以获得121个子样本(对每行和每列都是 (20-10)/1 + 1 = 11，11<em> 11 = 121)。所以，整个多粒度扫描过程就是：先输入一个完整的P维样本，然后通过一个长度为k的采样窗口进行滑动采样，得到S = (P - K)/1+1 个k维特征子样本向量，接着每个子样本都用于完全随机森林和普通随机森林的训练并在每个森林都获得一个长度为C的概率向量，这样每个森林会产生长度为S</em>C的表征向量（就是经过随机森林转换并拼接的概率向量），最后把每层的F个森林的结果拼接在一起得到本层输出。</p>
 <p>维度变化：1个实例400维-&gt;301个实例100维-&gt;2棵森林301个实例3维-&gt;1806维(2x301x3)</p>
 <p>​                   1个实例10 * 10维-&gt;121个实例10维-&gt;2棵森林121个实例3维-&gt;1806维(2x121x3)</p>
-<p><img src="/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG9.jpeg" alt="Cascade Forest"></p>
-<h3 id="整体流程"><a href="#整体流程" class="headerlink" title="整体流程"></a>整体流程</h3><p><img src="/Applications/dev/myblog/blog/source/_posts/周志华大神gcForest浅析/WechatIMG12.jpeg" alt="Cascade Forest"></p>
+<p><img src="/2017/05/19/周志华大神gcForest浅析/WechatIMG9.jpeg" alt="3"></p>
+<h3 id="整体流程"><a href="#整体流程" class="headerlink" title="整体流程"></a>整体流程</h3><p><img src="/2017/05/19/周志华大神gcForest浅析/WechatIMG12.jpeg" alt="4"></p>
 <p>阶段1：</p>
 <ol>
 <li>利用滑动窗口切分成多实例特征向量，经过森林变换输出类别概率向量。</li>
@@ -436,8 +436,8 @@ paper链接：《Deep Forest: Towards An Alternative to Deep Neural Networks》
 <p>​</p>
 </li>
 </ol>
-<h2 id="与其他算法结果对比"><a href="#与其他算法结果对比" class="headerlink" title="与其他算法结果对比"></a>与其他算法结果对比</h2><ol>
-<li>在大数据集上，分别和DNN类、LR、RF、SVM等算法做了对比。</li>
+<h2 id="与其他算法结果对比"><a href="#与其他算法结果对比" class="headerlink" title="与其他算法结果对比"></a>与其他算法结果对比</h2><p>在大数据集上，分别和DNN类、LR、RF、SVM等算法做了对比：</p>
+<ol>
 <li>图像分类（数据集：MNIST）：略低于DNN，基本持平（99.05%与98.96%）；</li>
 <li>人脸识别（数据集：ORL）：人脸图像数量不同时，gcForest都最好；</li>
 <li>音乐分类（数据集：GTZAN）：gcForest最好（65.67%）；</li>
