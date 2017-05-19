@@ -113,7 +113,7 @@ paper链接：《Deep Forest: Towards An Alternative to Deep Neural Networks》
 <meta property="og:image" content="http://yoursite.com/2017/05/19/周志华大神gcForest浅析/WechatIMG8.jpeg">
 <meta property="og:image" content="http://yoursite.com/2017/05/19/周志华大神gcForest浅析/WechatIMG9.jpeg">
 <meta property="og:image" content="http://yoursite.com/2017/05/19/周志华大神gcForest浅析/WechatIMG12.jpeg">
-<meta property="og:updated_time" content="2017-05-19T10:00:04.000Z">
+<meta property="og:updated_time" content="2017-05-19T10:25:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="周志华大神gcForest浅析">
 <meta name="twitter:description" content="gcForest(multi-Grained Cascade forest 多粒度级联森林)
@@ -417,8 +417,11 @@ paper链接：《Deep Forest: Towards An Alternative to Deep Neural Networks》
 <p><img src="/2017/05/19/周志华大神gcForest浅析/WechatIMG8.jpeg" alt="2"></p>
 <h3 id="Multi-Grained-Scanning：多粒度扫描"><a href="#Multi-Grained-Scanning：多粒度扫描" class="headerlink" title="Multi-Grained Scanning：多粒度扫描"></a>Multi-Grained Scanning：多粒度扫描</h3><p>受到神经网络的启发，CNN对图片，时序的特征学习很到位，所以引用了类似CNN的一个滑动窗口，</p>
 <p>假设有一个400维的样本输入，现在设定采样窗口是100维，那可以通过逐步的采样，最终获得301个子样本(这里默认的采样步长是1，所以得到的子样本个数 = (400-100)/1 + 1 = 301)。如果输入的是一个20 <em> 20的图片，利用一个10 </em> 10的采样窗口，就可以获得121个子样本(对每行和每列都是 (20-10)/1 + 1 = 11，11<em> 11 = 121)。所以，整个多粒度扫描过程就是：先输入一个完整的P维样本，然后通过一个长度为k的采样窗口进行滑动采样，得到S = (P - K)/1+1 个k维特征子样本向量，接着每个子样本都用于完全随机森林和普通随机森林的训练并在每个森林都获得一个长度为C的概率向量，这样每个森林会产生长度为S</em>C的表征向量（就是经过随机森林转换并拼接的概率向量），最后把每层的F个森林的结果拼接在一起得到本层输出。</p>
-<p>维度变化：1个实例400维-&gt;301个实例100维-&gt;2棵森林301个实例3维-&gt;1806维(2x301x3)</p>
-<p>​                   1个实例10 * 10维-&gt;121个实例10维-&gt;2棵森林121个实例3维-&gt;1806维(2x121x3)</p>
+<p><strong>维度变化：</strong></p>
+<ol>
+<li>1个实例400维-&gt;301个实例100维-&gt;2棵森林301个实例3维-&gt;1806维(2x301x3)</li>
+<li>1个实例10 * 10维-&gt;121个实例10维-&gt;2棵森林121个实例3维-&gt;1806维(2x121x3)</li>
+</ol>
 <p><img src="/2017/05/19/周志华大神gcForest浅析/WechatIMG9.jpeg" alt="3"></p>
 <h3 id="整体流程"><a href="#整体流程" class="headerlink" title="整体流程"></a>整体流程</h3><p><img src="/2017/05/19/周志华大神gcForest浅析/WechatIMG12.jpeg" alt="4"></p>
 <p>阶段1：</p>
@@ -462,7 +465,7 @@ paper链接：《Deep Forest: Towards An Alternative to Deep Neural Networks》
 <p>​</p>
 </li>
 </ol>
-<p><a href="https://github.com/pylablanche/gcForest" target="_blank" rel="external">GitHub源码</a>：python3实现，后续可以考虑python2.X实现，哈哈～</p>
+<p><a href="https://github.com/pylablanche/gcForest" target="_blank" rel="external">GitHub源码</a>：貌似是python3实现d额，后续，如果我有能力😢可以考虑python2.X实现，哈哈～</p>
 <h3 id="参考阅读："><a href="#参考阅读：" class="headerlink" title="参考阅读："></a>参考阅读：</h3><p><a href="https://arxiv.org/pdf/1702.08835.pdf" target="_blank" rel="external">Deep Forest: Towards An Alternative to Deep Neural Networks</a></p>
 <p><a href="http://geek.csdn.net/news/detail/195065" target="_blank" rel="external">周志华教授gcForest（多粒度级联森林）算法预测股指期货涨跌</a></p>
 <p><a href="https://www.zhihu.com/question/56474891" target="_blank" rel="external">如何评价周志华教授新提出的 Deep Forest 模型，它会取代当前火热的深度学习 DNN 吗？</a></p>
