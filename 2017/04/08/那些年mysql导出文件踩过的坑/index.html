@@ -90,16 +90,31 @@
 
 
 
-<meta name="description" content="Mysql导出数据到csv12345select *from test_fencanginto outfile &amp;apos;/Applications/dev/tmp/test_fencang.csv&amp;apos;fields terminated by &amp;apos;,&amp;apos; optionally enclosed by &amp;apos;&amp;quot;&amp;apos; escaped by &amp;apos;">
+<meta name="description" content="Mysql导出数据到csv链接 mysql报错mysql -uroot -p：
+12Enter password:ERROR 1045 (28000): Access denied for user &amp;apos;root&amp;apos;@&amp;apos;localhost&amp;apos; (using password: NO)
+原因，没有启动：
+1mysql.server restart
+查询出错：
+123">
 <meta property="og:type" content="article">
 <meta property="og:title" content="那些年mysql导出文件踩过的坑">
 <meta property="og:url" content="http://yoursite.com/2017/04/08/那些年mysql导出文件踩过的坑/index.html">
 <meta property="og:site_name" content="best wishes">
-<meta property="og:description" content="Mysql导出数据到csv12345select *from test_fencanginto outfile &amp;apos;/Applications/dev/tmp/test_fencang.csv&amp;apos;fields terminated by &amp;apos;,&amp;apos; optionally enclosed by &amp;apos;&amp;quot;&amp;apos; escaped by &amp;apos;">
-<meta property="og:updated_time" content="2017-04-21T05:25:02.000Z">
+<meta property="og:description" content="Mysql导出数据到csv链接 mysql报错mysql -uroot -p：
+12Enter password:ERROR 1045 (28000): Access denied for user &amp;apos;root&amp;apos;@&amp;apos;localhost&amp;apos; (using password: NO)
+原因，没有启动：
+1mysql.server restart
+查询出错：
+123">
+<meta property="og:updated_time" content="2017-05-26T10:19:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="那些年mysql导出文件踩过的坑">
-<meta name="twitter:description" content="Mysql导出数据到csv12345select *from test_fencanginto outfile &amp;apos;/Applications/dev/tmp/test_fencang.csv&amp;apos;fields terminated by &amp;apos;,&amp;apos; optionally enclosed by &amp;apos;&amp;quot;&amp;apos; escaped by &amp;apos;">
+<meta name="twitter:description" content="Mysql导出数据到csv链接 mysql报错mysql -uroot -p：
+12Enter password:ERROR 1045 (28000): Access denied for user &amp;apos;root&amp;apos;@&amp;apos;localhost&amp;apos; (using password: NO)
+原因，没有启动：
+1mysql.server restart
+查询出错：
+123">
 
 
 
@@ -377,7 +392,12 @@
       
 
       
-        <h3 id="Mysql导出数据到csv"><a href="#Mysql导出数据到csv" class="headerlink" title="Mysql导出数据到csv"></a>Mysql导出数据到csv</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">select *</div><div class="line">from test_fencang</div><div class="line">into outfile &apos;/Applications/dev/tmp/test_fencang.csv&apos;</div><div class="line">fields terminated by &apos;,&apos; optionally enclosed by &apos;&quot;&apos; escaped by &apos;&quot;&apos;</div><div class="line">lines terminated by &apos;\r\n&apos;;</div></pre></td></tr></table></figure>
+        <h3 id="Mysql导出数据到csv"><a href="#Mysql导出数据到csv" class="headerlink" title="Mysql导出数据到csv"></a>Mysql导出数据到csv</h3><p>链接 mysql报错<code>mysql -uroot -p</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Enter password:</div><div class="line">ERROR 1045 (28000): Access denied for user &apos;root&apos;@&apos;localhost&apos; (using password: NO)</div></pre></td></tr></table></figure>
+<p>原因，没有启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql.server restart</div></pre></td></tr></table></figure>
+<p>查询出错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">select *</div><div class="line">from test_fencang</div><div class="line">into outfile &apos;/Applications/dev/tmp/test_fencang.csv&apos;</div><div class="line">fields terminated by &apos;,&apos; optionally enclosed by &apos;&quot;&apos; escaped by &apos;&quot;&apos;</div><div class="line">lines terminated by &apos;\r\n&apos;;</div></pre></td></tr></table></figure>
 <p>亲切的mysql，严肃的报错：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement</div></pre></td></tr></table></figure>
 <p>搞得我束手无策，只能谷歌:</p>
@@ -395,6 +415,11 @@
 <p>只能又回头给文件夹授权：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chmod -R 777 /Applications/dev</div></pre></td></tr></table></figure>
 <p>然后在运行导出，成功了！！！我那个开心呀，赶紧写下来，哈哈哈。</p>
+<h3 id="莫名其妙数据库的表格被锁"><a href="#莫名其妙数据库的表格被锁" class="headerlink" title="莫名其妙数据库的表格被锁"></a>莫名其妙数据库的表格被锁</h3><p>表示用python查询的时候，报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_mysql_exceptions.OperationalError: (1205, &apos;Lock wait timeout exceeded; try restarting transact)</div></pre></td></tr></table></figure>
+<p>原因是表被锁了，然后：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select * from information_schema.innodb_trx</div></pre></td></tr></table></figure>
+<p>找到任务ID之后，kill掉。</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>my.cnf 设置：<a href="http://www.itdadao.com/articles/c15a1130741p0.html" target="_blank" rel="external">http://www.itdadao.com/articles/c15a1130741p0.html</a></p>
 <p>Mac文件夹权限修改：<a href="http://www.cnblogs.com/wanghuaijun/p/5294608.html" target="_blank" rel="external">http://www.cnblogs.com/wanghuaijun/p/5294608.html</a></p>
 
@@ -580,7 +605,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mysql导出数据到csv"><span class="nav-number">1.</span> <span class="nav-text">Mysql导出数据到csv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mysql导出数据到csv"><span class="nav-number">1.</span> <span class="nav-text">Mysql导出数据到csv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#莫名其妙数据库的表格被锁"><span class="nav-number">2.</span> <span class="nav-text">莫名其妙数据库的表格被锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>

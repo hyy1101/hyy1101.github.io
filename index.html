@@ -986,13 +986,14 @@ gcforest对于小样本数据也能较好的工作，而DNN需要大规模数据
       
         
           
-          Mysql导出数据到csv12345select *from test_fencanginto outfile &apos;/Applications/dev/tmp/test_fencang.csv&apos;fields terminated by &apos;,&apos; optionally enclosed by &apos;&quot;&apos; escaped by &apos;&quot;&apos;lines terminated by &apos;\r\n&apos;;
+          Mysql导出数据到csv链接 mysql报错mysql -uroot -p：
+12Enter password:ERROR 1045 (28000): Access denied for user &apos;root&apos;@&apos;localhost&apos; (using password: NO)
+原因，没有启动：
+1mysql.server restart
+查询出错：
+12345select *from test_fencanginto outfile &apos;/Applications/dev/tmp/test_fencang.csv&apos;fields terminated by &apos;,&apos; optionally enclosed by &apos;&quot;&apos; escaped by &apos;&quot;&apos;lines terminated by &apos;\r\n&apos;;
 亲切的mysql，严肃的报错：
-1ERROR 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
-搞得我束手无策，只能谷歌:
-1SHOW VARIABLES LIKE &quot;secure_file_priv&quot;;
-发现为null，然后又各种百度，发现有个my.cnf的文件，我电脑里面没有，就只能新建一个了。
-1
+1ERROR 1290 (HY000): The MySQL server is running w
           ...
           <!--noindex-->
           <div class="post-button text-center">
