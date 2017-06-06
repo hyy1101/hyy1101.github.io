@@ -1,0 +1,896 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="量化," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="量化策略学习参考：https://bigquant.com/tutorial/
+金叉死叉策略 — 择时策略其实就是双均线策略。策略思想是：当短期均线上穿长期均线时，形成金叉，此时买入股票。当短期均线下穿长期均线时，形成死叉，此时卖出股票。
+1234567# 策略逻辑部分    # 空仓状态下，短周期均线上穿长周期均线，买入股票    if short_mavg &amp;gt; long_mavg and">
+<meta property="og:type" content="article">
+<meta property="og:title" content="量化策略学习">
+<meta property="og:url" content="http://yoursite.com/2017/06/06/量化策略学习/index.html">
+<meta property="og:site_name" content="best wishes">
+<meta property="og:description" content="量化策略学习参考：https://bigquant.com/tutorial/
+金叉死叉策略 — 择时策略其实就是双均线策略。策略思想是：当短期均线上穿长期均线时，形成金叉，此时买入股票。当短期均线下穿长期均线时，形成死叉，此时卖出股票。
+1234567# 策略逻辑部分    # 空仓状态下，短周期均线上穿长周期均线，买入股票    if short_mavg &amp;gt; long_mavg and">
+<meta property="og:image" content="https://community.bigquant.com/uploads/default/original/1X/97c353250d27b5d31f87497e1cf0d024b36661c7.png">
+<meta property="og:image" content="https://community.bigquant.com/uploads/default/original/1X/78fedc278140fae19bbd0c57b85a83f48017d5b9.png">
+<meta property="og:image" content="https://community.bigquant.com/uploads/default/original/1X/2d0b39aafcaeeda4918b59eb45edef2a67b61602.png">
+<meta property="og:updated_time" content="2017-06-06T11:54:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="量化策略学习">
+<meta name="twitter:description" content="量化策略学习参考：https://bigquant.com/tutorial/
+金叉死叉策略 — 择时策略其实就是双均线策略。策略思想是：当短期均线上穿长期均线时，形成金叉，此时买入股票。当短期均线下穿长期均线时，形成死叉，此时卖出股票。
+1234567# 策略逻辑部分    # 空仓状态下，短周期均线上穿长周期均线，买入股票    if short_mavg &amp;gt; long_mavg and">
+<meta name="twitter:image" content="https://community.bigquant.com/uploads/default/original/1X/97c353250d27b5d31f87497e1cf0d024b36661c7.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/06/量化策略学习/"/>
+
+
+
+
+
+  <title> 量化策略学习 | best wishes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?41fc030db57d5570dd22f78997dc4a7e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">best wishes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">宠辱不惊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/06/量化策略学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="媛媛">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="best wishes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                量化策略学习
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-06T19:53:57+08:00">
+                2017-06-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/06/06/量化策略学习/" class="leancloud_visitors" data-flag-title="量化策略学习">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="量化策略学习"><a href="#量化策略学习" class="headerlink" title="量化策略学习"></a>量化策略学习</h1><p>参考：<a href="https://bigquant.com/tutorial/" target="_blank" rel="external">https://bigquant.com/tutorial/</a></p>
+<h2 id="金叉死叉策略-—-择时策略"><a href="#金叉死叉策略-—-择时策略" class="headerlink" title="金叉死叉策略 — 择时策略"></a>金叉死叉策略 — 择时策略</h2><p>其实就是双均线策略。策略思想是：当短期均线上穿长期均线时，形成金叉，此时买入股票。当短期均线下穿长期均线时，形成死叉，此时卖出股票。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 策略逻辑部分</span></div><div class="line">    <span class="comment"># 空仓状态下，短周期均线上穿长周期均线，买入股票</span></div><div class="line">    <span class="keyword">if</span> short_mavg &gt; long_mavg <span class="keyword">and</span> cur_position == <span class="number">0</span>  <span class="keyword">and</span> data.can_trade(sid):  </div><div class="line">        context.order(sid, int(cash/price/<span class="number">100</span>)*<span class="number">100</span>) </div><div class="line">    <span class="comment"># 持仓状态下，短周期均线下穿长周期均线，卖出股票</span></div><div class="line">    <span class="keyword">elif</span> short_mavg &lt; long_mavg  <span class="keyword">and</span> cur_position &gt; <span class="number">0</span> <span class="keyword">and</span>   data.can_trade(sid):  </div><div class="line">        context.order_target_percent(sid, <span class="number">0</span>)</div></pre></td></tr></table></figure>
+<h2 id="海龟策略-—-择时策略"><a href="#海龟策略-—-择时策略" class="headerlink" title="海龟策略 — 择时策略"></a>海龟策略 — 择时策略</h2><p>海龟策略的具体规则是：</p>
+<ol>
+<li>当今天的收盘价大于过去20个交易日中的最高价时，以收盘价买入；</li>
+<li>买入后，当收盘价小于过去10个交易日中的最低价时，以收盘价卖出。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 交易逻辑</span></div><div class="line">    <span class="comment">#  最新价大于等于20日高点，并且处于空仓状态，并且该股票当日可以交易</span></div><div class="line">    <span class="keyword">if</span> price &gt;= high_point  <span class="keyword">and</span> cur_position == <span class="number">0</span> <span class="keyword">and</span> data.can_trade(sid):  </div><div class="line">        context.order_target_percent(sid, <span class="number">1</span>) </div><div class="line">    <span class="comment">#  最新价小于等于10日低点，并且持有股票，并且该股票当日可以交易</span></div><div class="line">    <span class="keyword">elif</span> price &lt;= low_point  <span class="keyword">and</span> cur_position &gt; <span class="number">0</span> <span class="keyword">and</span> data.can_trade(sid): </div><div class="line">        context.order_target_percent(sid, <span class="number">0</span>)</div></pre></td></tr></table></figure>
+<h2 id="小市值策略-—-选股策略"><a href="#小市值策略-—-选股策略" class="headerlink" title="小市值策略 — 选股策略"></a>小市值策略 — 选股策略</h2><p>小市值的股票更容易带来超额收益，因为小市值类股票往往表现活跃，容易引发炒作风潮。此外，还有IPO管制的原因（大量排队企业选择借壳），也有市场风险偏好提升的原因（市场恶性循环越来越偏爱小市值）。</p>
+<p>策略逻辑：市值可以带来超额收益</p>
+<p>策略内容：每月月初买入市值最小的30只股票，持有至下个月月初再调仓</p>
+<p>资金管理：等权重买入</p>
+<p>风险控制：无单只股票仓位上限控制、无止盈止损</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 整理出每个交易日市值最小的30只股票</span></div><div class="line">daily_buy_stock = market_cap_data.groupby(<span class="string">'date'</span>).apply(<span class="keyword">lambda</span> df:df[(df[<span class="string">'amount'</span>] &gt; </div><div class="line"><span class="number">0</span>)].sort_values(<span class="string">'market_cap'</span>)[:<span class="number">30</span>])</div><div class="line"><span class="comment"># 当前的日期</span></div><div class="line">date = data.current_dt.strftime(<span class="string">'%Y-%m-%d'</span>)</div><div class="line"><span class="comment"># 根据日期获取调仓需要买入的股票的列表</span></div><div class="line">stock_to_buy = list(context.daily_buy_stock.ix[date].instrument)</div><div class="line"><span class="comment"># 通过positions对象，使用列表生成式的方法获取目前持仓的股票列表</span></div><div class="line">stock_hold_now = [equity.symbol <span class="keyword">for</span> equity <span class="keyword">in</span> context.portfolio.positions]</div><div class="line"><span class="comment"># 继续持有的股票：调仓时，如果买入的股票已经存在于目前的持仓里，那么应继续持有</span></div><div class="line">no_need_to_sell = [i <span class="keyword">for</span> i <span class="keyword">in</span> stock_hold_now <span class="keyword">if</span> i <span class="keyword">in</span> stock_to_buy]</div><div class="line"><span class="comment"># 需要卖出的股票</span></div><div class="line">stock_to_sell = [i <span class="keyword">for</span> i <span class="keyword">in</span> stock_hold_now <span class="keyword">if</span> i <span class="keyword">not</span> <span class="keyword">in</span> no_need_to_sell]</div><div class="line"></div><div class="line"><span class="comment"># 卖出</span></div><div class="line"><span class="keyword">for</span> stock <span class="keyword">in</span> stock_to_sell:</div><div class="line">    <span class="comment"># 如果该股票停牌，则没法成交。因此需要用can_trade方法检查下该股票的状态</span></div><div class="line">    <span class="comment"># 如果返回真值，则可以正常下单，否则会出错</span></div><div class="line">    <span class="comment"># 因为stock是字符串格式，我们用symbol方法将其转化成平台可以接受的形式</span></div><div class="line"></div><div class="line">    <span class="keyword">if</span> data.can_trade(context.symbol(stock)):</div><div class="line">        <span class="comment"># order_target_percent是平台的一个下单接口，表明下单使得该股票的权重为0，</span></div><div class="line">        <span class="comment">#   即卖出全部股票，可参考回测文档</span></div><div class="line">        context.order_target_percent(context.symbol(stock), <span class="number">0</span>)</div><div class="line"></div><div class="line">        <span class="comment"># 如果当天没有买入的股票，就返回</span></div><div class="line">        <span class="keyword">if</span> len(stock_to_buy) == <span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span></div><div class="line"></div><div class="line">        <span class="comment"># 等权重买入 </span></div><div class="line">        weight =  <span class="number">1</span> / len(stock_to_buy)</div><div class="line"></div><div class="line">        <span class="comment"># 买入</span></div><div class="line">        <span class="keyword">for</span>  stock <span class="keyword">in</span> stock_to_buy:</div><div class="line">            <span class="keyword">if</span> data.can_trade(context.symbol(stock)):</div><div class="line">                <span class="comment"># 下单使得某只股票的持仓权重达到weight，因为</span></div><div class="line">                <span class="comment"># weight大于0,因此是等权重买入</span></div><div class="line">                context.order_target_percent(context.symbol(stock), weight)</div></pre></td></tr></table></figure>
+<h2 id="多头排列回踩买入策略-—-择时选股"><a href="#多头排列回踩买入策略-—-择时选股" class="headerlink" title="多头排列回踩买入策略 — 择时选股"></a>多头排列回踩买入策略 — 择时选股</h2><p><strong>什么是均线？</strong></p>
+<p>均线的全称是移动平均线（MA）。移动平均线是个什么概念？即通过等权或指数加权的方式，计算一段时期内的平均价格，是将某一段时间的收盘价之和除以该周期。 比如，日线MA5的意思就是说，5天内的收盘价除以5。</p>
+<p><strong>什么是多头排列回踩点？</strong></p>
+<p>多头排列首先是一个均线排列形态，能够预判趋势目前是多头占上风的。而这个预判背后所支撑的逻辑，源于均线的排列方式。人们在长期使用均线这个指标的过程中，通过总结经验和数据，认为均线的排列可以粗分为两种情况：多头排列和空头排列。多头排列就是市场趋势是强势上升势，均线在5—10—20—40—120K线下支撑排列向上为多头排列。我们先看一个简单的三均线多头排列形态。</p>
+<p><img src="https://community.bigquant.com/uploads/default/original/1X/97c353250d27b5d31f87497e1cf0d024b36661c7.png" alt=""></p>
+<p>从图可以看出，多头排列形态的判定标准是：短期均线依次在长期均线之上，因此股价有较好的支撑。说的再简单一些，如果把均线理解为买入成本的平均值，均线排列依次短期线、中期线、长期线由上而下依次排列，这说明我们过去买进的成本很低，做短线的、中线的、长线的都有赚头，市场一片向上均线多头排列趋势为强势上升势，操作思维为多头思维。</p>
+<p>回踩点又是什么含义呢？很简单，就是价格前期冲高后出现了小幅回调下行。值得注意的是，在这个策略中，回踩是有条件的，即回踩幅度并没有破坏均线多头排列的格局。在这种情况下，由于每一条不同周期的均线都是支撑，所以回撤往往成为一个较理想的进场点位。假如某只股票，前期多头排列，但是回踩之后，整体均线形态受到巨大破坏，那么这只股票就不符合我们的筛选条件了。</p>
+<p>回踩点能够具体的量化，如果在多头排列的状态下当根K线击穿了10日均线，那么可以视作这根K线是一个回踩点，发出买入信号。2017年2月以来贵州茅台（600519）的K线图上出现的几个多头趋势回踩点，现在看来，这几个回踩点都是绝好的回调买入机会。</p>
+<p><img src="https://community.bigquant.com/uploads/default/original/1X/78fedc278140fae19bbd0c57b85a83f48017d5b9.png" alt=""></p>
+<p>多头排列回踩买入策略蕴含了投资过程中最重要的两个核心思想，一是选股，从3000只股票中选出目前走势符合多头排列的股票，因为这样的股票后市更有上涨空间，如果某只股票有一波趋势，那么这种简单的选股法则并不会遗漏这只股票，就拿贵州茅台举例，这只“白马股”一路走牛，通过市盈率、市值等因子很可能选不到这只股票，但是多头排列选股并不会错失这只股票。二是择时，当股票选出来以后，我们要择时买入，而回踩点正是一个绝好的时机进场。</p>
+<p><strong>交易系统</strong></p>
+<ol>
+<li>股票池为所有沪深A股</li>
+<li>均线周期选择为[5,10,20,40,120],短期均线值依次大于长期均线值</li>
+<li>回踩点的定义为当根K线击穿10日均线，未击穿更长周期均线，并扔满足多头排列</li>
+<li>买入股票数上限为100只，等权重买入，当持有股票数100只时，有股票卖出才买入股票</li>
+<li>买入时机：多头策略回踩点的第二天开盘买入</li>
+<li>卖出时机：当5日均线下穿40日均线，第二天开盘卖出</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 计算多个周期均线的函数</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">ma_calculate</span><span class="params">(df)</span>:</span></div><div class="line">    ma_list = [<span class="number">5</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">40</span>,<span class="number">120</span>]</div><div class="line">    <span class="keyword">for</span> ma_len <span class="keyword">in</span> ma_list:</div><div class="line">        df[<span class="string">'ma_'</span>+str(ma_len)] = pd.rolling_mean(df[<span class="string">'close'</span>], ma_len)</div><div class="line">    <span class="keyword">return</span> df</div><div class="line"><span class="comment"># 包含多个周期均线值的股票数据</span></div><div class="line">stock_ma_data = stock_raw_data.groupby(<span class="string">'instrument'</span>).apply(ma_calculate)</div><div class="line"></div><div class="line"><span class="comment"># 函数：求满足开仓条件的股票列表</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">open_pos_con</span><span class="params">(df)</span>:</span></div><div class="line">    <span class="keyword">return</span> list(df[(df[<span class="string">'ma_5'</span>]&gt;df[<span class="string">'ma_10'</span>])&amp;(df[<span class="string">'ma_10'</span>]&gt;df[<span class="string">'ma_20'</span>])&amp;(df[<span class="string">'ma_20'</span>]&gt;df[<span class="string">'ma_40'</span>])&amp;(df[<span class="string">'ma_40'</span>]&gt;df[<span class="string">'ma_120'</span>])&amp;(df[<span class="string">'low'</span>]&lt;df[<span class="string">'ma_10'</span>])].instrument)</div><div class="line"></div><div class="line"><span class="comment"># 函数：求满足平仓条件的股票列表</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">close_pos_con</span><span class="params">(df)</span>:</span></div><div class="line">    <span class="keyword">return</span> list(df[df[<span class="string">'ma_5'</span>]&lt;df[<span class="string">'ma_40'</span>]].instrument)</div><div class="line"><span class="comment"># 每日买入股票的数据框</span></div><div class="line">daily_stock_to_buy= stock_ma_data.groupby(<span class="string">'date'</span>).apply(open_pos_con)</div><div class="line"><span class="comment"># 每日卖出股票的数据框</span></div><div class="line">daily_stock_to_sell= stock_ma_data.groupby(<span class="string">'date'</span>).apply(close_pos_con)</div></pre></td></tr></table></figure>
+<h2 id="借助talib使用技术分析指标来炒股"><a href="#借助talib使用技术分析指标来炒股" class="headerlink" title="借助talib使用技术分析指标来炒股"></a>借助talib使用技术分析指标来炒股</h2><p><strong>什么是技术分析</strong></p>
+<p>所谓股票的技术分析，是相对于基本面分析而言的。基本分析法着重于对一般经济情况以及各个公司的经营管理状况、行业动态等因素进行分析，以此来研究股票的价值，衡量股价的高低。而技术分析则是透过图表或技术指标的记录，研究市场过去及现在的行为反应，以推测未来价格的变动趋势。其依据的技术指标的主要内容是由股价、成交量或涨跌指数等数据计算而得的，技术分析只关心证券市场本身的变化，而不考虑会对其产生某种影响的经济方面、政治方面的等各种外部的因素。</p>
+<p><strong>什么是talib</strong></p>
+<p>talib的简称是Technical Analysis Library，主要功能是计算股价的技术分析指标。先简单看看talib提供计算技术指标的函数，按技术指标的类型示例如下：</p>
+<p>函数名：CDL2CROWS<br>名称：Two Crows 两只乌鸦<br>简介：三日K线模式，第一天长阳，第二天高开收阴，第三天再次高开继续收阴，收盘比前一日收盘价低，预示股价下跌。<br>例子：integer = CDL2CROWS(open, high, low, close)</p>
+<p>函数名：CDL3STARSINSOUTH<br>名称：Three Stars In The South 南方三星<br>简介：三日K线模式，与大敌当前相反，三日K线皆阴，第一日有长下影线，第二日与第一日类似，K线整体小于第一日，第三日无下影线实体信号，成交价格都在第一日振幅之内，预示下跌趋势反转，股价上升。<br>例子：integer = CDL3STARSINSOUTH(open, high, low, close)</p>
+<p>函数名 : MA<br>名称：Moving average 移动平均值<br>简介：移动平均值是在一定范围内的价格平均值<br>例子：ma = MA(close, timeperiod=30, matype=0)</p>
+<p>函数名：ADX<br>名称：Average Directional Movement Index 平均趋向指数<br>简介：ADX指数是反映趋向变动的程度，而不是方向的本身。<br>例子：adx = ADX(high, low, close, timeperiod=14)</p>
+<p>函数名：ATR<br>名称：Average True Range 平均真实波幅<br>简介：主要用来衡量价格的波动。因此，这一技术指标并不能直接反映价格走向及其趋势稳定性，而只是表明价格波动的程度。<br>例子：atr = ATR(high, low, close, timeperiod=14)</p>
+<p>函数名：OBV<br>名称：On Balance Volume 能量潮<br>简介：通过统计成交量变动的趋势推测股价趋势<br>计算公式：以某日为基期，逐日累计每日上市股票总成交量，若隔日指数或股票上涨，则基期OBV加上本日成交量为本日OBV。隔日指数或股票下跌，则基期OBV减去本日成交量为本日OBV<br>例子：obv = OBV(close, volume)</p>
+<p>由于篇幅有限，技术分析指标不能在此充分介绍，可以参考<a href="http://www.ta-lib.org/function.html" target="_blank" rel="external">talib官方文档2</a></p>
+<p><strong>如何使用：MA实例</strong></p>
+<ul>
+<li>已知MA这个函数的调用方式为：ma = MA(close, timeperiod=30, matype=0)</li>
+<li>close表示收盘价序列，timeperiod指定义好均线的计算长度即几日均线，不输入的话，默认为30日， matype可以默认不用输入，然后就可以得到均线的值</li>
+<li>因此简单来讲，只取获取收盘价，就可以轻松计算移动平均值</li>
+</ul>
+<p><strong>策略实战：MACD策略</strong></p>
+<ul>
+<li>当macd下穿signal时，卖出股票</li>
+<li>当macd上穿signal时，买入股票</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 卖出逻辑 macd下穿signal</span></div><div class="line"><span class="keyword">if</span> macd[<span class="number">-1</span>] - signal[<span class="number">-1</span>] &lt; <span class="number">0</span> <span class="keyword">and</span> macd[<span class="number">-2</span>] - signal[<span class="number">-2</span>] &gt; <span class="number">0</span>:</div><div class="line">    <span class="comment"># 进行清仓</span></div><div class="line">    <span class="keyword">if</span> cur_position &gt; <span class="number">0</span> <span class="keyword">and</span> data.can_trade(sid):</div><div class="line">        context.order_target_value(sid, <span class="number">0</span>)</div><div class="line"></div><div class="line"><span class="comment"># 买入逻辑  macd上穿signal</span></div><div class="line"><span class="keyword">if</span> macd[<span class="number">-1</span>] - signal[<span class="number">-1</span>] &gt; <span class="number">0</span> <span class="keyword">and</span> macd[<span class="number">-2</span>] - signal[<span class="number">-2</span>] &lt; <span class="number">0</span>:</div><div class="line"><span class="comment"># 买入股票</span></div><div class="line">    <span class="keyword">if</span> cur_position == <span class="number">0</span> <span class="keyword">and</span> data.can_trade(sid):</div><div class="line">        context.order_target_percent(sid, <span class="number">1</span>)</div></pre></td></tr></table></figure>
+<h2 id="价值投资法"><a href="#价值投资法" class="headerlink" title="价值投资法"></a>价值投资法</h2><p>策略逻辑：当股票处于价值洼地时，具备投资价值</p>
+<p>策略内容：每月月初买入市盈率小于15倍、市净率小于1.5倍的30只股票，持有至下个月月初再调仓</p>
+<p>资金管理：等权重买入</p>
+<p>风险控制：无单只股票仓位上限控制、无止盈止损</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">seek_symbol</span><span class="params">(df)</span>:</span></div><div class="line">    selected = df[(df[<span class="string">'pb_lf'</span>] &lt; <span class="number">1.5</span>)</div><div class="line">        &amp; (df[<span class="string">'pe_ttm'</span>] &lt; <span class="number">15</span>) </div><div class="line">        &amp; (df[<span class="string">'amount'</span>] &gt; <span class="number">0</span>) </div><div class="line">        &amp; (df[<span class="string">'pb_lf'</span>] &gt; <span class="number">0</span>)</div><div class="line">        &amp; (df[<span class="string">'pe_ttm'</span>] &gt; <span class="number">0</span> ) ]</div><div class="line">                                    </div><div class="line">    <span class="comment"># 按pe_ttm和pb_lf 升序排列</span></div><div class="line">    selected = selected.sort_values([<span class="string">'pe_ttm'</span>,<span class="string">'pb_lf'</span>])</div><div class="line">    <span class="keyword">return</span> list(selected.instrument)[:<span class="number">30</span>] <span class="comment"># 记得转化成list</span></div><div class="line"></div><div class="line">daily_buy_stock = history_data.groupby(<span class="string">'date'</span>).apply(seek_symbol)</div></pre></td></tr></table></figure>
+<h2 id="事件驱动策略"><a href="#事件驱动策略" class="headerlink" title="事件驱动策略"></a>事件驱动策略</h2><p>事件驱动（Event Driven）属于量化投资之中的一个重要类别，涵盖投资机会广泛。广义上说，市场上任何发生的有可能与股票市场相关的新闻、事件、公告均有可能成为事件驱动的投资机会。 目前我国业界事件驱动策略中包括的常用重大事件有：业绩预告、业绩快报、分红送转、大股东增减持、高管增减持、定向增发、限售股解禁、股权激励、重组并购、ST摘和评级上调等，如下图所示。</p>
+<p><img src="https://community.bigquant.com/uploads/default/original/1X/2d0b39aafcaeeda4918b59eb45edef2a67b61602.png" alt=""></p>
+<ul>
+<li>策略逻辑：认为业绩快报中净利润大幅增长为利好消息，会导致价格在一定期限内上涨</li>
+<li>事件定义：当业绩快报中公布净利润同比增增长超过30%</li>
+<li>股票持有不超过50只，仅当持有数量小于50只时，才买入股票</li>
+<li>持有时间：40个交易日</li>
+</ul>
+<h2 id="基于协整的配对交易"><a href="#基于协整的配对交易" class="headerlink" title="基于协整的配对交易"></a>基于协整的配对交易</h2><p>相信很多同学都了解过 Pairs Trading，即配对交易策略。其基本原理就是找出两只走势相关的股票。这两只股票的价格差距从长期来看在一个固定的水平内波动，如果价差暂时性的超过或低于这个水平，就买多价格偏低的股票，卖空价格偏高的股票。等到价差恢复正常水平时，进行平仓操作，赚取这一过程中价差变化所产生的利润。</p>
+<p>使用这个策略的关键就是“必须找到一对价格走势高度相关的股票”，而高度相关在这里意味着在长期来看有一个稳定的价差，这就要用到协整关系的检验。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/量化/" rel="tag"># 量化</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/19/周志华大神gcForest浅析/" rel="next" title="周志华大神gcForest浅析">
+                <i class="fa fa-chevron-left"></i> 周志华大神gcForest浅析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="媛媛" />
+          <p class="site-author-name" itemprop="name">媛媛</p>
+           
+              <p class="site-description motion-element" itemprop="description">持之以恒</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#量化策略学习"><span class="nav-number">1.</span> <span class="nav-text">量化策略学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#金叉死叉策略-—-择时策略"><span class="nav-number">1.1.</span> <span class="nav-text">金叉死叉策略 — 择时策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#海龟策略-—-择时策略"><span class="nav-number">1.2.</span> <span class="nav-text">海龟策略 — 择时策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小市值策略-—-选股策略"><span class="nav-number">1.3.</span> <span class="nav-text">小市值策略 — 选股策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多头排列回踩买入策略-—-择时选股"><span class="nav-number">1.4.</span> <span class="nav-text">多头排列回踩买入策略 — 择时选股</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#借助talib使用技术分析指标来炒股"><span class="nav-number">1.5.</span> <span class="nav-text">借助talib使用技术分析指标来炒股</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#价值投资法"><span class="nav-number">1.6.</span> <span class="nav-text">价值投资法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件驱动策略"><span class="nav-number">1.7.</span> <span class="nav-text">事件驱动策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于协整的配对交易"><span class="nav-number">1.8.</span> <span class="nav-text">基于协整的配对交易</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">媛媛</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6BLakcxrjroymKY9COjaLrXA-gzGzoHsz", "666VnlfwNetTaf6YosSbNCWD");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
